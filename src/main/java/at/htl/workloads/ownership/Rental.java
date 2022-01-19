@@ -1,0 +1,78 @@
+package at.htl.workloads.ownership;
+
+import at.htl.workloads.vehicle.Vehicle;
+import at.htl.workloads.person.Tenant;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class Rental {
+
+    //region fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    private Vehicle vehicle;
+    @ManyToOne
+    private Tenant tenant;
+    private LocalDateTime from;
+    private LocalDateTime to;
+    //endregion
+
+    //region Constructor
+    public Rental(Long id, Vehicle vehicle, Tenant tenant, LocalDateTime from, LocalDateTime to) {
+        this.id = id;
+        this.vehicle = vehicle;
+        this.tenant = tenant;
+        this.from = from;
+        this.to = to;
+    }
+
+    public Rental() {
+    }
+    //endregion
+
+    //region Getter and Setter
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public void setFrom(LocalDateTime from) {
+        this.from = from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
+    public void setTo(LocalDateTime to) {
+        this.to = to;
+    }
+    //endregion
+}
