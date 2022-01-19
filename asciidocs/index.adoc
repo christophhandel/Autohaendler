@@ -1,0 +1,27 @@
+= Supermarkt
+Pavelescu Darius, Kerschbaum Philipp, Handel Christoph
+1.0.0, 2022-01-19: Autohaendler
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc] ‏ ‏ ‎
+icon:github-square[link=https://github.com/htl-leonding-college/asciidoctor-docker-template] ‏ ‏ ‎
+icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+== CLD
+
+[plantuml,bsp,png]
+----
+include::plantuml/cld.puml[]
+----
+
+== Beschreibung
+
+Es wird ein Autohändler simuliert bei dem Autos hinzugefügt, Autos ausgeborgt, Autos reperiert... werden können.

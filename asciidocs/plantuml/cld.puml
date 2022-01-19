@@ -1,0 +1,90 @@
+@startuml autohaendler
+
+class Vehicle{
+    - **id**: Long
+    - brand: String
+    - constructionYear: LocalDateTime
+    - horsePower: int
+    - acceleration: int
+    - owner: Owner
+}
+
+class Owner{
+    - vehicles: List<Vehicle>
+}
+
+class Person{
+    - **svNr**: String
+    - firstName: String
+    - lastName: String
+    - dateOfBirth: LocalDate
+    - phoneNumber: String
+    - driverLicenceNumber: String
+}
+
+class Mechanic{
+    - reparations: List<Reparation>
+    - pricePerHour: BigDecimal
+    - workStart: LocalDateTime
+    - workEnd: LocalDateTime
+}
+
+class Part{
+    - **partType**: String
+    - **description**: String
+    - amountStored: int
+}
+
+class Replacement{
+    - **part**: Part
+    - **reparation**: Reparation
+}
+
+class Tenant{
+    - rentals: List<Rental>
+    - priceDiscountPercent: double
+}
+
+class Rental{
+    - **id**: Long
+    - vehicle: Vehicle
+    - tenant: Tenant
+    - from: LocalDateTime
+    - to: LocalDateTime
+}
+
+class Reparation{
+    - **id**: Long
+    - vehicle: Vehicle
+    - mechanic: Mechanic
+    - nextAppointment: LocalDateTime
+    - duration: int
+}
+
+class VehicleTransfer{
+    - **id**: Long
+    - vehicle: Vehicle
+    - newOwner: Person
+    - time: LocalDateTime
+}
+
+Owner  --|> Person: is a
+Person  <|-left- Mechanic: is a
+Person <|-right-  Tenant: is a
+Reparation "1" --> "*" Mechanic: has a
+Reparation "*" <-right- "1" Vehicle: has a
+Reparation "1" -up-> "*" Replacement: has one or many
+Replacement "*" <-- "1" Part: is used
+
+Rental "*" <-left- "1" Vehicle: is lent
+Rental "*" <-right- "1" Tenant: is lent
+Vehicle "*" <-- "1" Owner: drives a
+VehicleTransfer "*" <-up- "1" Vehicle: buy or sell a
+VehicleTransfer "*" <-- "1" Person: buy or sell a
+
+@enduml
+
+
+
+
+
