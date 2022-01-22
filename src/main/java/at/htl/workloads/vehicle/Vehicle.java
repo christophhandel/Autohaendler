@@ -15,18 +15,18 @@ public class Vehicle {
     private String brand;
     private LocalDateTime constructionPerYear;
     private int horsePower;
-    private int acceleratiron;
+    private int acceleration;
     @ManyToOne
     private Owner owner;
     //endregion
 
     //region Constructor
-    public Vehicle(Long id, String brand, LocalDateTime constructionPerYear, int horsePower, int acceleratiron, Owner owner) {
+    public Vehicle(Long id, String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Owner owner) {
         this.id = id;
         this.brand = brand;
         this.constructionPerYear = constructionPerYear;
         this.horsePower = horsePower;
-        this.acceleratiron = acceleratiron;
+        this.acceleration = acceleration;
         this.owner = owner;
     }
 
@@ -67,12 +67,12 @@ public class Vehicle {
         this.horsePower = horsePower;
     }
 
-    public int getAcceleratiron() {
-        return acceleratiron;
+    public int getAcceleration() {
+        return acceleration;
     }
 
-    public void setAcceleratiron(int acceleratiron) {
-        this.acceleratiron = acceleratiron;
+    public void setAcceleration(int acceleration) {
+        this.acceleration = acceleration;
     }
 
     public Owner getOwner() {

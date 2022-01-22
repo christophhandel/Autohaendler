@@ -4,6 +4,7 @@ import at.htl.workloads.reparation.Reparation;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,17 +14,17 @@ import java.util.List;
 public class Mechanic extends Person {
 
     //region fields
-    @ManyToOne
-    private List<Reparation> reperations;
+    @OneToMany
+    private List<Reparation> reparations;
     private BigDecimal pricePerHour;
     private LocalDateTime workStart;
     private LocalDateTime workEnd;
     //endregion
 
     //region Constructor
-    public Mechanic(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, List<Reparation> reperations, BigDecimal pricePerHour, LocalDateTime workStart, LocalDateTime workEnd) {
+    public Mechanic(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, List<Reparation> reparations, BigDecimal pricePerHour, LocalDateTime workStart, LocalDateTime workEnd) {
         super(svNr, firstName, lastName, dateOfBirth, phoneNumber, driverLicenceNumber);
-        this.reperations = reperations;
+        this.reparations = reparations;
         this.pricePerHour = pricePerHour;
         this.workStart = workStart;
         this.workEnd = workEnd;
@@ -34,12 +35,12 @@ public class Mechanic extends Person {
     //endregion
 
     //region Getter and Setter
-    public List<Reparation> getReperations() {
-        return reperations;
+    public List<Reparation> getReparations() {
+        return reparations;
     }
 
-    public void setReperations(List<Reparation> reperations) {
-        this.reperations = reperations;
+    public void setReparations(List<Reparation> reparations) {
+        this.reparations = reparations;
     }
 
     public BigDecimal getPricePerHour() {
