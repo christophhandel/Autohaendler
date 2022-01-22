@@ -2,12 +2,13 @@ package at.htl.workloads.person;
 
 import at.htl.workloads.vehicle.Vehicle;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue(value="Own")
+@PrimaryKeyJoinColumn(name = "person_id")
 public class Owner extends Person{
 
     //region fields

@@ -1,5 +1,7 @@
 package at.htl.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class PersonDTO {
@@ -7,6 +9,7 @@ public class PersonDTO {
     private String svNr;
     private String firstName;
     private String lastName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private String phoneNumber;
     private String driverLicenceNumber;

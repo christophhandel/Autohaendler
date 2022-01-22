@@ -1,17 +1,15 @@
 package at.htl.workloads.person;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="person_type", discriminatorType = DiscriminatorType.STRING)
 public class Person {
 
     //region fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String svNr;
     private String firstName;
     private String lastName;

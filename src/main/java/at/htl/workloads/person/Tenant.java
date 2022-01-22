@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue(value="Ten")
+@PrimaryKeyJoinColumn(name = "person_id")
 public class Tenant extends Person{
 
     //region fields

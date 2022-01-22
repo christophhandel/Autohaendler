@@ -1,13 +1,19 @@
 package at.htl.workloads.reparation;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
 public class ReparationRepoImpl implements ReparationRepo{
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    @Inject
+    public ReparationRepoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
 
     @Override
@@ -35,5 +41,13 @@ public class ReparationRepoImpl implements ReparationRepo{
     @Override
     public void deleteReparation(Reparation reparation) {
         entityManager.remove(reparation);
+    }
+
+    @Override
+    public List<Reparation> getByIds(List<Long> reparationIds) {
+        return entityManager.createQuery("select r from Reparation r " +
+                "where r.id in :ids", Reparation.class)
+                .setParameter("ids", reparationIds)
+                .getResultList();
     }
 }

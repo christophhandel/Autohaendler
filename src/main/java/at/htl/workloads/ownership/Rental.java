@@ -17,7 +17,9 @@ public class Rental {
     private Vehicle vehicle;
     @ManyToOne
     private Tenant tenant;
+    @Column(name = "r_from")
     private LocalDateTime from;
+    @Column(name = "r_to")
     private LocalDateTime to;
     //endregion
 

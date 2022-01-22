@@ -1,28 +1,30 @@
 package at.htl.workloads.person;
 
 import at.htl.workloads.reparation.Reparation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue(value="Mech")
+@PrimaryKeyJoinColumn(name = "person_id")
 public class Mechanic extends Person {
 
     //region fields
-    @OneToMany
+    @OneToMany @JsonIgnore
     private List<Reparation> reparations;
     private BigDecimal pricePerHour;
-    private LocalDateTime workStart;
-    private LocalDateTime workEnd;
+    private LocalTime workStart;
+    private LocalTime workEnd;
     //endregion
 
     //region Constructor
-    public Mechanic(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, List<Reparation> reparations, BigDecimal pricePerHour, LocalDateTime workStart, LocalDateTime workEnd) {
+    public Mechanic(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, List<Reparation> reparations, BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) {
         super(svNr, firstName, lastName, dateOfBirth, phoneNumber, driverLicenceNumber);
         this.reparations = reparations;
         this.pricePerHour = pricePerHour;
@@ -51,19 +53,19 @@ public class Mechanic extends Person {
         this.pricePerHour = pricePerHour;
     }
 
-    public LocalDateTime getWorkStart() {
+    public LocalTime getWorkStart() {
         return workStart;
     }
 
-    public void setWorkStart(LocalDateTime workStart) {
+    public void setWorkStart(LocalTime workStart) {
         this.workStart = workStart;
     }
 
-    public LocalDateTime getWorkEnd() {
+    public LocalTime getWorkEnd() {
         return workEnd;
     }
 
-    public void setWorkEnd(LocalDateTime workEnd) {
+    public void setWorkEnd(LocalTime workEnd) {
         this.workEnd = workEnd;
     }
     //endregion

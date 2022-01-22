@@ -3,6 +3,7 @@ package at.htl.workloads.reparation;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class ReplacementId implements Serializable {
@@ -41,4 +42,18 @@ public class ReplacementId implements Serializable {
         this.reparation = reparation;
     }
     //endregion
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReplacementId that = (ReplacementId) o;
+        return Objects.equals(part, that.part) && Objects.equals(reparation, that.reparation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(part, reparation);
+    }
 }

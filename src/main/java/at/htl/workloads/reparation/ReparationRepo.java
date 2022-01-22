@@ -12,4 +12,10 @@ public interface ReparationRepo {
     Reparation updateReparation(Reparation reparation);
 
     void deleteReparation(Reparation reparation);
+
+    /**
+     * @param reparationIds
+     * @return List of reparations with reparationIds or null if one of the ids does not exist
+     */
+    List<Reparation> getByIds(List<Long> reparationIds);
 }
