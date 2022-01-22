@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autohaendler Mechaniker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+    <h1 class="title">Mechaniker</h1>
+
+    <div class="divider"></div>
+    <div class="row" style="margin-right: 100px; margin-left: 100px;">
+
+        {#for mechanic in mechanicList}
+        <div class="col" style="margin-right: 50px;">
+            <h5>{mechanic.firstName} {mechanic.lastName}</h5>
+            <p>Preis: {mechanic.pricePerHour}$/h</p>
+            <p>Arbeitsstunden: {mechanic.workStart}-{mechanic.workEnd}</p>
+        </div>
+        {/for}
+    </div>
+    <div class="divider"></div>
+
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2022 HTL Leonding
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
