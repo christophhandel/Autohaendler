@@ -49,7 +49,7 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Mechanic updateMechanic(String actSvNr, String newSvNr, String firstName, String lastName,
                                    LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber,
-                                   List<Long> reparationIds, BigDecimal pricePerHour,
+                                   BigDecimal pricePerHour,
                                    LocalTime workStart, LocalTime workEnd) throws ValidationException {
 
         if(findMechanicById(actSvNr) == null)
@@ -57,18 +57,12 @@ public class PersonServiceImpl implements PersonService{
         else if(!actSvNr.equals(newSvNr))
             throw new ValidationException("The 2 svNrs are not equal!!");
 
-        List<Reparation> newReparations = reparationRepository.getByIds(reparationIds);
-
-        if(newReparations == null)
-            throw new ValidationException("One of the reparations do not exist!!");
-
         Mechanic m = findMechanicById(actSvNr);
         m.setFirstName(firstName);
         m.setLastName(lastName);
         m.setDateOfBirth(dateOfBirth);
         m.setPhoneNumber(phoneNumber);
         m.setDriverLicenceNumber(driverLicenceNumber);
-        m.getReparations().addAll(newReparations);
         m.setPricePerHour(pricePerHour);
         m.setWorkStart(workStart);
         m.setWorkEnd(workEnd);
@@ -106,7 +100,7 @@ public class PersonServiceImpl implements PersonService{
     public Tenant updateTenant(String svNr, String svNr1, String firstName,
                                String lastName, LocalDate dateOfBirth,
                                String phoneNumber, String driverLicenceNumber,
-                               double priceDiscountPercent, List<Long> rentalIds)
+                               double priceDiscountPercent)
             throws ValidationException {
         // TODO: Implement
         return null;

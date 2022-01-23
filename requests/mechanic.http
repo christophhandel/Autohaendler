@@ -1,0 +1,74 @@
+### Create
+POST http://localhost:8080/api/mechanic/
+Content-Type: application/json
+
+{
+  "svNr": "0646220902",
+  "firstName": "Max",
+  "lastName": "Mustermann",
+  "dateOfBirth": "2002-02-22",
+  "phoneNumber": "067628419248",
+  "driverLicenceNumber": "AT-4512-999",
+  "pricePerHour": 25.70,
+  "workStart": "07:05",
+  "workEnd": "12:50"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 301");
+});
+%}
+
+### GetById
+GET http://localhost:8080/api/mechanic/0646220902
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/mechanic/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Update
+PUT http://localhost:8080/api/mechanic/0646220902
+Content-Type: application/json
+
+{
+  "svNr": "0646220902",
+  "firstName": "Max",
+  "lastName": "Musterfrau",
+  "dateOfBirth": "2002-02-22",
+  "phoneNumber": "067628419248",
+  "driverLicenceNumber": "AT-4512-999",
+  "pricePerHour": 25.70,
+  "workStart": "07:05",
+  "workEnd": "19:50",
+  "reparationIds": [1]
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/mechanic/0646220902
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###

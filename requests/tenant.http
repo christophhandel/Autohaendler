@@ -1,0 +1,69 @@
+### Create
+POST http://localhost:8080/api/tenant/
+Content-Type: application/json
+
+{
+  "svNr": "0101010101",
+  "firstName": "Max",
+  "lastName": "Mustermann",
+  "dateOfBirth": "2002-02-22",
+  "phoneNumber": "067628419248",
+  "driverLicenceNumber": "AT-4512-999",
+  "priceDiscountPercent": 7
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 301");
+});
+%}
+
+### GetById
+GET http://localhost:8080/api/tenant/0101010101
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/tenant/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Update
+PUT http://localhost:8080/api/tenant/0101010101
+Content-Type: application/json
+
+{
+  "svNr": "0101010101",
+  "firstName": "Max",
+  "lastName": "Mustermann",
+  "dateOfBirth": "2002-02-22",
+  "phoneNumber": "067628419248",
+  "driverLicenceNumber": "AT-4512-999",
+  "priceDiscountPercent": 14
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/tenant/0101010101
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###

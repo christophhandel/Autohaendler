@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class TenantDTO extends PersonDTO{
-    private Optional<List<Long>> rentalIds;
     private double priceDiscountPercent;
 
     public TenantDTO() {
@@ -14,16 +13,7 @@ public class TenantDTO extends PersonDTO{
 
     public TenantDTO(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, List<Long> rentalIds, double priceDiscountPercent) {
         super(svNr, firstName, lastName, dateOfBirth, phoneNumber, driverLicenceNumber);
-        this.rentalIds = Optional.of(rentalIds);
         this.priceDiscountPercent = priceDiscountPercent;
-    }
-
-    public List<Long> getRentalIds() {
-        return rentalIds.orElse(new ArrayList<>());
-    }
-
-    public void setRentalIds(List<Long> rentalIds) {
-        this.rentalIds = Optional.of(rentalIds);
     }
 
     public double getPriceDiscountPercent() {

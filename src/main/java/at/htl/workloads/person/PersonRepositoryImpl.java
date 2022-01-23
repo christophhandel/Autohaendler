@@ -3,6 +3,8 @@ package at.htl.workloads.person;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -31,16 +33,24 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public Mechanic findMechanicById(String svNr) {
-        return entityManager.createQuery("select m from Mechanic m " +
-                "where m.svNr = :svNr", Mechanic.class)
-                .setParameter("svNr", svNr)
-                .getSingleResult();
+        try {
+            return entityManager.createQuery("select m from Mechanic m " +
+                    "where m.svNr = :svNr", Mechanic.class)
+                    .setParameter("svNr", svNr)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Mechanic> findAllMechanics() {
-        return entityManager.createQuery("select m from Mechanic m", Mechanic.class)
-                .getResultList();
+        try {
+            return entityManager.createQuery("select m from Mechanic m", Mechanic.class)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
@@ -64,16 +74,24 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public Owner findOwnerById(String svNr) {
-        return entityManager.createQuery("select o from Owner o " +
-                "where o.svNr = :svNr", Owner.class)
-                .setParameter("svNr", svNr)
-                .getSingleResult();
+        try {
+            return entityManager.createQuery("select o from Owner o " +
+                    "where o.svNr = :svNr", Owner.class)
+                    .setParameter("svNr", svNr)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Owner> findAllOwners() {
-        return entityManager.createQuery("select o from Owner o", Owner.class)
-                .getResultList();
+        try {
+            return entityManager.createQuery("select o from Owner o", Owner.class)
+                    .getResultList();
+        }     catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override

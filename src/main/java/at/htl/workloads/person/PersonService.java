@@ -16,7 +16,7 @@ public interface PersonService {
 
     Mechanic updateMechanic(String actSvNr, String newSvNr, String firstName,
                             String lastName, LocalDate dateOfBirth, String phoneNumber,
-                            String driverLicenceNumber, List<Long> reparationIds, BigDecimal pricePerHour,
+                            String driverLicenceNumber, BigDecimal pricePerHour,
                             LocalTime workStart, LocalTime workEnd) throws ValidationException;
 
     Mechanic findMechanicById(String svNr);
@@ -31,7 +31,7 @@ public interface PersonService {
 
     Tenant updateTenant(String svNr, String svNr1, String firstName,
                           String lastName, LocalDate dateOfBirth, String phoneNumber,
-                          String driverLicenceNumber, double priceDiscountPercent, List<Long> rentalIds)
+                          String driverLicenceNumber, double priceDiscountPercent)
             throws ValidationException;
 
     Tenant findTenantById(String svNr);

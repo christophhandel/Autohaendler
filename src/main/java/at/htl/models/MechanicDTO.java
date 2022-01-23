@@ -10,33 +10,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class MechanicDTO extends PersonDTO{
-    private Optional<List<Long>> reparationIds;
     private BigDecimal pricePerHour;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime workStart;
     private LocalTime workEnd;
-
-    public MechanicDTO() {
-        this.reparationIds = Optional.empty();
-    }
 
     public MechanicDTO(String svNr, String firstName, String lastName, LocalDate dateOfBirth,
                        String phoneNumber, String driverLicenceNumber, List<Long> reparationIds,
                        BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) {
 
         super(svNr, firstName, lastName, dateOfBirth, phoneNumber, driverLicenceNumber);
-        this.reparationIds = Optional.of(reparationIds);
         this.pricePerHour = pricePerHour;
         this.workStart = workStart;
         this.workEnd = workEnd;
-    }
-
-    public List<Long> getReparationIds() {
-        return reparationIds.orElse(null);
-    }
-
-    public void setReparationIds(List<Long> reparationIds) {
-        this.reparationIds = Optional.of(reparationIds);
     }
 
     public BigDecimal getPricePerHour() {

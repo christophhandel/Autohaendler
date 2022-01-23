@@ -2,6 +2,7 @@ package at.htl.workloads.vehicle;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.xml.bind.ValidationException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,12 +11,12 @@ public class VehicleServiceImpl implements VehicleService{
     // TODO: Add VehicleRepository and write methods.
 
     @Override
-    public Vehicle saveVehicle(String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Long ownerId) throws ValidationException {
+    public Vehicle saveVehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, Long ownerId) throws ValidationException {
         return null;
     }
 
     @Override
-    public Vehicle updateVehicle(Long id, String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Long ownerId) throws ValidationException {
+    public Vehicle updateVehicle(Long id, String brand, LocalDate constructionPerYear, int horsePower, int acceleration, Long ownerId) throws ValidationException {
         return null;
     }
 

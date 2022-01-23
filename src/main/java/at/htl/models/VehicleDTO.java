@@ -1,24 +1,29 @@
 package at.htl.models;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 public class VehicleDTO {
 
     private String brand;
-    private LocalDateTime constructionPerYear;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate constructionYear;
     private int horsePower;
     private int acceleration;
-    private Long ownerId;
+    private Optional<Long> ownerId;
 
     public VehicleDTO() {
+        this.ownerId = Optional.empty();
     }
 
-    public VehicleDTO(String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Long ownerId) {
+    public VehicleDTO(String brand, LocalDate constructionYear, int horsePower, int acceleration, Long ownerId) {
         this.brand = brand;
-        this.constructionPerYear = constructionPerYear;
+        this.constructionYear = constructionYear;
         this.horsePower = horsePower;
         this.acceleration = acceleration;
-        this.ownerId = ownerId;
+        this.ownerId = Optional.of(ownerId);
     }
 
     public String getBrand() {
@@ -29,12 +34,12 @@ public class VehicleDTO {
         this.brand = brand;
     }
 
-    public LocalDateTime getConstructionPerYear() {
-        return constructionPerYear;
+    public LocalDate getConstructionYear() {
+        return constructionYear;
     }
 
-    public void setConstructionPerYear(LocalDateTime constructionPerYear) {
-        this.constructionPerYear = constructionPerYear;
+    public void setConstructionYear(LocalDate constructionYear) {
+        this.constructionYear = constructionYear;
     }
 
     public int getHorsePower() {
@@ -54,10 +59,10 @@ public class VehicleDTO {
     }
 
     public Long getOwnerId() {
-        return ownerId;
+        return ownerId.orElse(null);
     }
 
     public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+        this.ownerId = Optional.of(ownerId);
     }
 }

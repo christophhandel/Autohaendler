@@ -1,8 +1,6 @@
 package at.htl.api;
 
-import at.htl.models.MechanicDTO;
 import at.htl.models.VehicleDTO;
-import at.htl.workloads.person.Mechanic;
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.vehicle.VehicleService;
 
@@ -32,7 +30,7 @@ public class VehicleResourceApi {
         try {
             v = vehicleService.saveVehicle(
                     vehicleDTO.getBrand(),
-                    vehicleDTO.getConstructionPerYear(),
+                    vehicleDTO.getConstructionYear(),
                     vehicleDTO.getHorsePower(),
                     vehicleDTO.getAcceleration(),
                     vehicleDTO.getOwnerId()
@@ -57,7 +55,7 @@ public class VehicleResourceApi {
             v = vehicleService.updateVehicle(
                     id,
                     vehicleDTO.getBrand(),
-                    vehicleDTO.getConstructionPerYear(),
+                    vehicleDTO.getConstructionYear(),
                     vehicleDTO.getHorsePower(),
                     vehicleDTO.getAcceleration(),
                     vehicleDTO.getOwnerId()

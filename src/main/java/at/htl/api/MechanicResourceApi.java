@@ -67,7 +67,6 @@ public class MechanicResourceApi {
                     mechanicDTO.getDateOfBirth(),
                     mechanicDTO.getPhoneNumber(),
                     mechanicDTO.getDriverLicenceNumber(),
-                    mechanicDTO.getReparationIds(),
                     mechanicDTO.getPricePerHour(),
                     mechanicDTO.getWorkStart(),
                     mechanicDTO.getWorkEnd()

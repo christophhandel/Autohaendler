@@ -62,8 +62,7 @@ public class TenantResourceApi {
                     tenantDTO.getDateOfBirth(),
                     tenantDTO.getPhoneNumber(),
                     tenantDTO.getDriverLicenceNumber(),
-                    tenantDTO.getPriceDiscountPercent(),
-                    tenantDTO.getRentalIds()
+                    tenantDTO.getPriceDiscountPercent()
             );
         } catch (ValidationException e) {
             return Response.status(400, e.getMessage()).build();

@@ -1,0 +1,66 @@
+### Create
+POST http://localhost:8080/api/vehicle/
+Content-Type: application/json
+
+{
+  "brand": "BMW",
+  "constructionYear": "2020-01-01",
+  "horsePower": "600",
+  "acceleration": "8"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+
+client.global.set("id", response.body.id);
+%}
+
+### GetById
+GET http://localhost:8080/api/vehicle/{{id}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/vehicle/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Update
+PUT http://localhost:8080/api/vehicle/{{id}}
+Content-Type: application/json
+
+{
+  "brand": "BMW",
+  "constructionYear": "2020-01-01",
+  "horsePower": "600",
+  "acceleration": "8",
+  "ownerId": 1
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/vehicle/{{id}}
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
