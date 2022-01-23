@@ -1,8 +1,8 @@
 package at.htl.workloads.reparation;
 
-import com.arjuna.ats.jta.exceptions.NotImplementedException;
-
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,14 +11,19 @@ public class ReparationServiceImpl implements ReparationService{
 
     private ReparationRepo reparationRepo;
 
-    @Override
-    public List<Reparation> findAll(){
-        return this.reparationRepo.getAll();
+    @Inject
+    public ReparationServiceImpl(ReparationRepo reparationRepo) {
+        this.reparationRepo = reparationRepo;
     }
 
     @Override
-    public Reparation findById(Long id){
-        return this.reparationRepo.getById(id);
+    public List<Reparation> findAllReparations(){
+        return this.reparationRepo.findAllReparations();
+    }
+
+    @Override
+    public Reparation findReparationById(Long id){
+        return this.reparationRepo.findReparationById(id);
     }
 
     @Override
@@ -41,5 +46,45 @@ public class ReparationServiceImpl implements ReparationService{
         // TODO: If mechanic with id does not exist, throw ValidationException
         // TODO: If vehicle with id does not exist, throw ValidationException
         return null;
+    }
+
+    @Override
+    public List<Replacement> findAllReplacements() {
+        return reparationRepo.findAllReplacements();
+    }
+
+    @Override
+    public Replacement findReplacementById(String partType, String partDescription, Long reparationId) {
+        return reparationRepo.findReplacementById( partType,  partDescription,  reparationId);
+    }
+
+    @Override
+    public void deleteReplacement(Replacement replacement) {
+        reparationRepo.deleteReplacement(replacement);
+    }
+
+    @Override
+    public Replacement addReplacement(String partType, String partDescription, Long reparationId, int amount)
+            throws ValidationException {
+        ReplacementId rId = new ReplacementId(findPartById(partType, partDescription), findReparationById(reparationId));
+
+        if(rId.getReparation() == null ||rId.getPart() == null)
+            throw new ValidationException("Nonexistent Replacement!");
+
+        Replacement r = new Replacement(rId, amount);
+        return reparationRepo.addReplacement(r);
+    }
+
+    public Part findPartById(String partType, String partDescription) {
+        return reparationRepo.findPartById(partType, partDescription);
+    }
+
+    @Override
+    public Replacement updateReplacement(String partType, String partDescription, Long reparationId, int amount) throws ValidationException {
+        Replacement r = findReplacementById(partType, partDescription, reparationId);
+
+        r.setAmount(amount);
+
+        return  reparationRepo.updateReplacement(r);
     }
 }

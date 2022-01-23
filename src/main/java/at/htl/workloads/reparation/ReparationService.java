@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReparationService {
-    List<Reparation> findAll();
+    List<Reparation> findAllReparations();
 
-    Reparation findById(Long id);
+    Reparation findReparationById(Long id);
 
     void deleteReparation(Reparation reparation);
 
@@ -16,4 +16,18 @@ public interface ReparationService {
 
     Reparation updateReparation(Long id, Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration)
             throws ValidationException;
+
+    List<Replacement> findAllReplacements();
+
+    Replacement findReplacementById(String partType, String partDescription, Long reparationId);
+
+    void deleteReplacement(Replacement replacement);
+
+    Replacement addReplacement(String partType, String partDescription, Long reparationId, int amount)
+            throws ValidationException;
+
+    Replacement updateReplacement(String partType, String partDescription, Long reparationId, int amount)
+            throws ValidationException;
+
+    Part findPartById(String partType, String partDescription);
 }

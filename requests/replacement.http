@@ -1,0 +1,74 @@
+### Create
+POST http://localhost:8080/api/replacement/
+Content-Type: application/json
+
+{
+  "partType": "Reifen",
+  "partDescription": "Continental M&S 275-17R-55",
+  "reparationId": 1,
+  "amount": 4
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+
+client.global.set("id", response.body.id);
+%}
+
+### GetForReparation
+GET http://localhost:8080/api/replacement/1
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/replacement/all
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Update
+PUT http://localhost:8080/api/replacement/
+Content-Type: application/json
+
+{
+  "partType": "Reifen",
+  "partDescription": "Continental M&S 275-17R-55",
+  "reparationId": 1,
+  "amount": 1
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/replacement/
+Content-Type: application/json
+
+
+{
+  "partType": "Reifen",
+  "partDescription": "Continental M&S 275-17R-55",
+  "reparationId": 1,
+  "amount": 4
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###

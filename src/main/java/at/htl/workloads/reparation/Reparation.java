@@ -2,9 +2,11 @@ package at.htl.workloads.reparation;
 
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.person.Mechanic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Reparation {
@@ -19,6 +21,8 @@ public class Reparation {
     private Mechanic mechanic;
     private LocalDateTime nextAppointment;
     private int duration;
+    @OneToMany(mappedBy = "id.reparation") @JsonIgnore
+    private List<Replacement> replacements;
     //endregion
 
     //region Constructor
@@ -73,6 +77,14 @@ public class Reparation {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public List<Replacement> getReplacements() {
+        return replacements;
+    }
+
+    public void setReplacements(List<Replacement> replacements) {
+        this.replacements = replacements;
     }
     //endregion
 }

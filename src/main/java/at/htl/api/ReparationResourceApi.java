@@ -1,7 +1,6 @@
 package at.htl.api;
 
 import at.htl.models.ReparationDTO;
-import at.htl.workloads.person.Mechanic;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.reparation.ReparationService;
 
@@ -67,7 +66,7 @@ public class ReparationResourceApi {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response readById(@PathParam("id") Long id) {
-        Reparation r = reparationService.findById(id);
+        Reparation r = reparationService.findReparationById(id);
 
         if(r == null) {
             return Response.noContent().build();
@@ -79,14 +78,14 @@ public class ReparationResourceApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response readAll() {
-        return Response.ok(reparationService.findAll()).build();
+        return Response.ok(reparationService.findAllReparations()).build();
     }
 
     @DELETE
     @Transactional
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
-        Reparation r = reparationService.findById(id);
+        Reparation r = reparationService.findReparationById(id);
 
         if(r == null) {
             return Response.noContent().build();
