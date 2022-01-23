@@ -21,8 +21,7 @@ public class Vehicle {
     //endregion
 
     //region Constructor
-    public Vehicle(Long id, String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Owner owner) {
-        this.id = id;
+    public Vehicle(String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Owner owner) {
         this.brand = brand;
         this.constructionPerYear = constructionPerYear;
         this.horsePower = horsePower;

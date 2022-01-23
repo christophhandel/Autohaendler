@@ -26,15 +26,20 @@ public class MechanicResourceApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response create(MechanicDTO mechanicDTO) {
-        Mechanic m = personService.saveMechanic(mechanicDTO.getSvNr(),
-                mechanicDTO.getFirstName(),
-                mechanicDTO.getLastName(),
-                mechanicDTO.getDateOfBirth(),
-                mechanicDTO.getPhoneNumber(),
-                mechanicDTO.getDriverLicenceNumber(),
-                mechanicDTO.getPricePerHour(),
-                mechanicDTO.getWorkStart(),
-                mechanicDTO.getWorkEnd());
+        Mechanic m = null;
+        try {
+            m = personService.saveMechanic(mechanicDTO.getSvNr(),
+                    mechanicDTO.getFirstName(),
+                    mechanicDTO.getLastName(),
+                    mechanicDTO.getDateOfBirth(),
+                    mechanicDTO.getPhoneNumber(),
+                    mechanicDTO.getDriverLicenceNumber(),
+                    mechanicDTO.getPricePerHour(),
+                    mechanicDTO.getWorkStart(),
+                    mechanicDTO.getWorkEnd());
+        } catch (ValidationException e) {
+            return Response.status(400, e.getMessage()).build();
+        }
 
         return Response.status(301)
                 .location(URI.create("/api/mechanic/"+m.getSvNr()))
@@ -64,7 +69,6 @@ public class MechanicResourceApi {
                     mechanicDTO.getWorkEnd()
             );
         } catch (ValidationException e) {
-            // TODO: ADD VALIDATAION
             return Response.status(400, e.getMessage()).build();
         }
 

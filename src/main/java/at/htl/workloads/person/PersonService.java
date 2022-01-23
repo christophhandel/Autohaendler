@@ -12,7 +12,7 @@ public interface PersonService {
     Mechanic saveMechanic(String svNr, String firstName, String lastName,
                           LocalDate dateOfBirth, String phoneNumber,
                           String driverLicenceNumber,
-                          BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd);
+                          BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) throws ValidationException;
 
     Mechanic updateMechanic(String actSvNr, String newSvNr, String firstName,
                             String lastName, LocalDate dateOfBirth, String phoneNumber,

@@ -30,7 +30,10 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Mechanic saveMechanic(String svNr, String firstName, String lastName,
                                  LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber,
-                                 BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) {
+                                 BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) throws ValidationException {
+
+        if(findMechanicById(svNr) != null)
+            throw new ValidationException("Mechanic already exists!");
 
         Mechanic m = new Mechanic(svNr,firstName,lastName,dateOfBirth,
                 phoneNumber,driverLicenceNumber, new ArrayList<>(), pricePerHour,
