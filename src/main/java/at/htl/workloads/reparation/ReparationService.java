@@ -11,10 +11,10 @@ public interface ReparationService {
 
     void deleteReparation(Reparation reparation);
 
-    Reparation addReparation(Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration)
+    Reparation addReparation(Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration)
             throws ValidationException;
 
-    Reparation updateReparation(Long id, Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration)
+    Reparation updateReparation(Long id, Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration)
             throws ValidationException;
 
     List<Replacement> findAllReplacements();
@@ -30,4 +30,6 @@ public interface ReparationService {
             throws ValidationException;
 
     Part findPartById(String partType, String partDescription);
+
+    Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment);
 }

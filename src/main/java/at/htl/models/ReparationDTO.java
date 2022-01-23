@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 public class ReparationDTO {
 
     private Long vehicleId;
-    private Long mechanicId;
+    private String mechanicId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime nextAppointment;
     private int duration;
 
-    public ReparationDTO( Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration) {
+    public ReparationDTO( Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration) {
         this.vehicleId = vehicleId;
         this.mechanicId = mechanicId;
         this.nextAppointment = nextAppointment;
@@ -36,11 +36,11 @@ public class ReparationDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Long getMechanicId() {
+    public String getMechanicId() {
         return mechanicId;
     }
 
-    public void setMechanicId(Long mechanicId) {
+    public void setMechanicId(String mechanicId) {
         this.mechanicId = mechanicId;
     }
 

@@ -1,5 +1,6 @@
 package at.htl.workloads.reparation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReparationRepo {
@@ -20,6 +21,8 @@ public interface ReparationRepo {
     List<Reparation> findReparationsByIds(List<Long> reparationIds);
 
     List<Replacement> findAllReplacements();
+
+    Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment);
 
     Replacement findReplacementById(String partType, String partDescription, Long reparationId);
 
