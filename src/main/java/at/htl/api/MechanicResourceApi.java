@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 
 @Path("/api/mechanic")
 public class MechanicResourceApi {
+    private final PersonService personService;
+
     @Inject
-    PersonService personService;
+    public MechanicResourceApi(PersonService personService) {
+        this.personService = personService;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

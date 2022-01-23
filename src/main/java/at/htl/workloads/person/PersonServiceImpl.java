@@ -88,4 +88,34 @@ public class PersonServiceImpl implements PersonService{
     public void deleteMechanic(Mechanic m) {
         repository.deleteMechanic(m);
     }
+
+    @Override
+    public Tenant saveTenant(String svNr, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, double priceDiscountPercent) throws ValidationException {
+        // TODO: Implement
+        return null;
+    }
+
+    @Override
+    public Tenant updateTenant(String svNr, String svNr1, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber, double priceDiscountPercent, List<Long> rentalIds) throws ValidationException {
+        // TODO: Implement
+        return null;
+    }
+
+    @Override
+    public Tenant findTenantById(String svNr) {
+        // TODO: Implement
+        return null;
+    }
+
+    @Override
+    public List<Tenant> findAllTenants() {
+        // TODO: Implement
+        return null;
+    }
+
+    @Override
+    public void deleteTenant(Tenant t) {
+        // TODO: Implement
+
+    }
 }

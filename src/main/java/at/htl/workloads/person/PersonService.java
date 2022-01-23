@@ -24,4 +24,19 @@ public interface PersonService {
     List<Mechanic> findAllMechanics();
 
     void deleteMechanic(Mechanic m);
+
+    Tenant saveTenant(String svNr, String firstName, String lastName,
+                      LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber,
+                      double priceDiscountPercent) throws ValidationException;
+
+    Tenant updateTenant(String svNr, String svNr1, String firstName,
+                          String lastName, LocalDate dateOfBirth, String phoneNumber,
+                          String driverLicenceNumber, double priceDiscountPercent, List<Long> rentalIds)
+            throws ValidationException;
+
+    Tenant findTenantById(String svNr);
+
+    List<Tenant> findAllTenants();
+
+    void deleteTenant(Tenant t);
 }
