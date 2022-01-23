@@ -2,6 +2,7 @@ package at.htl.workloads.vehicle;
 
 import at.htl.workloads.person.Owner;
 import at.htl.workloads.reparation.Reparation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Vehicle {
     private int acceleration;
     @ManyToOne
     private Owner owner;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle") @JsonIgnore
     List<Reparation> reparations;
     //endregion
 
