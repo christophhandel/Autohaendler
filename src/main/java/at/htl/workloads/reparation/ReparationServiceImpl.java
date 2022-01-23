@@ -1,5 +1,10 @@
 package at.htl.workloads.reparation;
 
+import at.htl.workloads.person.Mechanic;
+import at.htl.workloads.person.PersonService;
+import at.htl.workloads.vehicle.Vehicle;
+import at.htl.workloads.vehicle.VehicleService;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
@@ -11,9 +16,15 @@ public class ReparationServiceImpl implements ReparationService{
 
     private ReparationRepo reparationRepo;
 
+    private VehicleService vehicleService;
+
+    private PersonService personService;
+
     @Inject
-    public ReparationServiceImpl(ReparationRepo reparationRepo) {
+    public ReparationServiceImpl(ReparationRepo reparationRepo, VehicleService vehicleService, PersonService personService) {
         this.reparationRepo = reparationRepo;
+        this.vehicleService = vehicleService;
+        this.personService = personService;
     }
 
     @Override
@@ -27,25 +38,52 @@ public class ReparationServiceImpl implements ReparationService{
     }
 
     @Override
+    public Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment){
+        return this.reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment);
+    }
+
+    @Override
     public void deleteReparation(Reparation reparation){
         this.reparationRepo.deleteReparation(reparation);
     }
 
     @Override
-    public Reparation addReparation(Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration) {
-        // TODO: Create reparation and save, throw ValidationException if there is an other reparation with the same mechanic at the same appointment
-        // TODO: If mechanic with id does not exist, throw ValidationException
-        // TODO: If vehicle with id does not exist, throw ValidationException
-        return null;
+    public Reparation addReparation(Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration)
+            throws ValidationException {
+
+        Mechanic mechanic=personService.findMechanicById(mechanicId);
+        Vehicle vehicle=vehicleService.findById(vehicleId);
+
+        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) == null)
+            throw new ValidationException("Der Mechaniker kann an diesem Datum nicht reserviert werden!");
+
+        Reparation reparation= new Reparation(vehicle,mechanic,nextAppointment,duration);
+        return reparationRepo.addReparation(reparation);
     }
 
     @Override
-    public Reparation updateReparation(Long reparationId, Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration) {
-        // TODO: Find reparation and update. If reparation does not exist, throw ValidationException.
-        //  TODO: if there is an other reparation with the same mechanic at the same appointment throw ValidationException
-        // TODO: If mechanic with id does not exist, throw ValidationException
-        // TODO: If vehicle with id does not exist, throw ValidationException
-        return null;
+    public Reparation updateReparation(Long reparationId, Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration)
+            throws ValidationException {
+
+        Reparation reparation = reparationRepo.findReparationById(reparationId);
+        if (reparation == null)
+            throw new ValidationException("Diese Reperation existiert nicht!");
+        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) == null)
+            throw new ValidationException("Der Mechaniker kann an diesem Datum nicht reserviert werden!");
+
+        Mechanic mechanic = personService.findMechanicById(mechanicId);
+        if (mechanic == null)
+            throw new ValidationException("Der Mechaniker existiert nicht!");
+
+        Vehicle vehicle = vehicleService.findById(vehicleId);
+        if (vehicle == null)
+            throw new ValidationException("Das Vehicle existiert nicht!");
+
+        reparation.setNextAppointment(nextAppointment);
+        reparation.setVehicle(vehicle);
+        reparation.setMechanic(mechanic);
+        reparation.setDuration(duration);
+        return reparationRepo.updateReparation(reparation);
     }
 
     @Override

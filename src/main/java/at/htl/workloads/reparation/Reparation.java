@@ -26,8 +26,7 @@ public class Reparation {
     //endregion
 
     //region Constructor
-    public Reparation(Long id, Vehicle vehicle, Mechanic mechanic, LocalDateTime nextAppointment, int duration) {
-        this.id = id;
+    public Reparation( Vehicle vehicle, Mechanic mechanic, LocalDateTime nextAppointment, int duration) {
         this.vehicle = vehicle;
         this.mechanic = mechanic;
         this.nextAppointment = nextAppointment;

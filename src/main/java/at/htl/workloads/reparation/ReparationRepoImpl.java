@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -65,6 +66,19 @@ public class ReparationRepoImpl implements ReparationRepo{
     public List<Replacement> findAllReplacements() {
         return entityManager.createQuery("select r from Replacement r", Replacement.class)
                 .getResultList();
+    }
+
+    @Override
+    public Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment){
+        try {
+            return entityManager.createQuery("select r from Reparation r where r.mechanic.svNr = :ID and " +
+                            "r.nextAppointment = :APPOINTMENT",Reparation.class)
+                    .setParameter("ID",mechanicId)
+                    .setParameter("APPOINTMENT",nextAppointment)
+                    .getSingleResult();
+        }catch (NoResultException ex){
+            return null;
+        }
     }
 
     @Override
