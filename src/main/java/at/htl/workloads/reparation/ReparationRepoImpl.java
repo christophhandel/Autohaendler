@@ -29,8 +29,9 @@ public class ReparationRepoImpl implements ReparationRepo{
     }
 
     @Override
-    public void addReparation(Reparation reparation) {
+    public Reparation addReparation(Reparation reparation) {
         entityManager.persist(reparation);
+        return reparation;
     }
 
     @Override

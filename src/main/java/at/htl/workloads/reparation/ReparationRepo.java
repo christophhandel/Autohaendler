@@ -7,7 +7,7 @@ public interface ReparationRepo {
 
     Reparation getById(Long id);
 
-    void addReparation(Reparation reparation);
+    Reparation addReparation(Reparation reparation);
 
     Reparation updateReparation(Reparation reparation);
 

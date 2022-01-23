@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class ReparationDTO {
 
     private Long vehicleId;
-    private Mechanic mechanicId;
+    private Long mechanicId;
     private LocalDateTime nextAppointment;
     private int duration;
 
-    public ReparationDTO( Long vehicleId, Mechanic mechanicId, LocalDateTime nextAppointment, int duration) {
+    public ReparationDTO( Long vehicleId, Long mechanicId, LocalDateTime nextAppointment, int duration) {
         this.vehicleId = vehicleId;
         this.mechanicId = mechanicId;
         this.nextAppointment = nextAppointment;
@@ -34,11 +34,11 @@ public class ReparationDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Mechanic getMechanicId() {
+    public Long getMechanicId() {
         return mechanicId;
     }
 
-    public void setMechanicId(Mechanic mechanicId) {
+    public void setMechanicId(Long mechanicId) {
         this.mechanicId = mechanicId;
     }
 
