@@ -33,4 +33,14 @@ public class VehicleServiceImpl implements VehicleService{
     public void delete(Vehicle v) {
 
     }
+
+    /**
+     * Liefert alle KFZs zurück, deren ID in vehicleIds liste drinnen ist.
+     * @param vehicleIds
+     * @return
+     */
+    @Override
+    public List<Vehicle> findWithIds(List<Long> vehicleIds) {
+        return null;
+    }
 }

@@ -12,4 +12,14 @@ public interface PersonRepository {
     List<Mechanic> findAllMechanics();
 
     void deleteMechanic(Mechanic m);
+
+    Owner saveOwner(Owner o);
+
+    Owner updateOwner(Owner o);
+
+    Owner findOwnerById(String svNr);
+
+    List<Owner> findAllOwners();
+
+    void deleteOwner(Owner o);
 }

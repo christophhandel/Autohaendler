@@ -28,4 +28,6 @@ public interface VehicleService {
     List<Vehicle> findAll();
 
     void delete(Vehicle v);
+
+    List<Vehicle> findWithIds(List<Long> vehicleIds);
 }

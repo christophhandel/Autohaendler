@@ -39,4 +39,19 @@ public interface PersonService {
     List<Tenant> findAllTenants();
 
     void deleteTenant(Tenant t);
+
+    Owner saveOwner(String svNr, String firstName, String lastName,
+                      LocalDate dateOfBirth, String phoneNumber, String driverLicenceNumber)
+            throws ValidationException;
+
+    Owner updateOwner(String svNr, String svNr1, String firstName,
+                        String lastName, LocalDate dateOfBirth, String phoneNumber,
+                        String driverLicenceNumber, List<Long> vehicleIds)
+            throws ValidationException;
+
+    Owner findOwnerById(String svNr);
+
+    List<Owner> findAllOwners();
+
+    void deleteOwner(Owner o);
 }
