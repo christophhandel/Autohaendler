@@ -16,7 +16,7 @@ import java.util.List;
 public class Mechanic extends Person {
 
     //region fields
-    @OneToMany @JsonIgnore
+    @OneToMany(mappedBy = "mechanic") @JsonIgnore
     private List<Reparation> reparations;
     private BigDecimal pricePerHour;
     private LocalTime workStart;

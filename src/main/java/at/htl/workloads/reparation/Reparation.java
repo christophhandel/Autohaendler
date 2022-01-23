@@ -21,7 +21,7 @@ public class Reparation {
     private Mechanic mechanic;
     private LocalDateTime nextAppointment;
     private int duration;
-    @OneToMany(mappedBy = "id.reparation") @JsonIgnore
+    @OneToMany(mappedBy = "id.reparation", cascade = CascadeType.ALL) @JsonIgnore
     private List<Replacement> replacements;
     //endregion
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class Tenant extends Person{
 
     //region fields
-    @OneToMany
+    @OneToMany(mappedBy = "tenant")
     private List<Rental> rentals;
     private double priceDiscountPercent;
     //endregion

@@ -1,9 +1,11 @@
 package at.htl.workloads.vehicle;
 
 import at.htl.workloads.person.Owner;
+import at.htl.workloads.reparation.Reparation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Vehicle {
@@ -18,6 +20,8 @@ public class Vehicle {
     private int acceleration;
     @ManyToOne
     private Owner owner;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
+    List<Reparation> reparations;
     //endregion
 
     //region Constructor
@@ -34,6 +38,15 @@ public class Vehicle {
     //endregion
 
     //region Getter and Setter
+
+    public List<Reparation> getReparations() {
+        return reparations;
+    }
+
+    public void setReparations(List<Reparation> reparations) {
+        this.reparations = reparations;
+    }
+
     public Long getId() {
         return id;
     }

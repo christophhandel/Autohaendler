@@ -1,5 +1,6 @@
 package at.htl.workloads.reparation;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
@@ -9,9 +10,9 @@ import java.util.Objects;
 public class ReplacementId implements Serializable {
 
     //region fields
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Part part;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Reparation reparation;
     //endregion
 

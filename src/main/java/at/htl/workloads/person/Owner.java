@@ -12,7 +12,7 @@ import java.util.List;
 public class Owner extends Person{
 
     //region fields
-    @OneToMany
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
     //endregion
 
