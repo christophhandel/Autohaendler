@@ -1,6 +1,7 @@
 package at.htl.workloads.person;
 
 import at.htl.workloads.vehicle.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.List;
 public class Owner extends Person{
 
     //region fields
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL) @JsonIgnore
     private List<Vehicle> vehicles;
     //endregion
 
