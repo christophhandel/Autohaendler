@@ -45,8 +45,7 @@ Content-Type: application/json
   "lastName": "Mustermann",
   "dateOfBirth": "2002-02-22",
   "phoneNumber": "067628419248",
-  "driverLicenceNumber": "AT-4512-999",
-  "vehicleIds": [1]
+  "driverLicenceNumber": "AT-4512-123"
 }
 
 > {%
