@@ -22,4 +22,14 @@ public interface PersonRepository {
     List<Owner> findAllOwners();
 
     void deleteOwner(Owner o);
+
+    Tenant saveTanant(Tenant o);
+
+    Tenant updateTenant(Tenant o);
+
+    Tenant findTenantById(String svNr);
+
+    List<Tenant> findAllTenants();
+
+    void deleteTenant(Tenant o);
 }

@@ -98,4 +98,43 @@ public class PersonRepositoryImpl implements PersonRepository{
     public void deleteOwner(Owner o) {
         entityManager.remove(o);
     }
+
+    @Override
+    public Tenant saveTanant(Tenant o) {
+        entityManager.persist(o);
+        return o;
+    }
+
+    @Override
+    public Tenant updateTenant(Tenant o) {
+        entityManager.merge(o);
+        return o;
+    }
+
+    @Override
+    public Tenant findTenantById(String svNr) {
+        try {
+            return entityManager.createQuery("select t from Tenant t " +
+                            "where t.svNr = :svNr", Tenant.class)
+                    .setParameter("svNr", svNr)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Tenant> findAllTenants() {
+        try {
+            return entityManager.createQuery("select t from Tenant t ", Tenant.class)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteTenant(Tenant o) {
+        entityManager.remove(o);
+    }
 }
