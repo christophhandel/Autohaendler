@@ -10,8 +10,6 @@ import java.util.List;
 
 @ApplicationScoped
 public class VehicleServiceImpl implements VehicleService{
-    // TODO: Add VehicleRepository and write methods.
-
     private final VehicleRepository vehicleRepository;
     private final PersonService personService;
 
