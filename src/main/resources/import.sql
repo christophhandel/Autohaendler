@@ -3,9 +3,9 @@ INSERT INTO  person(person_type, svnr, dateofbirth,
                     phonenumber)
 VALUES ('Mech', '1234567890', '2002-02-02','AT-123-445', 'Max', 'Mechaniker','028457472812'),
        ('Mech', '9999999999', '2002-03-03','AT-144-495', 'Lina', 'Lila','95786893092'),
-       ('Mech','1874206999', '1969','AT-187-420','Werner', 'Kaiser','06601234567'),
-       ('Mech','4206999187', '1999','AT-420-187','Philipp', 'Kerschbaum','06607654321'),
-       ('Mech','6999187420', '1978','AT-333-666','Kristof', 'Handl','06604206999');
+       ('Mech','8888888888', '1969-12-12','AT-187-420','Werner', 'Kaiser','06601234567'),
+       ('Mech','7777777777', '1999-09-09','AT-420-187','Philipp', 'Kerschbaum','06607654321'),
+       ('Mech','6666666666', '1978-11-11','AT-333-666','Kristof', 'Handl','06604206999');
 
 INSERT INTO mechanic(priceperhour, workend, workstart, person_id)
 VALUES (20, '12:00', '08:00', '1234567890'),
@@ -29,8 +29,8 @@ VALUES (2, datetime_pl('2022-12-30', '23:00'), '1234567890', 1),
        (2, datetime_pl('2022-08-26', '19:00'), '9999999999', 1);
 
 INSERT INTO part(description, parttype, amountstored)
-VALUES ('Continental M&S 275-17R-55', 'Reifen', 10),
-       ('Continental M&S 275-17R-55', 'Reifen', 5),
-       ('Continental M&S 275-17R-55', 'Reifen', 7),
-       ('Continental M&S 275-17R-55', 'Reifen', 3),
-       ('Continental M&S 275-17R-55', 'Reifen', 20);
+VALUES ('Continental M&S 275-17R-55', 'Bremsklotz', 10),
+       ('Pirelli Scorpion Verde', 'Reifen', 5),
+       ('Pirelli M&S ', 'Bremscheibe', 7),
+       ('Scorpion M&S 55', 'Reifen', 3),
+       ('Verde Grabber', 'Scheibe', 20);
