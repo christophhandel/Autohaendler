@@ -4,8 +4,8 @@ INSERT INTO  person(person_type, svnr, dateofbirth,
 VALUES ('Mech', '1234567890', '2002-02-02','AT-123-445', 'Max', 'Mechaniker','028457472812'),
        ('Mech', '9999999999', '2002-03-03','AT-144-495', 'Lina', 'Lila','95786893092'),
        ('Mech','8888888888', '1969-12-12','AT-187-420','Werner', 'Kaiser','06601234567'),
-       ('Mech','7777777777', '1999-09-09','AT-420-187','Philipp', 'Kerschbaum','06607654321'),
-       ('Mech','6666666666', '1978-11-11','AT-333-666','Kristof', 'Handl','06604206999');
+       ('Mech','7777777777', '1999-09-09','AT-420-187','Philliph', 'Gerschpaum','06607654321'),
+       ('Mech','6666666666', '1978-11-11','AT-333-666','Christoph', 'Handel','06604206999');
 
 INSERT INTO mechanic(priceperhour, workend, workstart, person_id)
 VALUES (20, '12:00', '08:00', '1234567890'),

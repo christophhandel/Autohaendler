@@ -43,6 +43,11 @@ public class ReparationServiceImpl implements ReparationService{
     }
 
     @Override
+    public List<Part> findAllParts() {
+        return this.reparationRepo.findAllParts();
+    }
+
+    @Override
     public void deleteReparation(Reparation reparation){
         this.reparationRepo.deleteReparation(reparation);
     }
@@ -104,7 +109,7 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public Replacement addReplacement(String partType, String partDescription, Long reparationId, int amount)
             throws ValidationException {
-        ReplacementId rId = new ReplacementId(findPartById(partType, partDescription), findReparationById(reparationId));
+        ReplacementId rId = new ReplacementId(findPartByType(partType, partDescription), findReparationById(reparationId));
 
         if(rId.getReparation() == null ||rId.getPart() == null)
             throw new ValidationException("Nonexistent Replacement!");
@@ -113,8 +118,28 @@ public class ReparationServiceImpl implements ReparationService{
         return reparationRepo.addReplacement(r);
     }
 
-    public Part findPartById(String partType, String partDescription) {
-        return reparationRepo.findPartById(partType, partDescription);
+    public Part findPartByType(String partType, String partDescription) {
+        return reparationRepo.findPartByType(partType, partDescription);
+    }
+
+    @Override
+    public Part findPartById(Long id) {
+        return this.reparationRepo.findPartById(id);
+    }
+
+    @Override
+    public Part addPart(Part part) {
+        return this.reparationRepo.addPart(part);
+    }
+
+    @Override
+    public Part updatePart(Part part) {
+        return this.reparationRepo.updatePart(part);
+    }
+
+    @Override
+    public void deletePart(Part part) {
+        this.reparationRepo.deletePart(part);
     }
 
     @Override

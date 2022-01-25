@@ -109,11 +109,22 @@ public class ReparationRepoImpl implements ReparationRepo{
     }
 
     @Override
-    public Part findPartById(String partType, String partDescription) {
+    public Replacement updateReplacement(Replacement r) {
+        return entityManager.merge(r);
+    }
+
+    @Override
+    public List<Part> findAllParts() {
+        return entityManager.createQuery("select p from Part p", Part.class)
+                .getResultList();
+    }
+
+    @Override
+    public Part findPartByType(String partType, String partDescription) {
         try {
             return entityManager.createQuery("select p from Part p where " +
-                    "p.partId.partType = :partType and " +
-                    "p.partId.description = :description", Part.class)
+                            "p.partId.partType = :partType and " +
+                            "p.partId.description = :description", Part.class)
                     .setParameter("partType", partType)
                     .setParameter("description", partDescription)
                     .getSingleResult();
@@ -121,9 +132,33 @@ public class ReparationRepoImpl implements ReparationRepo{
             return null;
         }
     }
+    @Override
+    public Part addPart(Part part) {
+        entityManager.persist(part);
+        return part;
+    }
 
     @Override
-    public Replacement updateReplacement(Replacement r) {
-        return entityManager.merge(r);
+    public Part updatePart(Part part) {
+        entityManager.merge(part);
+        return part;
     }
+
+    @Override
+    public void deletePart(Part part) {
+        entityManager.remove(part);
+    }
+
+    @Override
+    public Part findPartById(Long id) {
+        try {
+            return entityManager.createQuery("select p from Part p where p.partId = :ID",Part.class)
+                    .setParameter("ID",id)
+                    .getSingleResult();
+        }catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+
 }
