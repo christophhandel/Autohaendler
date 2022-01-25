@@ -12,13 +12,13 @@ public class VehicleDTO {
     private LocalDate constructionYear;
     private int horsePower;
     private int acceleration;
-    private Optional<Long> ownerId;
+    private Optional<String> ownerId;
 
     public VehicleDTO() {
         this.ownerId = Optional.empty();
     }
 
-    public VehicleDTO(String brand, LocalDate constructionYear, int horsePower, int acceleration, Long ownerId) {
+    public VehicleDTO(String brand, LocalDate constructionYear, int horsePower, int acceleration, String ownerId) {
         this.brand = brand;
         this.constructionYear = constructionYear;
         this.horsePower = horsePower;
@@ -58,11 +58,11 @@ public class VehicleDTO {
         this.acceleration = acceleration;
     }
 
-    public Long getOwnerId() {
+    public String getOwnerId() {
         return ownerId.orElse(null);
     }
 
-    public void setOwnerId(Long ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = Optional.of(ownerId);
     }
 }

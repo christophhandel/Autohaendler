@@ -42,7 +42,7 @@ public class TenantResourceApi {
         }
 
         return Response.status(301)
-                .location(URI.create("/api/mechanic/"+t.getSvNr()))
+                .location(URI.create("/api/tenant/"+t.getSvNr()))
                 .build();
     }
 
