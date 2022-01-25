@@ -40,7 +40,7 @@ public class VehicleResourceApi {
         }
 
         return Response.status(301)
-                .location(URI.create("/api/vehicle"+v.getId()))
+                .location(URI.create("/api/vehicle/"+v.getId()))
                 .build();
     }
 
