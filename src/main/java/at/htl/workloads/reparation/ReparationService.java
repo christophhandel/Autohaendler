@@ -35,12 +35,11 @@ public interface ReparationService {
 
     Part findPartByType(String partType, String partDescription);
 
-    Part findPartById(Long id);
-
-    Part addPart(Part part);
-
     Part updatePart(Part part);
 
     void deletePart(Part part);
 
+    Part addPart(String partType, String description, int amountStored) throws ValidationException;
+
+    Part findPartById(String partType, String description);
 }

@@ -122,15 +122,6 @@ public class ReparationServiceImpl implements ReparationService{
         return reparationRepo.findPartByType(partType, partDescription);
     }
 
-    @Override
-    public Part findPartById(Long id) {
-        return this.reparationRepo.findPartById(id);
-    }
-
-    @Override
-    public Part addPart(Part part) {
-        return this.reparationRepo.addPart(part);
-    }
 
     @Override
     public Part updatePart(Part part) {
@@ -140,6 +131,24 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public void deletePart(Part part) {
         this.reparationRepo.deletePart(part);
+    }
+
+    @Override
+    public Part addPart(String partType, String description, int amountStored) throws ValidationException {
+
+        if(partType == null || description == null || amountStored == 0)
+            throw new ValidationException("Unvalid Part");
+
+        PartId newPartId = new PartId();
+        newPartId.setPartType(partType);
+        newPartId.setDescription(description);
+        Part part = new Part(newPartId,amountStored);
+        return reparationRepo.addPart(part);
+    }
+
+    @Override
+    public Part findPartById(String partType, String description) {
+        return reparationRepo.findPartByType(partType,description);
     }
 
     @Override

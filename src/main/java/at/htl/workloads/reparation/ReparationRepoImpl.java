@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
-public class ReparationRepoImpl implements ReparationRepo{
+public class ReparationRepoImpl implements ReparationRepo {
 
     private final EntityManager entityManager;
 
@@ -20,16 +20,16 @@ public class ReparationRepoImpl implements ReparationRepo{
 
     @Override
     public List<Reparation> findAllReparations() {
-        return entityManager.createQuery("select r from Reparation r",Reparation.class).getResultList();
+        return entityManager.createQuery("select r from Reparation r", Reparation.class).getResultList();
     }
 
     @Override
     public Reparation findReparationById(Long id) {
         try {
-            return entityManager.createQuery("select r from Reparation r where r.id = :ID",Reparation.class)
-                    .setParameter("ID",id)
+            return entityManager.createQuery("select r from Reparation r where r.id = :ID", Reparation.class)
+                    .setParameter("ID", id)
                     .getSingleResult();
-        }catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -54,10 +54,10 @@ public class ReparationRepoImpl implements ReparationRepo{
     public List<Reparation> findReparationsByIds(List<Long> reparationIds) {
         try {
             return entityManager.createQuery("select r from Reparation r " +
-                    "where r.id in :ids", Reparation.class)
+                            "where r.id in :ids", Reparation.class)
                     .setParameter("ids", reparationIds)
                     .getResultList();
-        }  catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -69,14 +69,14 @@ public class ReparationRepoImpl implements ReparationRepo{
     }
 
     @Override
-    public Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment){
+    public Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment) {
         try {
             return entityManager.createQuery("select r from Reparation r where r.mechanic.svNr = :ID and " +
-                            "r.nextAppointment = :APPOINTMENT",Reparation.class)
-                    .setParameter("ID",mechanicId)
-                    .setParameter("APPOINTMENT",nextAppointment)
+                            "r.nextAppointment = :APPOINTMENT", Reparation.class)
+                    .setParameter("ID", mechanicId)
+                    .setParameter("APPOINTMENT", nextAppointment)
                     .getSingleResult();
-        }catch (NoResultException ex){
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -85,9 +85,9 @@ public class ReparationRepoImpl implements ReparationRepo{
     public Replacement findReplacementById(String partType, String partDescription, Long reparationId) {
         try {
             return entityManager.createQuery("select r from Replacement r where " +
-                    "r.id.part.partId.partType = :partType and " +
-                    "r.id.part.partId.description = :description and " +
-                    "r.id.reparation.id = :reparationId", Replacement.class)
+                            "r.id.part.partId.partType = :partType and " +
+                            "r.id.part.partId.description = :description and " +
+                            "r.id.reparation.id = :reparationId", Replacement.class)
                     .setParameter("partType", partType)
                     .setParameter("reparationId", reparationId)
                     .setParameter("description", partDescription)
@@ -132,6 +132,7 @@ public class ReparationRepoImpl implements ReparationRepo{
             return null;
         }
     }
+
     @Override
     public Part addPart(Part part) {
         entityManager.persist(part);
@@ -150,15 +151,19 @@ public class ReparationRepoImpl implements ReparationRepo{
     }
 
     @Override
-    public Part findPartById(Long id) {
+    public Part findPartById(String partType, String description) {
         try {
-            return entityManager.createQuery("select p from Part p where p.partId = :ID",Part.class)
-                    .setParameter("ID",id)
+            return entityManager.createQuery("select p from Part p " +
+                    " where p.partId.description = :description and " +
+                    " p.partId.partType = :partType",Part.class)
+                    .setParameter("description", description)
+                    .setParameter("partType", partType)
                     .getSingleResult();
-        }catch (NoResultException ex) {
+
+        } catch (NoResultException ex)
+        {
             return null;
         }
+
     }
-
-
 }

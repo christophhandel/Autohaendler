@@ -34,7 +34,6 @@ public interface ReparationRepo {
     Replacement updateReplacement(Replacement r);
 
 
-
     List<Part> findAllParts();
 
     Part findPartByType(String partType, String partDescription);
@@ -45,5 +44,5 @@ public interface ReparationRepo {
 
     void deletePart(Part part);
 
-    Part findPartById(Long id);
+    Part findPartById(String partType, String description);
 }
