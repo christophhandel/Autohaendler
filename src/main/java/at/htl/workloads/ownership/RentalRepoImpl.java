@@ -4,6 +4,7 @@ import at.htl.workloads.person.Mechanic;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class RentalRepoImpl implements RentalRepo{
 
@@ -24,5 +25,22 @@ public class RentalRepoImpl implements RentalRepo{
         Rental newR = entityManager.merge(r);
         entityManager.flush();
         return newR;
+    }
+
+    @Override
+    public void deleteRental(Rental r) {
+        entityManager.remove(r);
+    }
+
+    @Override
+    public Rental findRentalById(Long id) {
+        return entityManager.createQuery("select r from Rental r where r.id = :ID",Rental.class)
+                .setParameter("ID",id)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<Rental> findAllRentals() {
+        return entityManager.createQuery("select r from Rental r",Rental.class).getResultList();
     }
 }

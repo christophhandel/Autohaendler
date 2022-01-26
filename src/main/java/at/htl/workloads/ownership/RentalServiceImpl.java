@@ -34,17 +34,17 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Rental findRentalById(Long id) {
-        return null;
+        return rentalRepo.findRentalById(id);
     }
 
     @Override
     public List<Rental> findAllRentals() {
-        return null;
+        return rentalRepo.findAllRentals();
     }
 
     @Override
     public void deleteRental(Rental r) {
-
+        rentalRepo.deleteRental(r);
     }
 
     @Override
