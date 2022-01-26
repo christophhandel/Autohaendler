@@ -24,8 +24,7 @@ public class Rental {
     //endregion
 
     //region Constructor
-    public Rental(Long id, Vehicle vehicle, Tenant tenant, LocalDateTime from, LocalDateTime to) {
-        this.id = id;
+    public Rental( Vehicle vehicle, Tenant tenant, LocalDateTime from, LocalDateTime to) {
         this.vehicle = vehicle;
         this.tenant = tenant;
         this.from = from;
