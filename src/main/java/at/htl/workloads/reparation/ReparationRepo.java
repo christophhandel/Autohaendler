@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReparationRepo {
+
     List<Reparation> findAllReparations();
 
     Reparation findReparationById(Long id);
@@ -30,7 +31,18 @@ public interface ReparationRepo {
 
     Replacement addReplacement(Replacement r);
 
-    Part findPartById(String partType, String partDescription);
-
     Replacement updateReplacement(Replacement r);
+
+
+    List<Part> findAllParts();
+
+    Part findPartByType(String partType, String partDescription);
+
+    Part addPart(Part part);
+
+    Part updatePart(Part part);
+
+    void deletePart(Part part);
+
+    Part findPartById(String partType, String description);
 }

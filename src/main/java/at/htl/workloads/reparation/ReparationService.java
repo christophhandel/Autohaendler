@@ -29,7 +29,17 @@ public interface ReparationService {
     Replacement updateReplacement(String partType, String partDescription, Long reparationId, int amount)
             throws ValidationException;
 
-    Part findPartById(String partType, String partDescription);
-
     Reparation findReparationByMechanicIDAndAppointment(String mechanicId, LocalDateTime nextAppointment);
+
+    List<Part> findAllParts();
+
+    Part findPartByType(String partType, String partDescription);
+
+    Part updatePart(Part part);
+
+    void deletePart(Part part);
+
+    Part addPart(String partType, String description, int amountStored) throws ValidationException;
+
+    Part findPartById(String partType, String description);
 }
