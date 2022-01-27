@@ -59,7 +59,7 @@ public class ReparationServiceImpl implements ReparationService{
         Mechanic mechanic=personService.findMechanicById(mechanicId);
         Vehicle vehicle=vehicleService.findById(vehicleId);
 
-        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) == null)
+        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) != null)
             throw new ValidationException("Der Mechaniker kann an diesem Datum nicht reserviert werden!");
 
         Reparation reparation= new Reparation(vehicle,mechanic,nextAppointment,duration);

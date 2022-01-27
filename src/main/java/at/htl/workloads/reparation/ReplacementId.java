@@ -1,5 +1,7 @@
 package at.htl.workloads.reparation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
@@ -12,7 +14,7 @@ public class ReplacementId implements Serializable {
     //region fields
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Part part;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL) @JsonIgnore
     private Reparation reparation;
     //endregion
 

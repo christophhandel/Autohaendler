@@ -4,11 +4,13 @@ import at.htl.workloads.person.Mechanic;
 import at.htl.workloads.person.PersonService;
 import at.htl.workloads.vehicle.VehicleService;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ApplicationScoped
 public class RentalServiceImpl implements RentalService {
 
 

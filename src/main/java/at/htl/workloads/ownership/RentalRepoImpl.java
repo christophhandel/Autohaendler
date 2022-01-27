@@ -2,10 +2,12 @@ package at.htl.workloads.ownership;
 
 import at.htl.workloads.person.Mechanic;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@ApplicationScoped
 public class RentalRepoImpl implements RentalRepo{
 
     private final EntityManager entityManager;
