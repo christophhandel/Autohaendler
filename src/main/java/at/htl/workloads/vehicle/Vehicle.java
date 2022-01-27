@@ -5,6 +5,7 @@ import at.htl.workloads.reparation.Reparation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
-    private LocalDateTime constructionPerYear;
+    private LocalDate constructionPerYear;
     private int horsePower;
     private int acceleration;
     @ManyToOne
@@ -26,7 +27,7 @@ public class Vehicle {
     //endregion
 
     //region Constructor
-    public Vehicle(String brand, LocalDateTime constructionPerYear, int horsePower, int acceleration, Owner owner) {
+    public Vehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, Owner owner) {
         this.brand = brand;
         this.constructionPerYear = constructionPerYear;
         this.horsePower = horsePower;
@@ -64,11 +65,11 @@ public class Vehicle {
         this.brand = brand;
     }
 
-    public LocalDateTime getConstructionPerYear() {
+    public LocalDate getConstructionPerYear() {
         return constructionPerYear;
     }
 
-    public void setConstructionPerYear(LocalDateTime constructionPerYear) {
+    public void setConstructionPerYear(LocalDate constructionPerYear) {
         this.constructionPerYear = constructionPerYear;
     }
 

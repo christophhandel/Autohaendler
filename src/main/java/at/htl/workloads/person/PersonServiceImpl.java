@@ -92,8 +92,14 @@ public class PersonServiceImpl implements PersonService{
                              LocalDate dateOfBirth, String phoneNumber,
                              String driverLicenceNumber, double priceDiscountPercent)
             throws ValidationException {
-        // TODO: Implement
-        return null;
+
+        if(findTenantById(svNr) != null)
+            throw new ValidationException("Tenant already exists!");
+
+        Tenant tenant = new Tenant(svNr,firstName,lastName,dateOfBirth,
+                phoneNumber,driverLicenceNumber, new ArrayList<>(),priceDiscountPercent);
+
+        return repository.saveTanant(tenant);
     }
 
     @Override
@@ -102,26 +108,37 @@ public class PersonServiceImpl implements PersonService{
                                String phoneNumber, String driverLicenceNumber,
                                double priceDiscountPercent)
             throws ValidationException {
-        // TODO: Implement
-        return null;
+        if(findTenantById(svNr) == null)
+            throw new ValidationException("Tenant with that svNr does not exist!");
+        else if(!svNr.equals(svNr1))
+            throw new ValidationException("The 2 svNrs are not equal!!");
+
+        Tenant t = findTenantById(svNr);
+        t.setFirstName(firstName);
+        t.setLastName(lastName);
+        t.setDateOfBirth(dateOfBirth);
+        t.setPhoneNumber(phoneNumber);
+        t.setDriverLicenceNumber(driverLicenceNumber);
+        t.setPriceDiscountPercent(priceDiscountPercent);
+
+        t = repository.updateTenant(t);
+
+        return t;
     }
 
     @Override
     public Tenant findTenantById(String svNr) {
-        // TODO: Implement
-        return null;
+        return repository.findTenantById(svNr);
     }
 
     @Override
     public List<Tenant> findAllTenants() {
-        // TODO: Implement
-        return null;
+        return repository.findAllTenants();
     }
 
     @Override
     public void deleteTenant(Tenant t) {
-        // TODO: Implement
-
+        repository.deleteTenant(t);
     }
 
     @Override

@@ -8,20 +8,18 @@
 </head>
 <body>
 
-    <h1 class="title">Mechaniker</h1>
+    <h1 class="title">KFZ Liste</h1>
 
-    <div class="divider"></div>
     <div class="row" style="margin-right: 100px; margin-left: 100px;">
 
-        {#for mechanic in mechanicList}
+        {#for vehicle in vehicles}
         <div class="col" style="margin-right: 50px;">
-            <h5>{mechanic.firstName} {mechanic.lastName}</h5>
-            <p>Preis: {mechanic.pricePerHour}$/h</p>
-            <p>Arbeitsstunden: {mechanic.workStart}-{mechanic.workEnd}</p>
+            <h5>{vehicle.brand} ({vehicle.constructionPerYear})</h5>
+            <p>HP: {vehicle.horsePower}</p>
+            <p>0-100km/h: {vehicle.acceleration} s</p>
         </div>
         {/for}
     </div>
-    <div class="divider"></div>
 
     <footer class="page-footer">
         <div class="footer-copyright">
@@ -32,7 +30,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/script.js"></script>
 </body>
 </html>

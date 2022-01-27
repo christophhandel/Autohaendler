@@ -1,6 +1,7 @@
 package at.htl.workloads.person;
 
 import at.htl.workloads.ownership.Rental;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.List;
 public class Tenant extends Person{
 
     //region fields
-    @OneToMany(mappedBy = "tenant")
+    @OneToMany(mappedBy = "tenant") @JsonIgnore
     private List<Rental> rentals;
     private double priceDiscountPercent;
     //endregion
