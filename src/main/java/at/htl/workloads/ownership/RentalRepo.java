@@ -12,4 +12,9 @@ public interface RentalRepo {
     VehicleTransfer findTransferById(Long id);
 
 
+    void deleteRental(Rental r);
+
+    Rental findRentalById(Long id);
+
+    List<Rental> findAllRentals();
 }

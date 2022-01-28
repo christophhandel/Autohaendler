@@ -3,6 +3,8 @@ package at.htl.api;
 import at.htl.models.ReparationDTO;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.reparation.ReparationService;
+import io.quarkus.qute.Location;
+import io.quarkus.qute.Template;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -31,7 +33,7 @@ public class ReparationResourceApi {
                     reparationDTO.getDuration()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422, e.getMessage()).build();
         }
 
         return Response.status(301)

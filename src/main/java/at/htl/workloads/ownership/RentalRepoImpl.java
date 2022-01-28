@@ -62,4 +62,20 @@ public class RentalRepoImpl implements RentalRepo{
             return null;
         }
     }
+
+    public void deleteRental(Rental r) {
+        entityManager.remove(r);
+    }
+
+    @Override
+    public Rental findRentalById(Long id) {
+        return entityManager.createQuery("select r from Rental r where r.id = :ID",Rental.class)
+                .setParameter("ID",id)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<Rental> findAllRentals() {
+        return entityManager.createQuery("select r from Rental r",Rental.class).getResultList();
+    }
 }
