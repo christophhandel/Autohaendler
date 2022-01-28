@@ -1,12 +1,16 @@
 package at.htl.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class RentalDTO {
 
     private Long vehicleId;
     private String tenantId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime from;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime to;
 
     public RentalDTO(Long vehicleId, String tenantId, LocalDateTime from, LocalDateTime to) {

@@ -1,0 +1,63 @@
+### Create
+POST http://localhost:8080/api/rental/
+Content-Type: application/json
+
+{
+  "vehicleId": "3",
+  "tenantId": "1111122222",
+  "from": "2021-01-12 16:30",
+  "to": "2002-02-22 12:45"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 301");
+});
+%}
+
+### GetById
+GET http://localhost:8080/api/rental/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/rental/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Update
+PUT http://localhost:8080/api/rental/
+Content-Type: application/json
+
+{
+  "vehicleId": "3",
+  "tenantId": "1111122222",
+  "from": "2021-01-12",
+  "to": "2002-02-22"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/rental/
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
