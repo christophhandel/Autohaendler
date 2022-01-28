@@ -21,8 +21,7 @@ public class VehicleTransfer {
     //endregion
 
     //region Constructor
-    public VehicleTransfer(Long id, Vehicle vehicle, Person newOwner, LocalDateTime time) {
-        this.id = id;
+    public VehicleTransfer(Vehicle vehicle, Person newOwner, LocalDateTime time) {
         this.vehicle = vehicle;
         this.newOwner = newOwner;
         this.time = time;

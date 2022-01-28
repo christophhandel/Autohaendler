@@ -20,4 +20,12 @@ public interface RentalService {
     void deleteRental(Rental r);
 
     Rental updateRental(Long id,Long vehicleId, String tenantId, LocalDateTime from, LocalDateTime to) throws ValidationException;
+
+    VehicleTransfer saveTransfer(Long vehicleId, String ownerId) throws ValidationException;
+
+    VehicleTransfer findTransferById(Long id);
+
+    void deleteTransfer(Long id);
+
+    List<VehicleTransfer> findAllTransfers();
 }

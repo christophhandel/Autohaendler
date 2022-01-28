@@ -1,6 +1,5 @@
 package at.htl.workloads.ownership;
 
-import at.htl.workloads.person.Mechanic;
 import at.htl.workloads.person.PersonService;
 import at.htl.workloads.vehicle.VehicleService;
 
@@ -13,12 +12,18 @@ import java.util.List;
 @ApplicationScoped
 public class RentalServiceImpl implements RentalService {
 
+    @Inject
+    RentalRepo rentalRepo;
+
+    @Inject
+    RentalService rentalService;
+
+    @Inject
+    PersonService personService;
 
     private final VehicleService vehicleService;
-
     private final PersonService personservice;
 
-    private final RentalRepo rentalRepo;
 
     @Inject
     public RentalServiceImpl(VehicleService vehicleService, PersonService personservice, RentalRepo rentalRepo) {
@@ -65,5 +70,36 @@ public class RentalServiceImpl implements RentalService {
         r = rentalRepo.updateMechanic(r);
 
         return r;
+    }
+
+    @Override
+    public VehicleTransfer saveTransfer(Long vehicleId, String ownerId) throws ValidationException {
+        if (vehicleService.findById(vehicleId) == null)
+            throw new ValidationException("KFZ nicht gefunden!");
+
+        if (personservice.findOwnerById(ownerId) == null)
+            throw new ValidationException("Person nicht gefunden!");
+
+            VehicleTransfer v = new VehicleTransfer(vehicleService.findById(vehicleId),
+                    personservice.findOwnerById(ownerId),
+                    LocalDateTime.now());
+
+            return rentalRepo.saveTransfer(v);
+    }
+
+    @Override
+    public VehicleTransfer findTransferById(Long id) {
+        return rentalRepo.findTransferById(id);
+    }
+
+    @Override
+    public void deleteTransfer(Long id) {
+        VehicleTransfer v = findTransferById(id);
+        rentalRepo.deleteVehicle(v);
+    }
+
+    @Override
+    public List<VehicleTransfer> findAllTransfers() {
+        return rentalRepo.findAllTransfers();
     }
 }

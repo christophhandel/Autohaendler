@@ -1,0 +1,46 @@
+### Create
+POST http://localhost:8080/api/vehicleTransfer/
+Content-Type: application/json
+
+{
+  "vehicleId": 1,
+  "ownerId": "5555555555"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 301");
+});
+
+client.global.set("id", response.body.id);
+%}
+
+### GetById
+GET http://localhost:8080/api/vehicleTransfer/{{id}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GetAll
+GET http://localhost:8080/api/vehicleTransfer/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Delete
+DELETE http://localhost:8080/api/vehicleTransfer/{{id}}
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
