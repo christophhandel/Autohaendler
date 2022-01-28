@@ -16,7 +16,7 @@ client.global.set("id", response.body.id);
 %}
 
 ### GetById
-POST http://localhost:8080/api/vehicleTransfer/{{id}}}
+GET http://localhost:8080/api/vehicleTransfer/{{id}}
 
 > {%
 client.test("Request executed successfully", function() {
@@ -25,22 +25,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### GetAll
-GET http://localhost:8080/api/tenant/
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200");
-});
-%}
-
-### Update
-POST http://localhost:8080/api/vehicleTransfer/
-Content-Type: application/json
-
-{
-  "vehicleId": "1",
-  "ownerId": "5555555555"
-}
+GET http://localhost:8080/api/vehicleTransfer/
 
 > {%
 client.test("Request executed successfully", function() {
@@ -49,7 +34,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Delete
-POST http://localhost:8080/api/vehicleTransfer/
+DELETE http://localhost:8080/api/vehicleTransfer/{{id}}
 Content-Type: application/json
 
 > {%

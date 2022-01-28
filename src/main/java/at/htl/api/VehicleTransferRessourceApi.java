@@ -39,7 +39,7 @@ public class VehicleTransferRessourceApi {
         }
 
         return Response.status(301)
-                .location(URI.create("/api/vehicelTransfer/"+v.getId()))
+                .location(URI.create("/api/vehicleTransfer/"+v.getId()))
                 .build();
     }
 
