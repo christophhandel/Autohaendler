@@ -1,1 +1,117 @@
-<!-- TODO -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autohaendler Mechaniker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+<h1 class="title">Ersatzteil Hinzufügen</h1>
+
+<div style="margin-left: 100px; margin-right: 100px;">
+    <form id="form-data" method="post" onsubmit="return onSubmit(this)">
+        <div class="row">
+            {#if reparationId}
+                <div class="input-field col s12">
+                    <input required="required" disabled value="Reparation" id="reparation" type="text" class="validate">
+                    <input hidden name="reparationId" id="reparationId" value="{reparationId}">
+                    <label for="reparation">Reparation</label>
+                </div>
+            {#else}
+            <div class="input-field col s12">
+                <select name="reparationId" id="reparations">
+                        <option value="" disabled selected>Reparation Aussuchen</option>
+                        {#for reparation in reparations}
+                        <option value="{reparation.id}">{reparation.vehicle.brand} ({reparation.mechanic.firstName} {reparation.mechanic.lastName}) ({reparation.nextAppointment})</option>
+                        {/for}
+                </select>
+                <label for="reparations">Reparation</label>
+            </div>
+            {/if}
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select name="partId" id="parts">
+                    <option value="" disabled selected>Ersatzteil auswählen</option>
+                    {#for part in parts}
+                    <option value="{part.partId.description}/{part.partId.partType}">{part.partId.partType} ({part.partId.description})</option>
+                    {/for}
+                </select>
+                <label for="parts">Ersatzteil</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="amount" required="required" id="amount" type="number" class="validate">
+                <label for="amount">Menge</label>
+            </div>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit">Fertig</button>
+    </form>
+</div>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2022 HTL Leonding
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/script.js"></script>
+<script>
+    {#if reparationId}
+    $.ajax({
+        method:"GET",
+        url:"/api/reparation/{reparationId}",
+        contentType: 'application/json',
+        success: function(data) {
+            $('#reparation').val(
+                data.vehicle.brand + " / " +data.mechanic.firstName + ' ' + data.mechanic.lastName +
+                ' (' + data.nextAppointment.replace('T', ' ') + ')');
+        }.bind(this),
+        error: function(xhr, status, err) {
+            window.location.replace("/error/msg=Unknown");
+        }.bind(this)
+    });
+    {/if}
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, {});
+    });
+
+    function onSubmit( form ){
+        var payload = getFormData($(form));
+
+        partIds = payload['partId'].split('/');
+        payload['partType'] = partIds[1];
+        payload['partDescription'] = partIds[0];
+
+        delete payload['partId'];
+        console.log(payload);
+
+        $.ajax({
+            method:"POST",
+            url:"/api/replacement",
+            data: JSON.stringify(payload),
+            contentType: 'application/json',
+            success: function(data) {
+                window.location.replace("/reparation/info/" + $('#reparationId').val());
+            }.bind(this),
+            error: function(xhr, status, err) {
+                window.location.replace("/error/msg=Unknown");
+            }.bind(this)
+        });
+
+        return false;
+    }
+
+</script>
+</body>
+</html>
