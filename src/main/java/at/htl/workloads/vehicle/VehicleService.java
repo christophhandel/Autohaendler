@@ -33,4 +33,6 @@ public interface VehicleService {
     void delete(Vehicle v);
 
     List<Vehicle> findWithIds(List<Long> vehicleIds);
+
+    List<Vehicle> findSoldVehicles();
 }
