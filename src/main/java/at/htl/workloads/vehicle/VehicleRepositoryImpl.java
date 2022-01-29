@@ -66,4 +66,15 @@ public class VehicleRepositoryImpl implements VehicleRepository{
             return null;
         }
     }
+
+    @Override
+    public List<Vehicle> findSoldVehicles() {
+        try {
+            return entityManager.createQuery("select v from Vehicle v where v.owner is not null",Vehicle.class).getResultList();
+        } catch (NoResultException ex){
+            return null;
+        }
+    }
+
+
 }

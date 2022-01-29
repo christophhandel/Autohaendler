@@ -73,4 +73,12 @@ public class VehicleServiceImpl implements VehicleService{
     public List<Vehicle> findWithIds(List<Long> vehicleIds) {
         return vehicleRepository.getAllVehiclesInIdList(vehicleIds);
     }
+
+    /**
+     * Liefert alle KFZs zurück, die nicht verkauft sind.
+     */
+    @Override
+    public List<Vehicle> findSoldVehicles() {
+        return vehicleRepository.findSoldVehicles();
+    }
 }

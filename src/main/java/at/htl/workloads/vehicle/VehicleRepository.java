@@ -15,4 +15,6 @@ public interface VehicleRepository {
     void deleteVehicle(Vehicle v);
 
     List<Vehicle> getAllVehiclesInIdList(List<Long> vehicleIds);
+
+    List<Vehicle> findSoldVehicles();
 }
