@@ -17,4 +17,6 @@ public interface VehicleRepository {
     List<Vehicle> getAllVehiclesInIdList(List<Long> vehicleIds);
 
     List<Vehicle> findSoldVehicles();
+    List<Vehicle> findRentedVehicles();
+    List<Vehicle> findAvailableVehicles();
 }

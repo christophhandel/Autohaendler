@@ -7,10 +7,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.xml.bind.ValidationException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
-public class VehicleRepositoryImpl implements VehicleRepository{
+public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Inject
     EntityManager entityManager;
@@ -29,23 +31,21 @@ public class VehicleRepositoryImpl implements VehicleRepository{
 
     @Override
     public Vehicle findById(Long id) {
-            try {
-                return entityManager.createQuery("select v from Vehicle v where v.id = :id", Vehicle.class)
-                        .setParameter("id", id)
-                        .getSingleResult();
-            } catch (NoResultException ex) {
-                return null;
-            }
+        try {
+            return entityManager.createQuery("select v from Vehicle v where v.id = :id", Vehicle.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Vehicle> listAll() {
         try {
-            return entityManager.createQuery("select v from Vehicle v",Vehicle.class)
+            return entityManager.createQuery("select v from Vehicle v", Vehicle.class)
                     .getResultList();
-        }
-        catch (NoResultException ex)
-        {
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -62,7 +62,7 @@ public class VehicleRepositoryImpl implements VehicleRepository{
                             "where v.id in :ids", Vehicle.class)
                     .setParameter("ids", vehicleIds)
                     .getResultList();
-        }  catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -70,11 +70,32 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     @Override
     public List<Vehicle> findSoldVehicles() {
         try {
-            return entityManager.createQuery("select v from Vehicle v where v.owner is not null",Vehicle.class).getResultList();
-        } catch (NoResultException ex){
+            return entityManager.createQuery("select v from Vehicle v where v.owner is not null", Vehicle.class).getResultList();
+        } catch (NoResultException ex) {
             return null;
         }
     }
 
+    @Override
+    public List<Vehicle> findRentedVehicles() {
+        try {
+            return entityManager.createQuery("select r.vehicle from Rental r group by " +
+                            " r.vehicle where r.from > :now and :now < r.to", Vehicle.class)
+                    .setParameter("now", LocalDateTime.now())
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 
+    @Override
+    public List<Vehicle> findAvailableVehicles() {
+        try {
+            //TODO
+            return;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }
+

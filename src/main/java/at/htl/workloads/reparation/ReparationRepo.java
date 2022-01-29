@@ -45,4 +45,6 @@ public interface ReparationRepo {
     void deletePart(Part part);
 
     Part findPartById(String partType, String description);
+
+    Reparation getPriceForReperation(Reparation reparation);
 }

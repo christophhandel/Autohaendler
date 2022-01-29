@@ -81,4 +81,14 @@ public class VehicleServiceImpl implements VehicleService{
     public List<Vehicle> findSoldVehicles() {
         return vehicleRepository.findSoldVehicles();
     }
+
+    @Override
+    public List<Vehicle> findRentedVehicles() {
+        return vehicleRepository.findRentedVehicles();
+    }
+
+    @Override
+    public List<Vehicle> findAvailableVehicles() {
+        return vehicleRepository.findAvailableVehicles();
+    }
 }

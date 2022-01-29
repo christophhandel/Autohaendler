@@ -1,5 +1,7 @@
 package at.htl.workloads.reparation;
 
+import at.htl.workloads.vehicle.Vehicle;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -165,5 +167,16 @@ public class ReparationRepoImpl implements ReparationRepo {
             return null;
         }
 
+    }
+
+    @Override
+    public Reparation getPriceForReperation(Reparation reparation) {
+        try {
+            return entityManager.createQuery("select r.mechanic.pricePerHour*r.duration from Reparation r where r.id = :id", Vehicle.class)
+                    .setParameter("id",reparation.getId())
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

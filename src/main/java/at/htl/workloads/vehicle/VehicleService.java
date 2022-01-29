@@ -35,4 +35,6 @@ public interface VehicleService {
     List<Vehicle> findWithIds(List<Long> vehicleIds);
 
     List<Vehicle> findSoldVehicles();
+    List<Vehicle> findRentedVehicles();
+    List<Vehicle> findAvailableVehicles();
 }
