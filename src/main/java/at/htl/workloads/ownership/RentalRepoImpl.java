@@ -69,9 +69,13 @@ public class RentalRepoImpl implements RentalRepo{
 
     @Override
     public Rental findRentalById(Long id) {
-        return entityManager.createQuery("select r from Rental r where r.id = :ID",Rental.class)
-                .setParameter("ID",id)
-                .getSingleResult();
+        try {
+            return entityManager.createQuery("select r from Rental r where r.id = :ID",Rental.class)
+                    .setParameter("ID",id)
+                    .getSingleResult();
+        } catch (NoResultException ex){
+            return null;
+        }
     }
 
     @Override
