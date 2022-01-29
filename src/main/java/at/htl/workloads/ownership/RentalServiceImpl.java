@@ -1,6 +1,12 @@
 package at.htl.workloads.ownership;
 
+import at.htl.boundary.VehicleResource;
+import at.htl.workloads.person.Owner;
+import at.htl.workloads.person.Person;
 import at.htl.workloads.person.PersonService;
+import at.htl.workloads.vehicle.Vehicle;
+import at.htl.workloads.vehicle.VehicleRepository;
+import at.htl.workloads.vehicle.VehicleRepositoryImpl;
 import at.htl.workloads.vehicle.VehicleService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,10 +22,7 @@ public class RentalServiceImpl implements RentalService {
     RentalRepo rentalRepo;
 
     @Inject
-    RentalService rentalService;
-
-    @Inject
-    PersonService personService;
+    VehicleRepository vehicleRepository;
 
     private final VehicleService vehicleService;
     private final PersonService personservice;
@@ -74,17 +77,24 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public VehicleTransfer saveTransfer(Long vehicleId, String ownerId) throws ValidationException {
-        if (vehicleService.findById(vehicleId) == null)
-            throw new ValidationException("KFZ nicht gefunden!");
+        Vehicle ve = vehicleService.findById(vehicleId);
 
-        if (personservice.findOwnerById(ownerId) == null)
+        if (ve == null)
+            throw new ValidationException("KFZ nicht gefunden!");
+        else if(ve.getOwner() != null)
+            throw new ValidationException("KFZ gehört nicht mehr uns!");
+
+        Owner o = personservice.findOwnerById(ownerId);
+        if (o == null)
             throw new ValidationException("Person nicht gefunden!");
 
-            VehicleTransfer v = new VehicleTransfer(vehicleService.findById(vehicleId),
-                    personservice.findOwnerById(ownerId),
-                    LocalDateTime.now());
+        ve.setOwner(o);
+        vehicleRepository.updateVehicle(ve);
+        VehicleTransfer v = new VehicleTransfer(ve,
+                personservice.findOwnerById(ownerId),
+                LocalDateTime.now());
 
-            return rentalRepo.saveTransfer(v);
+        return rentalRepo.saveTransfer(v);
     }
 
     @Override

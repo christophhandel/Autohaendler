@@ -41,7 +41,7 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     @Override
     public List<Vehicle> listAll() {
         try {
-            return entityManager.createQuery("select v from Vehicle v",Vehicle.class)
+            return entityManager.createQuery("select v from Vehicle v where v.owner = null ",Vehicle.class)
                     .getResultList();
         }
         catch (NoResultException ex)

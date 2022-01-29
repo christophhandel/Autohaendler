@@ -109,10 +109,18 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public Replacement addReplacement(String partType, String partDescription, Long reparationId, int amount)
             throws ValidationException {
-        ReplacementId rId = new ReplacementId(findPartByType(partType, partDescription), findReparationById(reparationId));
+        Part p = findPartByType(partType, partDescription);
+        ReplacementId rId = new ReplacementId(p, findReparationById(reparationId));
 
         if(rId.getReparation() == null ||rId.getPart() == null)
             throw new ValidationException("Nonexistent Replacement!");
+
+        if(p.getAmountStored() - amount < 0)
+            throw new ValidationException("Lagerbestand zu gering!");
+
+        p.setAmountStored(p.getAmountStored() - amount);
+
+        reparationRepo.updatePart(p);
 
         Replacement r = new Replacement(rId, amount);
         return reparationRepo.addReplacement(r);
@@ -137,7 +145,7 @@ public class ReparationServiceImpl implements ReparationService{
     public Part addPart(String partType, String description, int amountStored) throws ValidationException {
 
         if(partType == null || description == null || amountStored == 0)
-            throw new ValidationException("Unvalid Part");
+            throw new ValidationException("Ersatzteil ist nicht valid.");
 
         PartId newPartId = new PartId();
         newPartId.setPartType(partType);
@@ -154,8 +162,18 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public Replacement updateReplacement(String partType, String partDescription, Long reparationId, int amount) throws ValidationException {
         Replacement r = findReplacementById(partType, partDescription, reparationId);
+        Part p = findPartById(partType, partDescription);
+
+        if(r == null)
+            throw new ValidationException("Ersatzteil existiert nicht!");
+        else if((p.getAmountStored() + r.getAmount()) - amount < 0)
+            throw new ValidationException("Lagerstand zu gering!");
 
         r.setAmount(amount);
+
+        p.setAmountStored((p.getAmountStored() + r.getAmount()) - amount);
+
+        reparationRepo.updatePart(p);
 
         return  reparationRepo.updateReplacement(r);
     }

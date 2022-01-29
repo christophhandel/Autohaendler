@@ -8,10 +8,10 @@
 </head>
 <body>
 
-<h1 class="title">Neue Reparation</h1>
+<h1 class="title">KFZ vermieten</h1>
 
-<div class="row">
-    <form class="col s12" id="form-data" method="post" onsubmit="return onSubmit(this)">
+<div style="margin-left: 100px; margin-right: 100px;">
+    <form id="form-data" method="post" onsubmit="return onSubmit(this)">
         <div class="row">
             <div class="input-field col s12">
                 <select name="vehicleId" id="vehicles">
@@ -24,37 +24,40 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6">
-                <input name="nextAppointmentDate" required="required" id="nextAppointmentDate" type="text" class="datepicker">
-                <label for="nextAppointmentDate">Datum</label>
-            </div>
-            <div class="input-field col s6">
-                <input name="nextAppointmentTime" required="required" id="nextAppointmentTime" type="text" class="timepicker">
-                <label for="nextAppointmentTime">Uhrzeit</label>
-            </div>
-        </div>
-        <div class="row">
             <div class="input-field col s12">
-                <select name="mechanicId" id="mechanics">
-                    <option value="" disabled selected>Mechaniker auswählen</option>
-                    {#for mechanic in mechanics}
-                    <option value="{mechanic.svNr}">{mechanic.firstName} {mechanic.lastName} ({mechanic.workStart} - {mechanic.workEnd})</option>
+                <select name="ownerId" id="ownerId">
+                    <option value="" disabled selected>Käufer auswählen</option>
+                    {#for person in people}
+                    <option value="{person.svNr}">{person.firstName} {person.lastName}</option>
                     {/for}
                 </select>
-                <label for="mechanics">Mechaniker</label>
+                <label for="ownerId">Käufer</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">
-                <input name="duration" required="required" id="duration" type="number" class="validate">
-                <label for="duration">Dauer in Stunden</label>
+            <div class="input-field col s6">
+                <input name="fromDate" required="required" id="fromDate" type="text" class="datepicker">
+                <label for="fromDate">Von-Datum</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="fromTime" required="required" id="fromTime" type="text" class="timepicker">
+                <label for="fromTime">Von-Uhrzeit</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="toDate" required="required" id="toDate" type="text" class="datepicker">
+                <label for="toDate">Bis-Datum</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="toTime" required="required" id="toTime" type="text" class="timepicker">
+                <label for="toTime">Bis-Uhrzeit</label>
             </div>
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">Fertig</button>
     </form>
 </div>
-
 <footer class="page-footer">
     <div class="footer-copyright">
         <div class="container">
@@ -83,7 +86,6 @@
         });
     });
 
-
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems, {});
@@ -92,18 +94,24 @@
     function onSubmit( form ){
         var payload = getFormData($(form));
 
-        payload['nextAppointment'] = payload['nextAppointmentDate'] + "T" + payload['nextAppointmentTime']
+        payload['from'] = payload['fromDate'] + "T" + payload['fromTime']
 
-        delete payload['nextAppointmentDate'];
-        delete payload['nextAppointmentTime'];
+        delete payload['fromDate'];
+        delete payload['fromTime'];
+
+        payload['to'] = payload['toDate'] + "T" + payload['toTime']
+
+        delete payload['toDate'];
+        delete payload['toTime'];
+        console.log(payload);
 
         $.ajax({
             method:"POST",
-            url:"/api/reparation",
+            url:"/api/rental",
             data: JSON.stringify(payload),
             contentType: 'application/json',
             success: function(data) {
-                window.location.replace("/reparation/info/" + data.id);
+                window.location.replace("/vehicle/list");
             }.bind(this),
             error: function(xhr, status, err) {
                 window.location.replace("/error/msg=Unknown");

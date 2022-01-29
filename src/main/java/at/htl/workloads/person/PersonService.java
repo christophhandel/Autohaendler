@@ -54,4 +54,8 @@ public interface PersonService {
     List<Owner> findAllOwners();
 
     void deleteOwner(Owner o);
+
+    List<Person> findAllPeople();
+
+    Person findPersonById(String svNr);
 }

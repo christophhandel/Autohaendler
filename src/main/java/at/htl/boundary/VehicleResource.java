@@ -1,7 +1,6 @@
 package at.htl.boundary;
 
-import at.htl.workloads.person.Mechanic;
-import at.htl.workloads.person.PersonService;
+import at.htl.workloads.person.*;
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.vehicle.VehicleService;
 import io.quarkus.qute.CheckedTemplate;
@@ -19,10 +18,15 @@ public class VehicleResource {
     @Inject
     VehicleService service;
 
+    @Inject
+    PersonService personService;
+
     @CheckedTemplate
     public static class Templates {
         public static native TemplateInstance list(List<Vehicle> vehicles);
         public static native TemplateInstance buy();
+        public static native TemplateInstance sell(List<Vehicle> vehicles, List<Owner> people);
+        public static native TemplateInstance rent(List<Vehicle> vehicles, List<Tenant> people);
     }
 
     @GET
@@ -37,6 +41,20 @@ public class VehicleResource {
     @Path("/buy")
     public TemplateInstance buyVehicle() {
         return Templates.buy();
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/sell")
+    public TemplateInstance sellVehicle() {
+        return Templates.sell(service.findAll(), personService.findAllOwners());
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/rent")
+    public TemplateInstance rentVehicle() {
+        return Templates.rent(service.findAll(), personService.findAllTenants());
     }
 
 

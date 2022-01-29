@@ -214,4 +214,14 @@ public class PersonServiceImpl implements PersonService{
     public void deleteOwner(Owner o) {
         repository.deleteOwner(o);
     }
+
+    @Override
+    public List<Person> findAllPeople() {
+        return repository.findAllPeople();
+    }
+
+    @Override
+    public Person findPersonById(String svNr) {
+        return repository.findPersonById(svNr);
+    }
 }

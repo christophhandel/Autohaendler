@@ -14,7 +14,7 @@ public class ReparationDTO {
 
     private Long vehicleId;
     private String mechanicId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime nextAppointment;
     private int duration;
 

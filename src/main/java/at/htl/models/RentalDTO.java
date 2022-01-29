@@ -8,9 +8,9 @@ public class RentalDTO {
 
     private Long vehicleId;
     private String tenantId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime from;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime to;
 
     public RentalDTO(Long vehicleId, String tenantId, LocalDateTime from, LocalDateTime to) {

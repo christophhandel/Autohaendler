@@ -32,4 +32,8 @@ public interface PersonRepository {
     List<Tenant> findAllTenants();
 
     void deleteTenant(Tenant o);
+
+    List<Person> findAllPeople();
+
+    Person findPersonById(String svNr);
 }
