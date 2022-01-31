@@ -2,6 +2,11 @@ package at.htl.workloads.reparation;
 
 import at.htl.IntTestBase;
 import at.htl.workloads.person.Mechanic;
+import at.htl.workloads.person.Owner;
+import at.htl.workloads.person.PersonRepository;
+import at.htl.workloads.vehicle.Vehicle;
+import at.htl.workloads.vehicle.VehicleRepository;
+import io.quarkus.qute.TemplateExtension;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -9,19 +14,23 @@ import javax.inject.Inject;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 class ReparationRepoTest extends IntTestBase {
 
     @Inject
     ReparationRepo reparationRepo;
+    @Inject
+    VehicleRepository vehicleRepository;
+    @Inject
+    PersonRepository personRepository;
 
     @Test
     void savePartOk() {
@@ -39,4 +48,89 @@ class ReparationRepoTest extends IntTestBase {
         assertThatCode(() -> reparationRepo.deletePart(mewPart.get())).doesNotThrowAnyException();
     }
 
+    @Test
+    void saveReparation(){
+        Reparation reparation = new Reparation(vehicleRepository.findById(1L),
+                personRepository.findMechanicById("1234567890"),
+                LocalDateTime.of(2022,12,23,1,2),
+                7);
+
+        AtomicReference<Reparation> newRep = new AtomicReference<>();
+        assertThatCode(()-> newRep.set(reparationRepo.addReparation(reparation)))
+                .doesNotThrowAnyException();
+        assertThatCode(() -> reparationRepo.findReparationById(newRep.get().getId()))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReparationById(newRep.get().getId()))
+                .isNotNull();
+        assertThatCode(() -> reparationRepo.deleteReparation(newRep.get()))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void saveReplacement(){
+        Part part = new Part(new PartId("Reife","Hello"),12);
+
+        Replacement replacement = new Replacement(
+                new ReplacementId(part,reparationRepo.findReparationById(1L)),14
+        );
+
+        reparationRepo.addPart(part);
+
+        AtomicReference<Replacement> newRep = new AtomicReference<>();
+        assertThatCode(()-> newRep.set(reparationRepo.addReplacement(replacement)))
+                .doesNotThrowAnyException();
+        assertThatCode(() -> reparationRepo.findReplacementById(
+                newRep.get().getId().getPart().getPartId().getPartType(),
+                newRep.get().getId().getPart().getPartId().getDescription(),
+                newRep.get().getId().getReparation().getId()))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReplacementById(
+                newRep.get().getId().getPart().getPartId().getPartType(),
+                newRep.get().getId().getPart().getPartId().getDescription(),
+                newRep.get().getId().getReparation().getId()))
+                .isNotNull();
+        assertThatCode(() -> reparationRepo.deleteReplacement(newRep.get()))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void updatePart(){
+        Part p = new Part(new PartId("Reifen","Michelin"),20);
+
+        AtomicReference<Part> newPart = new AtomicReference<>();
+        assertThatCode(()-> newPart.set(reparationRepo.addPart(p)))
+                .doesNotThrowAnyException();
+        Part p1 = newPart.get();
+        p1.setAmountStored(20);
+        assertThatCode(()-> reparationRepo.updatePart(p))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findPartById("Reifen","Michelin"))
+                .hasFieldOrPropertyWithValue("amountStored",20);
+        assertThatCode(() -> reparationRepo.deletePart(p1)).doesNotThrowAnyException();
+    }
+
+    //TODO
+
+    @Test
+    void findByIdNoExistendPart(){
+        assertThatCode(() -> reparationRepo.findPartById("Kerze","Brenner"))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findPartById("Kerze","Brenner")).isNull();
+    }
+
+    @Test
+    void findByIdNoExistendReparation(){
+        assertThatCode(() -> reparationRepo.findReparationById(999L))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReparationById(999L)).isNull();
+    }
+
+    @Test
+    void findByIdNoExistendReplacement(){
+        assertThatCode(() -> reparationRepo.findReplacementById(
+                "Kerze","Brenner",4L))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReplacementById(
+                "Kerze","Brenner",4L)).isNull();
+    }
 }
