@@ -34,8 +34,9 @@ public class VehicleTransferRessourceApi {
             v = rentalService.saveTransfer(vehicleTransferDTO.getVehicleId()
                     ,vehicleTransferDTO.getOwnerId()
             );
-        } catch (ValidationException ex) {
-            return Response.status(400, ex.getMessage()).build();
+        } catch (ValidationException e) {
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -49,7 +50,8 @@ public class VehicleTransferRessourceApi {
     public Response readTransferById(@PathParam("id") Long id) {
         VehicleTransfer v = rentalService.findTransferById(id);
         if (v == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Transfer mit dieser id existiert nicht!").build();
         }
         return Response.ok(v).build();
     }
@@ -66,7 +68,8 @@ public class VehicleTransferRessourceApi {
     public Response deleteTransfer(@PathParam("id") Long id) {
         VehicleTransfer vehicleTransfer = rentalService.findTransferById(id);
         if (vehicleTransfer == null)
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Transfer mit dieser id existiert nicht!").build();
 
         rentalService.deleteTransfer(id);
         return Response.ok(vehicleTransfer).build();

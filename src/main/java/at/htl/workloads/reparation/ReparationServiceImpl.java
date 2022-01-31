@@ -55,6 +55,8 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public Reparation addReparation(Long vehicleId, String mechanicId, LocalDateTime nextAppointment, int duration)
             throws ValidationException {
+        if(duration < 0)
+            throw new ValidationException("Duration darf nicht kleiner als 0 sein");
 
         Mechanic mechanic=personService.findMechanicById(mechanicId);
         Vehicle vehicle=vehicleService.findById(vehicleId);
@@ -109,6 +111,9 @@ public class ReparationServiceImpl implements ReparationService{
     @Override
     public Replacement addReplacement(String partType, String partDescription, Long reparationId, int amount)
             throws ValidationException {
+        if(amount < 0)
+            throw new ValidationException("Lagerstand darf nicht kleiner als 0 sein!");
+
         Part p = findPartByType(partType, partDescription);
         ReplacementId rId = new ReplacementId(p, findReparationById(reparationId));
 
@@ -143,8 +148,7 @@ public class ReparationServiceImpl implements ReparationService{
 
     @Override
     public Part addPart(String partType, String description, int amountStored) throws ValidationException {
-
-        if(partType == null || description == null || amountStored == 0)
+        if(partType == null || description == null || amountStored <= 0)
             throw new ValidationException("Ersatzteil ist nicht valid.");
 
         PartId newPartId = new PartId();

@@ -106,7 +106,7 @@
                 window.location.replace("/reparation/info/" + data.id);
             }.bind(this),
             error: function(xhr, status, err) {
-                window.location.replace("/error/msg=Unknown");
+                window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
             }.bind(this)
         });
 

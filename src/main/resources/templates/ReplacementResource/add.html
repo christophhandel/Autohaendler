@@ -102,10 +102,10 @@
             data: JSON.stringify(payload),
             contentType: 'application/json',
             success: function(data) {
-                window.location.replace("/reparation/info/" + $('#reparationId').val());
+                //window.location.replace("/reparation/info/" + $('#reparationId').val());
             }.bind(this),
             error: function(xhr, status, err) {
-                window.location.replace("/error/msg=Unknown");
+                window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
             }.bind(this)
         });
 

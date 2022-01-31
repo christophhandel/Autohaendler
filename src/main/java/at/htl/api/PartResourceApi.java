@@ -34,7 +34,8 @@ public class PartResourceApi {
             newPart = reparationService.addPart(partDTO.getPartType(),
                     partDTO.getDescription(), partDTO.getAmountStored());
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -51,7 +52,7 @@ public class PartResourceApi {
     public Response update(@PathParam("id") Long id, PartDTO partDTO) {
         //TODO
 
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @GET
@@ -61,7 +62,8 @@ public class PartResourceApi {
         Part part = reparationService.findPartById(partType,description);
 
         if(part == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Part mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(part).build();
@@ -80,7 +82,8 @@ public class PartResourceApi {
         Part part = reparationService.findPartByType(partType,description);
 
         if(part == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Part mit dieser id existiert nicht!").build();
         }
 
         reparationService.deletePart(part);

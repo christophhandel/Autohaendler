@@ -36,7 +36,8 @@ public class VehicleResourceApi {
                     vehicleDTO.getOwnerId()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -61,7 +62,8 @@ public class VehicleResourceApi {
                     vehicleDTO.getOwnerId()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(v).build();
@@ -74,7 +76,8 @@ public class VehicleResourceApi {
         Vehicle v = vehicleService.findById(id);
 
         if(v == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("KFZ mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(v).build();
@@ -93,7 +96,8 @@ public class VehicleResourceApi {
         Vehicle v = vehicleService.findById(id);
 
         if(v == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("KFZ mit dieser id existiert nicht!").build();
         }
 
         vehicleService.delete(v);

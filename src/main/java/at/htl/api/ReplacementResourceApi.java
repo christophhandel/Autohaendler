@@ -1,9 +1,6 @@
 package at.htl.api;
 
-import at.htl.models.MechanicDTO;
 import at.htl.models.ReplacementDTO;
-import at.htl.workloads.person.Mechanic;
-import at.htl.workloads.person.PersonService;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.reparation.ReparationService;
 import at.htl.workloads.reparation.Replacement;
@@ -15,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.ValidationException;
 import java.net.URI;
-import java.util.List;
 
 @Path("/api/replacement")
 public class ReplacementResourceApi {
@@ -40,7 +36,8 @@ public class ReplacementResourceApi {
                     replacementDTO.getAmount()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -64,7 +61,8 @@ public class ReplacementResourceApi {
                     replacementDTO.getAmount()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(r).build();
@@ -79,7 +77,8 @@ public class ReplacementResourceApi {
                 replacementDTO.getReparationId());
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Reparation mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(r).build();
@@ -92,7 +91,8 @@ public class ReplacementResourceApi {
         Reparation r = reparationService.findReparationById(id);
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Reparation mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(r.getReplacements()).build();
@@ -114,7 +114,8 @@ public class ReplacementResourceApi {
                 replacementDTO.getReparationId());
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Reparation mit dieser id existiert nicht!").build();
         }
 
         reparationService.deleteReplacement(r);

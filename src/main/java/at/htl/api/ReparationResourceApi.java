@@ -33,7 +33,8 @@ public class ReparationResourceApi {
                     reparationDTO.getDuration()
             );
         } catch (ValidationException e) {
-            return Response.status(422, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -58,7 +59,8 @@ public class ReparationResourceApi {
                     reparationDTO.getDuration()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(r).build();
@@ -71,7 +73,8 @@ public class ReparationResourceApi {
         Reparation r = reparationService.findReparationById(id);
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Reparation mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(r).build();
@@ -90,7 +93,8 @@ public class ReparationResourceApi {
         Reparation r = reparationService.findReparationById(id);
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Reparation mit dieser id existiert nicht!").build();
         }
 
         reparationService.deleteReparation(r);

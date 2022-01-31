@@ -59,7 +59,7 @@
                 window.location.replace("/part/list");
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(xhr, status, err.toString());
+                window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
             }.bind(this)
         });
 

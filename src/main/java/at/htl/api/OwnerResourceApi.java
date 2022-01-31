@@ -42,7 +42,8 @@ public class OwnerResourceApi {
                     ownerDTO.getDriverLicenceNumber());
 
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -69,7 +70,8 @@ public class OwnerResourceApi {
                     ownerDTO.getDriverLicenceNumber(),
                     ownerDTO.getVehicleIds());
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(owner).build();
@@ -82,7 +84,8 @@ public class OwnerResourceApi {
         Owner owner = personService.findOwnerById(svNr);
 
         if(owner == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Owner mit dieser SvNr existiert nicht!").build();
         }
 
         return Response.ok(owner).build();
@@ -101,7 +104,8 @@ public class OwnerResourceApi {
         Owner owner = personService.findOwnerById(svNr);
 
         if(owner == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Owner mit dieser SvNr existiert nicht!").build();
         }
 
         personService.deleteOwner(owner);

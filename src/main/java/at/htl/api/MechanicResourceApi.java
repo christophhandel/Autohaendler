@@ -42,7 +42,8 @@ public class MechanicResourceApi {
                     mechanicDTO.getWorkStart(),
                     mechanicDTO.getWorkEnd());
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -72,7 +73,8 @@ public class MechanicResourceApi {
                     mechanicDTO.getWorkEnd()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(m).build();
@@ -85,7 +87,8 @@ public class MechanicResourceApi {
         Mechanic m = personService.findMechanicById(svNr);
 
         if(m == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Mechaniker mit dieser SvNr existiert nicht!").build();
         }
 
         return Response.ok(m).build();
@@ -104,7 +107,8 @@ public class MechanicResourceApi {
         Mechanic m = personService.findMechanicById(svNr);
 
         if(m == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Mechaniker mit dieser SvNr existiert nicht!").build();
         }
 
         personService.deleteMechanic(m);

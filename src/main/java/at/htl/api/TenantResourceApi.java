@@ -38,7 +38,8 @@ public class TenantResourceApi {
                     tenantDTO.getDriverLicenceNumber(),
                     tenantDTO.getPriceDiscountPercent());
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -65,7 +66,8 @@ public class TenantResourceApi {
                     tenantDTO.getPriceDiscountPercent()
             );
         } catch (ValidationException e) {
-            return Response.status(400, e.getMessage()).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.ok(t).build();
@@ -97,7 +99,8 @@ public class TenantResourceApi {
         Tenant t = personService.findTenantById(svNr);
 
         if(t == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Tenant mit dieser svNr existiert nicht!").build();
         }
 
         personService.deleteTenant(t);

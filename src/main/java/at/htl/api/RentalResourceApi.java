@@ -34,7 +34,8 @@ public class RentalResourceApi {
                     rentalDTO.getFrom(),
                     rentalDTO.getTo());
         } catch (ValidationException e) {
-            return Response.status(400).build();
+            return Response.status(422)
+                    .entity(e.getMessage()).build();
         }
 
         return Response.status(301)
@@ -65,7 +66,8 @@ public class RentalResourceApi {
         Rental r = rentalservice.findRentalById(id);
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Rental mit dieser id existiert nicht!").build();
         }
 
         return Response.ok(r).build();
@@ -84,7 +86,8 @@ public class RentalResourceApi {
         Rental r = rentalservice.findRentalById(id);
 
         if(r == null) {
-            return Response.noContent().build();
+            return Response.status(404)
+                    .entity("Rental mit dieser id existiert nicht!").build();
         }
 
         rentalservice.deleteRental(r);
