@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RentalService {
 
-    Rental saveRental(Long vehicleId, String tenantId, LocalDateTime from, LocalDateTime to);
+    Rental saveRental(Long vehicleId, String tenantId, LocalDateTime from, LocalDateTime to) throws ValidationException;
 
     Rental findRentalById(Long id);
 

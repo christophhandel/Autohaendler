@@ -25,7 +25,7 @@ public class RentalRepoImpl implements RentalRepo{
     }
 
     @Override
-    public Rental updateMechanic(Rental r) {
+    public Rental updateRental(Rental r) {
         Rental newR = entityManager.merge(r);
         entityManager.flush();
         return newR;

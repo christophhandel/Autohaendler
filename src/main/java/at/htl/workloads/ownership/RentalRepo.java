@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RentalRepo {
     Rental saveRental(Rental r);
-    Rental updateMechanic(Rental r);
+    Rental updateRental(Rental r);
 
     VehicleTransfer saveTransfer(VehicleTransfer v);
     void deleteVehicle(VehicleTransfer v);

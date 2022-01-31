@@ -28,10 +28,14 @@ public class RentalResourceApi {
     @Transactional
     public Response create(RentalDTO rentalDTO) {
         Rental r = null;
-        r = rentalservice.saveRental(rentalDTO.getVehicleId(),
-                rentalDTO.getTenantId(),
-                rentalDTO.getFrom(),
-                rentalDTO.getTo());
+        try {
+            r = rentalservice.saveRental(rentalDTO.getVehicleId(),
+                    rentalDTO.getTenantId(),
+                    rentalDTO.getFrom(),
+                    rentalDTO.getTo());
+        } catch (ValidationException e) {
+            return Response.status(400).build();
+        }
 
         return Response.status(301)
                 .location(URI.create("/api/rental/"+r.getId()))

@@ -6,6 +6,8 @@ import at.htl.workloads.person.Tenant;
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.vehicle.VehicleService;
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 @QuarkusTest
 class RentalRepoTest extends IntTestBase {
@@ -57,21 +58,60 @@ class RentalRepoTest extends IntTestBase {
         }
     }
 
+    @AfterEach
+    public void delete(){
+        vehicleService.delete(vehicle);
+        personService.deleteTenant(tenant);
+    }
+
+    @Test
+    void getByIdNonExistent() {
+        AtomicReference<Rental> r = new AtomicReference<>();
+        assertThatCode(() -> r.set(rentalRepository.findRentalById(999L))).doesNotThrowAnyException();
+        assertThat(r.get()).isNull();
+    }
 
     @Test
     void saveRental() {
+        Rental r = createAndSaveRental(
+                LocalDateTime.of(2021,1,10,10,0),
+                LocalDateTime.of(2020,1,20,10,0)
+        );
+
+        var loadedRental = rentalRepository.findRentalById(r.getId());
+
+        assertThat(loadedRental).isNotNull();
+
+        rentalRepository.deleteRental(r);
+    }
+
+    @Test
+    void updateRental() {
+        Rental r = createAndSaveRental(
+                LocalDateTime.of(2021,1,10,10,0),
+                LocalDateTime.of(2021,1,20,10,0)
+        );
+
+        r.setFrom(LocalDateTime.of(2022,1,10,10,0));
+
+        assertThatCode(() -> rentalRepository.updateRental(r)).doesNotThrowAnyException();
+
+        var loadedRental = rentalRepository.findRentalById(r.getId());
+
+        assertThat(loadedRental).isNotNull().hasFieldOrPropertyWithValue("from", LocalDateTime.of(2022,1,10,10,0));
+
+        rentalRepository.deleteRental(r);
+    }
+
+    private Rental createAndSaveRental(LocalDateTime of, LocalDateTime of1) {
         Rental r = new Rental(vehicle,
                 tenant,
-                LocalDateTime.of(2021,1,10,10,0),
-                LocalDateTime.of(2021,1,20,10,0));
+                of,
+                of1);
 
         AtomicReference<Rental> savedR = new AtomicReference<>();
         assertThatCode(() -> savedR.set(rentalRepository.saveRental(r))).doesNotThrowAnyException();
 
-        var loadedRental = rentalRepository.findRentalById(savedR.get().getId());
-
-        assertThat(loadedRental).isNotNull();
+        return savedR.get();
     }
-
-    // TODO: Finish
 }
