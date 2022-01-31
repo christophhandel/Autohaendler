@@ -37,7 +37,22 @@ public class PersonServiceImpl implements PersonService{
                                  BigDecimal pricePerHour, LocalTime workStart, LocalTime workEnd) throws ValidationException {
 
         if(findMechanicById(svNr) != null)
-            throw new ValidationException("Mechanic already exists!");
+            throw new ValidationException("Der Mechaniker existiert bereit!");
+
+        if (dateOfBirth.compareTo(LocalDate.now())> 0)
+        {
+            throw new ValidationException("Geburtsdatum darf nicht in der Zukunft liegen!");
+        }
+
+        if (pricePerHour.compareTo(BigDecimal.ZERO) <= 0)
+        {
+            throw new ValidationException("Der Stundenlohn darf nicht unter null sein!");
+        }
+
+        if (workStart.compareTo(workEnd) >= 0)
+        {
+            throw new ValidationException("Der Arbeitsstart darf nicht vor dem Ende liegen!");
+        }
 
         Mechanic m = new Mechanic(svNr,firstName,lastName,dateOfBirth,
                 phoneNumber,driverLicenceNumber, new ArrayList<>(), pricePerHour,
