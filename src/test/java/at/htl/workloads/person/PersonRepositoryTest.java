@@ -38,7 +38,6 @@ class PersonRepositoryTest extends IntTestBase {
         assertThatCode(() -> personRepository.deleteMechanic(newM.get())).doesNotThrowAnyException();
     }
 
-
     @Test
     void saveOwnerOk() {
         Owner owner = new Owner("sdgdfh45","Lisa","Haus",
@@ -136,6 +135,4 @@ class PersonRepositoryTest extends IntTestBase {
                 .doesNotThrowAnyException();
         assertThat(personRepository.findTenantById("1")).isNull();
     }
-
-
 }

@@ -111,6 +111,14 @@ public class PersonServiceImpl implements PersonService{
         if(findTenantById(svNr) != null)
             throw new ValidationException("Tenant already exists!");
 
+        if (dateOfBirth.compareTo(LocalDate.now()) > 0){
+            throw new ValidationException("Geburtsdatum darf nicht in der Zukunft liegen!");
+        }
+
+        if (priceDiscountPercent <0.0){
+            throw new ValidationException("Der Prozentsatz darf nicht unter null sein!");
+        }
+
         Tenant tenant = new Tenant(svNr,firstName,lastName,dateOfBirth,
                 phoneNumber,driverLicenceNumber, new ArrayList<>(),priceDiscountPercent);
 
@@ -163,7 +171,11 @@ public class PersonServiceImpl implements PersonService{
             throws ValidationException {
 
         if(findOwnerById(svNr) != null)
-            throw new ValidationException("Owner already exists!");
+            throw new ValidationException("Bestizer existiert bereits!");
+
+        if (dateOfBirth.compareTo(LocalDate.now()) > 0){
+            throw new ValidationException("Geburtsdatum darf nicht in der Zukunft liegen!");
+        }
 
         Owner o = new Owner(
                 svNr,

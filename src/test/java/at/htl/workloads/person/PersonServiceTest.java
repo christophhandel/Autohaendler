@@ -94,5 +94,55 @@ class PersonServiceTest extends IntTestBase {
         personService.deleteMechanic(personService.findMechanicById("asds234asf"));
     }
 
+    @Test
+    void createOwnerOk(){
+        assertThatCode(() ->
+                personService.saveOwner("sdgdfh45","Lisa","Haus",
+                        LocalDate.of(2008,12,24)
+                        ,"057839585","5645"))
+                .doesNotThrowAnyException();
+
+        assertThat(personService.findOwnerById("sdgdfh45")).isNotNull();
+        personService.deleteOwner(personService.findOwnerById("sdgdfh45"));
+    }
+
+    @Test
+    void createOwnerWrongDob(){
+        assertThatThrownBy(() ->
+                personService.saveOwner("sdgdfh45","Lisa","Haus",
+                        LocalDate.of(2025,12,24)
+                        ,"057839585","5645"))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void createTenantOk(){
+        assertThatCode(() ->
+                personService.saveTenant("sdgdfh45","Lisa","Haus",
+                        LocalDate.of(2008,12,24)
+                        ,"057839585","5645",16.86))
+                .doesNotThrowAnyException();
+
+        assertThat(personService.findTenantById("sdgdfh45")).isNotNull();
+        personService.deleteTenant(personService.findTenantById("sdgdfh45"));
+    }
+
+    @Test
+    void createTenantWrongDob(){
+        assertThatThrownBy(() ->
+                personService.saveTenant("sdgdfh45","Lisa","Haus",
+                        LocalDate.of(2025,12,24)
+                        ,"057839585","5645",34.12))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void createTenantWongPriceDiscountPercent(){
+        assertThatThrownBy(() ->
+                personService.saveTenant("sdgdfh45","Lisa","Haus",
+                        LocalDate.of(2008,12,24)
+                        ,"057839585","5645",-1.2))
+                .isInstanceOf(ValidationException.class);
+    }
 
 }
