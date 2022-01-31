@@ -1,5 +1,6 @@
 package at.htl.workloads.reparation;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,5 +47,5 @@ public interface ReparationRepo {
 
     Part findPartById(String partType, String description);
 
-    Reparation getPriceForReperation(Reparation reparation);
+    BigDecimal getPriceForReperation(Reparation reparation);
 }

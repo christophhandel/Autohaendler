@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -170,13 +171,14 @@ public class ReparationRepoImpl implements ReparationRepo {
     }
 
     @Override
-    public Reparation getPriceForReperation(Reparation reparation) {
+    public BigDecimal getPriceForReperation(Reparation reparation) {
         try {
-            return entityManager.createQuery("select r.mechanic.pricePerHour*r.duration from Reparation r where r.id = :id", Vehicle.class)
+            return entityManager.createQuery("select r.mechanic.pricePerHour*r.duration from Reparation r where r.id = :id", BigDecimal.class)
                     .setParameter("id",reparation.getId())
-                    .getResultList();
+                    .getSingleResult();
         } catch (NoResultException ex) {
             return null;
         }
     }
+
 }
