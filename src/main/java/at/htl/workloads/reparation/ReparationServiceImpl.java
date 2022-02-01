@@ -64,6 +64,10 @@ public class ReparationServiceImpl implements ReparationService{
         if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) != null)
             throw new ValidationException("Der Mechaniker kann an diesem Datum nicht reserviert werden!");
 
+        if (nextAppointment.compareTo(LocalDateTime.now())<0){
+            throw new ValidationException("Die nächste Reparatur darf nicht in der Vergangenheit liegen.");
+        }
+
         Reparation reparation= new Reparation(vehicle,mechanic,nextAppointment,duration);
         return reparationRepo.addReparation(reparation);
     }
