@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Rental {
@@ -75,6 +76,21 @@ public class Rental {
 
     public void setTo(LocalDateTime to) {
         this.to = to;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rental rental = (Rental) o;
+        return Objects.equals(id, rental.id) && Objects.equals(vehicle, rental.vehicle) && Objects.equals(tenant, rental.tenant) && Objects.equals(from, rental.from) && Objects.equals(to, rental.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, vehicle, tenant, from, to);
     }
     //endregion
 }

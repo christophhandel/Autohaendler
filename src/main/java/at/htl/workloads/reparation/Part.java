@@ -3,6 +3,7 @@ package at.htl.workloads.reparation;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Part {
@@ -39,6 +40,21 @@ public class Part {
 
     public void setAmountStored(int amountStored) {
         this.amountStored = amountStored;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Part part = (Part) o;
+        return amountStored == part.amountStored && Objects.equals(partId, part.partId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(partId, amountStored);
     }
     //endregion
 }

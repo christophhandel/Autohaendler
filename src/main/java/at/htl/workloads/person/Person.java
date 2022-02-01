@@ -2,6 +2,7 @@ package at.htl.workloads.person;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -79,6 +80,21 @@ public class Person {
 
     public void setDriverLicenceNumber(String driverLicenceNumber) {
         this.driverLicenceNumber = driverLicenceNumber;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(svNr, person.svNr) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(dateOfBirth, person.dateOfBirth) && Objects.equals(phoneNumber, person.phoneNumber) && Objects.equals(driverLicenceNumber, person.driverLicenceNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(svNr, firstName, lastName, dateOfBirth, phoneNumber, driverLicenceNumber);
     }
     //endregion
 }

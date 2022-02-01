@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Reparation {
@@ -84,6 +85,21 @@ public class Reparation {
 
     public void setReplacements(List<Replacement> replacements) {
         this.replacements = replacements;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reparation that = (Reparation) o;
+        return duration == that.duration && Objects.equals(id, that.id) && Objects.equals(vehicle, that.vehicle) && Objects.equals(mechanic, that.mechanic) && Objects.equals(nextAppointment, that.nextAppointment) && Objects.equals(replacements, that.replacements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, vehicle, mechanic, nextAppointment, duration, replacements);
     }
     //endregion
 }

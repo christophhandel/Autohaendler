@@ -5,6 +5,7 @@ import at.htl.workloads.vehicle.Vehicle;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class VehicleTransfer {
@@ -62,6 +63,21 @@ public class VehicleTransfer {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VehicleTransfer that = (VehicleTransfer) o;
+        return Objects.equals(id, that.id) && Objects.equals(vehicle, that.vehicle) && Objects.equals(newOwner, that.newOwner) && Objects.equals(time, that.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, vehicle, newOwner, time);
     }
     //endregion
 }

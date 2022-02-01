@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @DiscriminatorValue(value="Mech")
@@ -67,6 +68,22 @@ public class Mechanic extends Person {
 
     public void setWorkEnd(LocalTime workEnd) {
         this.workEnd = workEnd;
+    }
+    //endregion
+
+    //region equals and hash
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Mechanic mechanic = (Mechanic) o;
+        return Objects.equals(reparations, mechanic.reparations) && Objects.equals(pricePerHour, mechanic.pricePerHour) && Objects.equals(workStart, mechanic.workStart) && Objects.equals(workEnd, mechanic.workEnd);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), reparations, pricePerHour, workStart, workEnd);
     }
     //endregion
 }

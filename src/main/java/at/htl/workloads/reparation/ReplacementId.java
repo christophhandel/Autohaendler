@@ -46,7 +46,7 @@ public class ReplacementId implements Serializable {
     }
     //endregion
 
-
+    //region equals and hash
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,4 +59,5 @@ public class ReplacementId implements Serializable {
     public int hashCode() {
         return Objects.hash(part, reparation);
     }
+    //endregion
 }
