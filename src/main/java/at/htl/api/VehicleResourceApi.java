@@ -84,6 +84,20 @@ public class VehicleResourceApi {
     }
 
     @GET
+    @Path("/futureRentals/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response futureRentalsFor(@PathParam("id") Long id) {
+        Vehicle v = vehicleService.findById(id);
+
+        if(v == null) {
+            return Response.status(404)
+                    .entity("KFZ mit dieser id existiert nicht!").build();
+        }
+
+        return Response.ok(vehicleService.getFutureRentals(v)).build();
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response readAll() {
         return Response.ok(vehicleService.findAll()).build();

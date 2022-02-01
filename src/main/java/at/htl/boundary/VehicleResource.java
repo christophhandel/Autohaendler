@@ -9,6 +9,7 @@ import io.quarkus.qute.TemplateInstance;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -25,6 +26,7 @@ public class VehicleResource {
     public static class Templates {
         public static native TemplateInstance list(List<Vehicle> vehicles);
         public static native TemplateInstance buy();
+        public static native TemplateInstance info(Long vehicleId);
         public static native TemplateInstance sell(List<Vehicle> vehicles, List<Owner> people);
         public static native TemplateInstance rent(List<Vehicle> vehicles, List<Tenant> people);
     }
@@ -55,6 +57,13 @@ public class VehicleResource {
     @Path("/rent")
     public TemplateInstance rentVehicle() {
         return Templates.rent(service.findAll(), personService.findAllTenants());
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/info/{vehicleId}")
+    public TemplateInstance infoOnVehicle(@PathParam("vehicleId") Long vehicleId) {
+        return Templates.info(vehicleId);
     }
 
 

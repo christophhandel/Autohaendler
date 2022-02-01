@@ -2,6 +2,7 @@ package at.htl.workloads.ownership;
 
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.person.Tenant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) @JsonIgnore
     private Vehicle vehicle;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Tenant tenant;

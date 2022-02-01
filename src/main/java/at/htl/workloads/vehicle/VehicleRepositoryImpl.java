@@ -1,5 +1,6 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.reparation.Replacement;
 
@@ -7,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -74,6 +76,16 @@ public class VehicleRepositoryImpl implements VehicleRepository{
         } catch (NoResultException ex){
             return null;
         }
+    }
+
+    @Override
+    public List<Rental> findRentalsForVehicle(Vehicle v) {
+        return entityManager.createQuery("select r from Rental r " +
+                "where r.vehicle.id = :id " +
+                        "and r.from > :now", Rental.class)
+                .setParameter("id", v.getId())
+                .setParameter("now", LocalDateTime.now())
+                .getResultList();
     }
 
 

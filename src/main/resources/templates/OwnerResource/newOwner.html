@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autohaendler Mechaniker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+<h1 class="title">Besizer Anmelden</h1>
+
+<div class="row">
+    <form class="col s12" id="form-data" method="post" onsubmit="return onSubmit(this)">
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="firstName" required="required" id="firstName" type="text" class="validate">
+                <label for="firstName">Vorname</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="lastName" required="required" id="lastName" type="text" class="validate">
+                <label for="lastName">Nachname</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="dateOfBirth" required="required" id="dateOfBirth" type="text" class="datepicker">
+                <label for="dateOfBirth">Geburtsdatum</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="phoneNumber" required="required" id="phoneNumber" type="text">
+                <label for="phoneNumber">Telefonnr.</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="svNr" required="required" id="svNr" type="text" class="validate">
+                <label for="svNr">Sozialversicherungsnummer</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="driverLicenceNumber" required="required" id="driverLicenceNumber" type="text" class="validate">
+                <label for="driverLicenceNumber">Führerscheinnr.</label>
+            </div>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit">Fertig</button>
+    </form>
+</div>
+
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2022 HTL Leonding
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/script.js"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, {
+            autoClose: true,
+            format:'yyyy-mm-dd'
+        });
+    });
+
+    function onSubmit( form ){
+        var payload = getFormData($(form));
+
+        $.ajax({
+            method:"POST",
+            url:"/api/owner",
+            data: JSON.stringify(payload),
+            contentType: 'application/json',
+            success: function() {
+                window.location.replace("/");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
+            }.bind(this)
+        });
+
+        return false;
+    }
+
+</script>
+</body>
+</html>
