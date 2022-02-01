@@ -21,7 +21,17 @@ public class VehicleServiceImpl implements VehicleService{
     }
 
     @Override
-    public Vehicle saveVehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, String ownerId) throws ValidationException {
+    public Vehicle saveVehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, String ownerId)
+            throws ValidationException {
+        if(constructionPerYear.compareTo(LocalDate.now()) > 0)
+            throw new ValidationException("ConstructionYear kann nicht in der Zukunft liegen!");
+
+        else if(horsePower <= 0)
+            throw new ValidationException("PS kann nicht unter 0 sein!");
+
+        else if(acceleration <= 0)
+            throw new ValidationException("0-100 Beschleuningungsdauer kann nicht unter 0 sein!");
+
         Vehicle vehicle = new Vehicle(
                 brand,
                 constructionPerYear,
@@ -33,20 +43,35 @@ public class VehicleServiceImpl implements VehicleService{
     }
 
     @Override
-    public Vehicle updateVehicle(Long id, String brand, LocalDate constructionPerYear, int horsePower, int acceleration, String ownerId) throws ValidationException {
-        if (findById(id) != null){
-            throw new ValidationException("Dieses Fahrzeig existiert bereits!");
+    public Vehicle updateVehicle(Long id, String brand, LocalDate constructionPerYear,
+                                 int horsePower,
+                                 int acceleration,
+                                 String ownerId) throws ValidationException {
+        if(constructionPerYear.compareTo(LocalDate.now()) > 0)
+            throw new ValidationException("ConstructionYear kann nicht in der Zukunft liegen!");
+
+        else if(horsePower <= 0)
+            throw new ValidationException("PS kann nicht unter 0 sein!");
+
+        else if(acceleration <= 0)
+            throw new ValidationException("0-100 Beschleuningungsdauer kann nicht unter 0 sein!");
+
+        if (findById(id) == null){
+            throw new ValidationException("Dieses Fahrzeig existiert nicht!");
         }
 
-        if (personService.findOwnerById(ownerId) == null){
+        if (ownerId != null && personService.findOwnerById(ownerId) == null){
             throw  new ValidationException("Dieses Besitzer gibt es noch nicht!");
         }
-        Vehicle vehicle = new Vehicle(
-                brand,
-                constructionPerYear,
-                horsePower,
-                acceleration,
-                personService.findOwnerById(ownerId));
+
+        Vehicle vehicle = findById(id);
+
+        vehicle.setBrand(brand);
+        vehicle.setAcceleration(acceleration);
+        vehicle.setHorsePower(horsePower);
+        vehicle.setOwner(ownerId == null ? null : personService.findOwnerById(ownerId));
+        vehicle.setConstructionPerYear(constructionPerYear);
+
         return vehicleRepository.updateVehicle(vehicle);
     }
 
