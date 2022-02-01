@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autohaendler Mechaniker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+<h2 class="title" id="title"></h2>
+<div class="row">
+    <h4 class="col s6">PS: </h4>
+</div>
+<div class="row">
+    <h5 class="col s5" id="ps"></h5>
+</div>
+<div class="row">
+    <h4 class="col s6">0-100km/h:</h4>
+</div>
+<div class="row">
+    <h5 id="acceleration"></h5><h5 ></h5>
+</div>
+
+<div class="row">
+    <h4>Vermietungen in der Zukunft</h4>
+</div>
+<div class="row">
+    <ul id='rentals' class="collection"></ul>
+</div>
+
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2022 HTL Leonding
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/script.js"></script>
+<script>
+    $.ajax({
+        method:"GET",
+        url:"/api/vehicle/{vehicleId}",
+        contentType: 'application/json',
+        success: function(data) {
+            console.log(data)
+            $('#title').text(data.brand + ' (' + data.constructionPerYear + ')');
+            $('#ps').text(data.horsePower);
+            $('#acceleration').text(data.acceleration);
+        }.bind(this),
+        error: function(xhr, status, err) {
+            window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
+        }.bind(this)
+    });
+
+    $.ajax({
+        method:"GET",
+        url:"/api/vehicle/futureRentals/{vehicleId}",
+        contentType: 'application/json',
+        success: function(data) {
+            rentalHtml = ''
+
+            for (let i = 0; i < data.length; i++) {
+                rental = data[i];
+                rentalHtml = rentalHtml + '<li class="collection-item"><h5>' + rental.from.replace('T', ' ') +
+                    ' bis '  + rental.to.replace('T', ' ') + " (" + rental.tenant.firstName + ' ' + rental.tenant.lastName  + ')</h5></li>'
+            }
+
+            $('#rentals').html(rentalHtml);
+        }.bind(this),
+        error: function(xhr, status, err) {
+            window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
+        }.bind(this)
+    });
+
+</script>
+</body>
+</html>

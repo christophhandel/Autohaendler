@@ -8,24 +8,38 @@
 </head>
 <body>
 
-<h1 class="title">Neues Ersatzteil Kaufen</h1>
+<h1 class="title">Besizer Anmelden</h1>
 
 <div class="row">
     <form class="col s12" id="form-data" method="post" onsubmit="return onSubmit(this)">
         <div class="row">
             <div class="input-field col s6">
-                <input name="partType" required="required" id="partType" type="text" class="validate">
-                <label for="partType">Typ</label>
+                <input name="firstName" required="required" id="firstName" type="text" class="validate">
+                <label for="firstName">Vorname</label>
             </div>
             <div class="input-field col s6">
-                <input name="description" required="required" id="description" type="text" class="validate">
-                <label for="description">Description</label>
+                <input name="lastName" required="required" id="lastName" type="text" class="validate">
+                <label for="lastName">Nachname</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">
-                <input name="amountStored" required="required" id="amountStored" type="number" class="validate">
-                <label for="amountStored">Lagerstand</label>
+            <div class="input-field col s6">
+                <input name="dateOfBirth" required="required" id="dateOfBirth" type="text" class="datepicker">
+                <label for="dateOfBirth">Geburtsdatum</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="phoneNumber" required="required" id="phoneNumber" type="text">
+                <label for="phoneNumber">Telefonnr.</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="svNr" required="required" id="svNr" type="text" class="validate">
+                <label for="svNr">Sozialversicherungsnummer</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="driverLicenceNumber" required="required" id="driverLicenceNumber" type="text" class="validate">
+                <label for="driverLicenceNumber">Führerscheinnr.</label>
             </div>
         </div>
 
@@ -46,17 +60,24 @@
 <script src="/script.js"></script>
 <script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, {
+            autoClose: true,
+            format:'yyyy-mm-dd'
+        });
+    });
+
     function onSubmit( form ){
         var payload = getFormData($(form));
 
         $.ajax({
             method:"POST",
-            url:"/api/part",
+            url:"/api/owner",
             data: JSON.stringify(payload),
             contentType: 'application/json',
-            success: function(data) {
-                console.log(data);
-                window.location.replace("/part/list");
+            success: function() {
+                window.location.replace("/");
             }.bind(this),
             error: function(xhr, status, err) {
                 window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));

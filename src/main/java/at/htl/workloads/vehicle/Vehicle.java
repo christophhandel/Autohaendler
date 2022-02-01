@@ -1,5 +1,6 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.person.Owner;
 import at.htl.workloads.reparation.Reparation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +25,8 @@ public class Vehicle {
     private Owner owner;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle") @JsonIgnore
     List<Reparation> reparations;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
+    List<Rental> rentals;
     //endregion
 
     //region Constructor
@@ -40,6 +43,15 @@ public class Vehicle {
     //endregion
 
     //region Getter and Setter
+
+
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
+    }
 
     public List<Reparation> getReparations() {
         return reparations;
