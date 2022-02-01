@@ -1,5 +1,6 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.person.Mechanic;
 
 import javax.inject.Inject;
@@ -35,4 +36,6 @@ public interface VehicleService {
     List<Vehicle> findWithIds(List<Long> vehicleIds);
 
     List<Vehicle> findSoldVehicles();
+
+    List<Rental> getFutureRentals(Vehicle v);
 }

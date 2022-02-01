@@ -1,5 +1,7 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.workloads.ownership.Rental;
+
 import java.util.List;
 
 public interface VehicleRepository {
@@ -17,4 +19,6 @@ public interface VehicleRepository {
     List<Vehicle> getAllVehiclesInIdList(List<Long> vehicleIds);
 
     List<Vehicle> findSoldVehicles();
+
+    List<Rental> findRentalsForVehicle(Vehicle v);
 }

@@ -1,5 +1,6 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.person.PersonService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -80,5 +81,10 @@ public class VehicleServiceImpl implements VehicleService{
     @Override
     public List<Vehicle> findSoldVehicles() {
         return vehicleRepository.findSoldVehicles();
+    }
+
+    @Override
+    public List<Rental> getFutureRentals(Vehicle v) {
+        return vehicleRepository.findRentalsForVehicle(v);
     }
 }
