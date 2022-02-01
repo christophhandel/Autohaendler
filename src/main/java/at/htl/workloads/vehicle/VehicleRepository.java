@@ -20,5 +20,5 @@ public interface VehicleRepository {
 
     List<Vehicle> findSoldVehicles();
 
-    List<Rental> findRentalsForVehicle(Vehicle v);
+    List<Rental> findRentalsForVehicleInFuture(Vehicle v);
 }

@@ -79,7 +79,7 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     }
 
     @Override
-    public List<Rental> findRentalsForVehicle(Vehicle v) {
+    public List<Rental> findRentalsForVehicleInFuture(Vehicle v) {
         return entityManager.createQuery("select r from Rental r " +
                 "where r.vehicle.id = :id " +
                         "and r.from > :now", Rental.class)
