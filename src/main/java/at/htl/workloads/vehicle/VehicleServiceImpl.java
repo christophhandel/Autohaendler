@@ -85,6 +85,6 @@ public class VehicleServiceImpl implements VehicleService{
 
     @Override
     public List<Rental> getFutureRentals(Vehicle v) {
-        return vehicleRepository.findRentalsForVehicle(v);
+        return vehicleRepository.findRentalsForVehicleInFuture(v);
     }
 }
