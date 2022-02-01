@@ -109,7 +109,47 @@ class ReparationRepoTest extends IntTestBase {
         assertThatCode(() -> reparationRepo.deletePart(p1)).doesNotThrowAnyException();
     }
 
-    //TODO
+    @Test
+    void updateReparation(){
+        Reparation r = new Reparation(vehicleRepository.findById(1L),
+                personRepository.findMechanicById("1234567890"),
+                null,100);
+
+        AtomicReference<Reparation> newRep = new AtomicReference<>();
+        assertThatCode(()-> newRep.set(reparationRepo.addReparation(r)))
+                .doesNotThrowAnyException();
+        Reparation r1 = newRep.get();
+        r1.setDuration(20);
+        assertThatCode(()-> reparationRepo.updateReparation(r))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReparationById(newRep.get().getId()))
+                .hasFieldOrPropertyWithValue("duration",20);
+        assertThatCode(() -> reparationRepo.deleteReparation(r1)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void updateReplacement(){
+        PartId partId = new PartId("Bremsklotz","Continental M&S 275-17R-55");
+        Part part = new Part(partId,32);
+        ReplacementId replacementId = new ReplacementId(part,reparationRepo.findReparationById(1L));
+
+        Replacement r = new Replacement(replacementId,100);
+
+        AtomicReference<Replacement> newRep = new AtomicReference<>();
+        assertThatCode(()-> newRep.set(reparationRepo.addReplacement(r)))
+                .doesNotThrowAnyException();
+        Replacement r1 = newRep.get();
+        r1.setAmount(30);
+        assertThatCode(()-> reparationRepo.updateReplacement(r))
+                .doesNotThrowAnyException();
+        assertThat(reparationRepo.findReplacementById(
+                newRep.get().getId().getPart().getPartId().getPartType(),
+                newRep.get().getId().getPart().getPartId().getDescription(),
+                newRep.get().getId().getReparation().getId()))
+                .hasFieldOrPropertyWithValue("amount",30);
+        assertThatCode(() -> reparationRepo.deleteReplacement(r1))
+                .doesNotThrowAnyException();
+    }
 
     @Test
     void findByIdNoExistendPart(){
