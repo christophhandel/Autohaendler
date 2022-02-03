@@ -1,12 +1,11 @@
 package at.htl.workloads.person;
 
-import javax.ws.rs.core.Response;
+import at.htl.models.results.IncomePerPerson;
+
 import javax.xml.bind.ValidationException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface PersonService {
@@ -59,4 +58,6 @@ public interface PersonService {
     List<Person> findAllPeople();
 
     Person findPersonById(String svNr);
+
+    List<IncomePerPerson> calculateIncomePerOwner();
 }

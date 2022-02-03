@@ -1,5 +1,7 @@
 package at.htl.workloads.person;
 
+import at.htl.models.results.IncomePerPerson;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -158,4 +160,20 @@ public class PersonRepositoryImpl implements PersonRepository{
             return null;
         }
     }
+
+    @Override
+    public List<IncomePerPerson> calculateIncomePerOwner() {
+        try {
+            return entityManager.createQuery("select new at.htl.models.results" +
+                            ".IncomePerPerson(SUM (r.mechanic.pricePerHour*r.duration),o) " +
+                            "from Owner o " +
+                            "left outer join o.vehicles v " +
+                            "left outer join v.reparations r " +
+                            "group by o ", IncomePerPerson.class)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
 }

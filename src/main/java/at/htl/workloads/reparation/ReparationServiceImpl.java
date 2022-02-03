@@ -14,11 +14,11 @@ import java.util.List;
 @ApplicationScoped
 public class ReparationServiceImpl implements ReparationService{
 
-    private ReparationRepo reparationRepo;
+    private final ReparationRepo reparationRepo;
     
-    private VehicleService vehicleService;
+    private final VehicleService vehicleService;
 
-    private PersonService personService;
+    private final PersonService personService;
 
     @Inject
     public ReparationServiceImpl(ReparationRepo reparationRepo, VehicleService vehicleService, PersonService personService) {
@@ -125,9 +125,6 @@ public class ReparationServiceImpl implements ReparationService{
             throw new ValidationException("Nonexistent Replacement!");
 
         if(p.getAmountStored() - amount < 0)
-            throw new ValidationException("Lagerbestand zu gering!");
-
-        if(amount < 0)
             throw new ValidationException("Lagerbestand zu gering!");
 
         p.setAmountStored(p.getAmountStored() - amount);

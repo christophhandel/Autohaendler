@@ -1,6 +1,6 @@
 package at.htl.workloads.person;
 
-import at.htl.workloads.reparation.Reparation;
+import at.htl.models.results.IncomePerPerson;
 import at.htl.workloads.reparation.ReparationRepo;
 import at.htl.workloads.vehicle.Vehicle;
 import at.htl.workloads.vehicle.VehicleService;
@@ -250,5 +250,10 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Person findPersonById(String svNr) {
         return repository.findPersonById(svNr);
+    }
+
+    @Override
+    public List<IncomePerPerson> calculateIncomePerOwner() {
+        return repository.calculateIncomePerOwner();
     }
 }

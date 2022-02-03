@@ -1,5 +1,7 @@
 package at.htl.workloads.person;
 
+import at.htl.models.results.IncomePerPerson;
+
 import java.util.List;
 
 public interface PersonRepository {
@@ -36,4 +38,6 @@ public interface PersonRepository {
     List<Person> findAllPeople();
 
     Person findPersonById(String svNr);
+
+    List<IncomePerPerson> calculateIncomePerOwner();
 }

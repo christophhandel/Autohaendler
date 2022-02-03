@@ -1,10 +1,15 @@
 package at.htl.workloads.person;
 
 import at.htl.IntTestBase;
+import at.htl.models.results.IncomePerPerson;
+import at.htl.workloads.reparation.Reparation;
+import at.htl.workloads.vehicle.Vehicle;
+import com.google.common.math.BigDecimalMath;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import javax.persistence.Convert;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -134,5 +139,27 @@ class PersonRepositoryTest extends IntTestBase {
         assertThatCode(() -> personRepository.findTenantById("1"))
                 .doesNotThrowAnyException();
         assertThat(personRepository.findTenantById("1")).isNull();
+    }
+
+    @Test
+    void testCalculateIncomePerTenant() {
+
+        assertThatCode(() -> personRepository.calculateIncomePerOwner())
+                .doesNotThrowAnyException();
+
+        List<IncomePerPerson> tmpIncome = personRepository.calculateIncomePerOwner();
+        assertThat(tmpIncome).isNotNull();
+        assertThat(tmpIncome.size()).isEqualTo(personRepository.findAllOwners().size());
+
+        BigDecimal curIncome = null;
+        for (IncomePerPerson tmp : tmpIncome){
+            Owner o = (Owner) tmp.getPerson();
+            for (Vehicle v : o.getVehicles()) {
+                for (Reparation rep : v.getReparations()) {
+                    curIncome = rep.getMechanic().getPricePerHour().multiply(BigDecimal.valueOf(rep.getDuration()));
+                }
+            }
+            assertThat(tmp.getIncome()).isNotNull().isEqualTo(curIncome);
+        }
     }
 }

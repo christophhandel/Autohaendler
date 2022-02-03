@@ -44,7 +44,6 @@ public class Vehicle {
 
     //region Getter and Setter
 
-
     public List<Rental> getRentals() {
         return rentals;
     }
