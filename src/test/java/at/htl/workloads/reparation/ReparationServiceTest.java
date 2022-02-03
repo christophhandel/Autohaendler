@@ -46,8 +46,57 @@ class ReparationServiceTest extends IntTestBase {
     void createReparationWrongAppointment(){
         assertThatThrownBy(() ->
                 reparationService.addReparation(1L,"asfsdg23",
-                        LocalDateTime.of(2020,11,05,23,23),200))
+                        LocalDateTime.of(2020,11,5,23,23),200))
                 .isInstanceOf(ValidationException.class);
     }
 
+    @Test
+    void createReplacementOk(){
+        assertThatCode(() ->
+                reparationService.addReplacement("Bremsklotz", "Continental M&S 275-17R-55"
+                        ,5L,8))
+                .doesNotThrowAnyException();
+
+        assertThat(reparationService.findReplacementById("Bremsklotz",
+                "Continental M&S 275-17R-55"
+                ,5L)).isNotNull();
+        reparationService.deleteReplacement(reparationService
+                .findReplacementById("Bremsklotz", "Continental M&S 275-17R-55"
+                ,5L));
+    }
+
+    @Test
+    void createReplacementWrongAmount(){
+        assertThatThrownBy(() ->
+                reparationService.addReplacement("Reifen","Pirelli Scorpion Verde",
+                        4L,-2))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void createPartOk(){
+        assertThatCode(() ->
+                reparationService.addPart(
+                        "Continental M&S 275-17R-55",
+                        "Bremsklotz",
+                        10))
+                .doesNotThrowAnyException();
+
+        assertThat(reparationService.findPartById(
+                "Continental M&S 275-17R-55",
+                "Bremsklotz")).isNotNull();
+        reparationService.deletePart(reparationService.findPartById(
+                "Continental M&S 275-17R-55",
+                "Bremsklotz"
+        ));
+
+    }
+
+    @Test
+    void createPartWrongAmount(){
+        assertThatThrownBy(() ->
+                reparationService.addPart("Reifen","Pirelli Scorpion Verde",
+                        -4))
+                .isInstanceOf(ValidationException.class);
+    }
 }

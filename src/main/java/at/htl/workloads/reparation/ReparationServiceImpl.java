@@ -127,6 +127,9 @@ public class ReparationServiceImpl implements ReparationService{
         if(p.getAmountStored() - amount < 0)
             throw new ValidationException("Lagerbestand zu gering!");
 
+        if(amount < 0)
+            throw new ValidationException("Lagerbestand zu gering!");
+
         p.setAmountStored(p.getAmountStored() - amount);
 
         reparationRepo.updatePart(p);
