@@ -151,15 +151,18 @@ class PersonRepositoryTest extends IntTestBase {
         assertThat(tmpIncome).isNotNull();
         assertThat(tmpIncome.size()).isEqualTo(personRepository.findAllOwners().size());
 
-        BigDecimal curIncome = null;
         for (IncomePerPerson tmp : tmpIncome){
+            BigDecimal curIncome = BigDecimal.valueOf(0);
             Owner o = (Owner) tmp.getPerson();
             for (Vehicle v : o.getVehicles()) {
                 for (Reparation rep : v.getReparations()) {
-                    curIncome = rep.getMechanic().getPricePerHour().multiply(BigDecimal.valueOf(rep.getDuration()));
+                    curIncome = curIncome.add(
+                            rep.getMechanic().getPricePerHour()
+                                    .multiply(BigDecimal.valueOf(rep.getDuration()))
+                    );
                 }
             }
-            assertThat(tmp.getIncome()).isNotNull().isEqualTo(curIncome);
+            assertThat(tmp.getIncome()).isNotNull().isEqualByComparingTo(curIncome);
         }
     }
 }

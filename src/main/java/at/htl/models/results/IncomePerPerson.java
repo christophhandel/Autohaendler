@@ -14,6 +14,11 @@ public class IncomePerPerson {
         this.person = person;
     }
 
+    public IncomePerPerson(double income, Person person) {
+        this.income = BigDecimal.valueOf(income);
+        this.person = person;
+    }
+
     public IncomePerPerson() {
     }
     //endregion

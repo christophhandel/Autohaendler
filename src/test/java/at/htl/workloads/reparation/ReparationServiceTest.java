@@ -27,7 +27,7 @@ class ReparationServiceTest extends IntTestBase {
     void createReparationOk(){
         assertThatCode(() ->
                 reparationService.addReparation(1L,"asfsdg23",
-                        LocalDateTime.now(),100))
+                        LocalDateTime.now().plusDays(1),100))
                 .doesNotThrowAnyException();
 
         assertThat(reparationService.findReparationById(1L)).isNotNull();
