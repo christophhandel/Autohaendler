@@ -155,6 +155,12 @@ public class ReparationServiceImpl implements ReparationService{
         if(partType == null || description == null || amountStored <= 0)
             throw new ValidationException("Ersatzteil ist nicht valid.");
 
+        if(reparationRepo.findPartByType(partType, description) != null) {
+            Part p = reparationRepo.findPartByType(partType, description);
+            p.setAmountStored(p.getAmountStored()+amountStored);
+            return reparationRepo.updatePart(p);
+        }
+
         PartId newPartId = new PartId();
         newPartId.setPartType(partType);
         newPartId.setDescription(description);

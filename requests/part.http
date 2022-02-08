@@ -13,12 +13,12 @@ client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200");
 });
 
-client.global.set("partType", response.body.partType);
-client.global.set("description", response.body.description);
+client.global.set("partType", response.body.partId.partType);
+client.global.set("description", response.body.partId.description);
 %}
 
 ### GetById
-GET http://localhost:8080/api/part/partType={{partType}}&description={{description}}}
+GET http://localhost:8080/api/part/?partType={{partType}}&description={{description}}
 
 > {%
 client.test("Request executed successfully", function() {
@@ -27,23 +27,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### GetAll
-GET http://localhost:8080/api/part/
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200");
-});
-%}
-
-### Update
-PUT http://localhost:8080/api/part/partType={{partType}}&description={{description}}}
-Content-Type: application/json
-
-{
-  "partType": "Bremscheibe",
-  "description": "Pirelli Vorderachse",
-  "amountStored": "4"
-}
+GET http://localhost:8080/api/part/all
 
 > {%
 client.test("Request executed successfully", function() {
@@ -52,7 +36,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Delete
-DELETE http://localhost:8080/api/part/partType={partType}&description={description}
+DELETE http://localhost:8080/api/part/?partType={{partType}}&description={{description}}
 Content-Type: application/json
 
 > {%

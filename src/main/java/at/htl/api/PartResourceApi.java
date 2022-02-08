@@ -14,7 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.ValidationException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 @Path("/api/part")
@@ -28,7 +30,6 @@ public class PartResourceApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response create(PartDTO partDTO) {
-
         Part newPart;
         try {
             newPart = reparationService.addPart(partDTO.getPartType(),
@@ -39,27 +40,18 @@ public class PartResourceApi {
         }
 
         return Response.status(301)
-                .location(URI.create("/api/part/partType=" + URLEncoder.encode(newPart.getPartId().getPartType(), StandardCharsets.UTF_8)+"&description="
+                .location(URI.create("/api/part/?partType=" + URLEncoder.encode(newPart.getPartId().getPartType(), StandardCharsets.UTF_8)+"&description="
                         + URLEncoder.encode(newPart.getPartId().getDescription(), StandardCharsets.UTF_8))).build();
-
-    }
-
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    @Path("/{id}")
-    public Response update(@PathParam("id") Long id, PartDTO partDTO) {
-        //TODO
-
-        return Response.noContent().build();
     }
 
     @GET
-    @Path("/partType={partType}&description={description}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readById(@PathParam("partType") String partType,@PathParam("description") String description) {
-        Part part = reparationService.findPartById(partType,description);
+    public Response readById(@QueryParam("partType") String partType,
+                             @QueryParam("description") String description) {
+        if(partType == null || description==null)
+            return Response.status(400).build();
+        Part part = reparationService.findPartById(URLDecoder.decode(partType, Charset.defaultCharset()),
+                URLDecoder.decode(description, Charset.defaultCharset()));
 
         if(part == null) {
             return Response.status(404)
@@ -71,14 +63,15 @@ public class PartResourceApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/all")
     public Response readAll() {
         return Response.ok(reparationService.findAllParts()).build();
     }
 
     @DELETE
     @Transactional
-    @Path("/partType={partType}&description={description}")
-    public Response delete(@PathParam("partType") String partType,@PathParam("description") String description) {
+    public Response delete(@QueryParam("partType") String partType,
+                           @QueryParam("description") String description) {
         Part part = reparationService.findPartByType(partType,description);
 
         if(part == null) {
