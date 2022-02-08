@@ -12,7 +12,20 @@
 
 <div class="row" style="margin-right: 100px; margin-left: 100px;">
 
-    {#for income in incomePerPersonList}
+    <h5 class="title">Zahlungen pro Besitzer</h5>
+
+    {#for income in incomePerOwnerList}
+        <div class="col" style="margin-right: 50px;">
+        <h5>{income.person.firstName} {income.person.lastName}</h5>
+        <h6>Summe: {income.income}€</h6>
+        </div>
+    {/for}
+</div>
+
+<div class="row" style="margin-right: 100px; margin-left: 100px;">
+    <h5 class="title">Zahlungen pro Mieter</h5>
+
+    {#for income in incomePerTenantList}
         <div class="col" style="margin-right: 50px;">
         <h5>{income.person.firstName} {income.person.lastName}</h5>
         <h6>Summe: {income.income}€</h6>

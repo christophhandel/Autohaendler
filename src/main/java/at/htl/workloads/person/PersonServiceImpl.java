@@ -256,4 +256,9 @@ public class PersonServiceImpl implements PersonService{
     public List<IncomePerPerson> calculateIncomePerOwner() {
         return repository.calculateIncomePerOwner();
     }
+
+    @Override
+    public List<IncomePerPerson> calculateIncomePerTenant() {
+        return repository.calculateIncomePerTenant();
+    }
 }

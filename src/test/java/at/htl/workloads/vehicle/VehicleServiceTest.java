@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -26,7 +27,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2002, 1, 1),
                 400,
-                10,
+                BigDecimal.valueOf(10),
                 null
         )))
                 .doesNotThrowAnyException();
@@ -44,7 +45,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 400,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -57,7 +58,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 400,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -69,7 +70,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 0,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -78,7 +79,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 -3,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -93,7 +94,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 0,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -103,19 +104,19 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 -3,
-                10,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
     }
 
     @Test
-    void add_acceleration_lowerthan_0() {
+    void add_priceperhour_lowerthan_0() {
         assertThatThrownBy(() -> service.saveVehicle(
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 200,
-                0,
+                BigDecimal.valueOf(0),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -124,7 +125,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 200,
-                -1,
+                BigDecimal.valueOf(-1),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -133,13 +134,13 @@ class VehicleServiceTest extends IntTestBase {
 
 
     @Test
-    void update_acceleration_lowerthan_0(){
+    void update_priceperHour_lowerthan_0(){
         assertThatThrownBy(() -> service.updateVehicle(
                 1L,
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 200,
-                0,
+                BigDecimal.valueOf(0),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -149,7 +150,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(LocalDate.now().getYear()+1, 1, 1),
                 200,
-                -5,
+                BigDecimal.valueOf(-5),
                 null
         ))
                 .isInstanceOf(ValidationException.class);
@@ -163,7 +164,7 @@ class VehicleServiceTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2002, 1, 1),
                 400,
-                10,
+                BigDecimal.valueOf(10),
                 null
         )))
                 .doesNotThrowAnyException();
@@ -175,7 +176,7 @@ class VehicleServiceTest extends IntTestBase {
                 v.getBrand(),
                 v.getConstructionPerYear(),
                 150,
-                12,
+                BigDecimal.valueOf(10),
                 null
         ))
                 .doesNotThrowAnyException();

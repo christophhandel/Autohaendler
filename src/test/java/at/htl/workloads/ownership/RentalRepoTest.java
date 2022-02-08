@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
@@ -50,7 +51,7 @@ class RentalRepoTest extends IntTestBase {
                     "ASD",
                     LocalDate.now(),
                     500,
-                    100,
+                    BigDecimal.valueOf(100),
                     null
             );
         } catch (ValidationException e) {

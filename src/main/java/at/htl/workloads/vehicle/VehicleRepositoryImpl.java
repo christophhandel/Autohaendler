@@ -1,8 +1,6 @@
 package at.htl.workloads.vehicle;
 
 import at.htl.workloads.ownership.Rental;
-import at.htl.workloads.reparation.Reparation;
-import at.htl.workloads.reparation.Replacement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -41,18 +39,6 @@ public class VehicleRepositoryImpl implements VehicleRepository{
     }
 
     @Override
-    public List<Vehicle> listAll() {
-        try {
-            return entityManager.createQuery("select v from Vehicle v where v.owner = null ",Vehicle.class)
-                    .getResultList();
-        }
-        catch (NoResultException ex)
-        {
-            return null;
-        }
-    }
-
-    @Override
     public void deleteVehicle(Vehicle v) {
         entityManager.remove(v);
     }
@@ -86,6 +72,24 @@ public class VehicleRepositoryImpl implements VehicleRepository{
                 .setParameter("id", v.getId())
                 .setParameter("now", LocalDateTime.now())
                 .getResultList();
+    }
+
+    @Override
+    public List<Vehicle> findOwnedVehicles() {
+        try {
+            return entityManager.createQuery("select v from Vehicle v where v.owner is null",Vehicle.class).getResultList();
+        } catch (NoResultException ex){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Vehicle> findAllVehicles() {
+        try {
+            return entityManager.createQuery("select v from Vehicle v",Vehicle.class).getResultList();
+        } catch (NoResultException ex){
+            return null;
+        }
     }
 
 

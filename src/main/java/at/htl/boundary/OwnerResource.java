@@ -20,7 +20,7 @@ public class OwnerResource {
     @CheckedTemplate
     public static class Templates {
         public static native TemplateInstance newOwner();
-        public static native TemplateInstance incomePerPerson(List<IncomePerPerson> incomePerPersonList);
+        public static native TemplateInstance incomePerPerson(List<IncomePerPerson> incomePerOwnerList, List<IncomePerPerson> incomePerTenantList);
     }
 
     @GET
@@ -34,6 +34,6 @@ public class OwnerResource {
     @Produces(MediaType.TEXT_HTML)
     @Path("/incomePerPerson")
     public TemplateInstance getIncomePerPerson() {
-        return Templates.incomePerPerson(repository.calculateIncomePerOwner());
+        return Templates.incomePerPerson(repository.calculateIncomePerOwner(), repository.calculateIncomePerTenant());
     }
 }

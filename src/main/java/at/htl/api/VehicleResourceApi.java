@@ -32,7 +32,7 @@ public class VehicleResourceApi {
                     vehicleDTO.getBrand(),
                     vehicleDTO.getConstructionYear(),
                     vehicleDTO.getHorsePower(),
-                    vehicleDTO.getAcceleration(),
+                    vehicleDTO.getPricePerHour(),
                     vehicleDTO.getOwnerId()
             );
         } catch (ValidationException e) {
@@ -58,7 +58,7 @@ public class VehicleResourceApi {
                     vehicleDTO.getBrand(),
                     vehicleDTO.getConstructionYear(),
                     vehicleDTO.getHorsePower(),
-                    vehicleDTO.getAcceleration(),
+                    vehicleDTO.getPricePerHour(),
                     vehicleDTO.getOwnerId()
             );
         } catch (ValidationException e) {

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -35,7 +36,7 @@ class VehicleRepositoryTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2020, 1, 1),
                 500,
-                100,
+                BigDecimal.valueOf(10),
                 null
         );
 
@@ -58,7 +59,7 @@ class VehicleRepositoryTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2020, 1, 1),
                 500,
-                100,
+                BigDecimal.valueOf(10),
                 null
         );
 
@@ -68,13 +69,13 @@ class VehicleRepositoryTest extends IntTestBase {
                 .doesNotThrowAnyException();
 
         Vehicle updatedV = newV.get();
-        updatedV.setAcceleration(999);
+        updatedV.setPricePerHour(BigDecimal.valueOf(999));
 
         assertThatCode(() -> repository.updateVehicle(v))
                 .doesNotThrowAnyException();
 
         assertThat(repository.findById(newV.get().getId()))
-                .hasFieldOrPropertyWithValue("acceleration", 999);
+                .hasFieldOrPropertyWithValue("pricePerHour", BigDecimal.valueOf(999));
 
         assertThatCode(() -> repository.deleteVehicle(newV.get()))
                 .doesNotThrowAnyException();
@@ -103,14 +104,14 @@ class VehicleRepositoryTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2020, 1, 1),
                 500,
-                100,
+                BigDecimal.valueOf(100),
                 null
         );
         Vehicle v2 = new Vehicle(
                 "BMW",
                 LocalDate.of(2021, 1, 1),
                 500,
-                100,
+                BigDecimal.valueOf(10),
                 personRepository.findOwnerById("4444444444")
         );
 
@@ -132,7 +133,7 @@ class VehicleRepositoryTest extends IntTestBase {
                 "BMW",
                 LocalDate.of(2020, 1, 1),
                 500,
-                100,
+                BigDecimal.valueOf(10),
                 null
         );
 

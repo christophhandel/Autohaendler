@@ -2,6 +2,7 @@ package at.htl.workloads.person;
 
 import at.htl.IntTestBase;
 import at.htl.models.results.IncomePerPerson;
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.vehicle.Vehicle;
 import com.google.common.math.BigDecimalMath;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -142,7 +144,7 @@ class PersonRepositoryTest extends IntTestBase {
     }
 
     @Test
-    void testCalculateIncomePerTenant() {
+    void testCalculateIncomePerOwner() {
 
         assertThatCode(() -> personRepository.calculateIncomePerOwner())
                 .doesNotThrowAnyException();
@@ -161,6 +163,29 @@ class PersonRepositoryTest extends IntTestBase {
                                     .multiply(BigDecimal.valueOf(rep.getDuration()))
                     );
                 }
+            }
+            assertThat(tmp.getIncome()).isNotNull().isEqualByComparingTo(curIncome);
+        }
+    }
+
+    @Test
+    void testCalculateIncomePerTenant() {
+
+        assertThatCode(() -> personRepository.calculateIncomePerTenant())
+                .doesNotThrowAnyException();
+
+        List<IncomePerPerson> tmpIncome = personRepository.calculateIncomePerTenant();
+        assertThat(tmpIncome).isNotNull();
+        assertThat(tmpIncome.size()).isEqualTo(personRepository.findAllTenants().size());
+
+        for (IncomePerPerson tmp : tmpIncome){
+            BigDecimal curIncome = BigDecimal.valueOf(0);
+            Tenant t = (Tenant) tmp.getPerson();
+            for (Rental r : t.getRentals()) {
+                curIncome = curIncome.add(
+                        r.getVehicle().getPricePerHour()
+                                .multiply(BigDecimal.valueOf(ChronoUnit.HOURS.between(r.getFrom(),r.getTo())))
+                );
             }
             assertThat(tmp.getIncome()).isNotNull().isEqualByComparingTo(curIncome);
         }

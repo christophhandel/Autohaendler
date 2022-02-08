@@ -60,4 +60,6 @@ public interface PersonService {
     Person findPersonById(String svNr);
 
     List<IncomePerPerson> calculateIncomePerOwner();
+
+    List<IncomePerPerson> calculateIncomePerTenant();
 }

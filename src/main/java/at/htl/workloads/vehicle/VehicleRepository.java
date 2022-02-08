@@ -12,8 +12,6 @@ public interface VehicleRepository {
 
     Vehicle findById(Long id);
 
-    List<Vehicle> listAll();
-
     void deleteVehicle(Vehicle v);
 
     List<Vehicle> getAllVehiclesInIdList(List<Long> vehicleIds);
@@ -21,4 +19,8 @@ public interface VehicleRepository {
     List<Vehicle> findSoldVehicles();
 
     List<Rental> findRentalsForVehicleInFuture(Vehicle v);
+
+    List<Vehicle> findOwnedVehicles();
+
+    List<Vehicle> findAllVehicles();
 }

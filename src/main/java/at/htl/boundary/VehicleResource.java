@@ -34,8 +34,8 @@ public class VehicleResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Path("/list")
-    public TemplateInstance listMechanics() {
-        return Templates.list(service.findAll());
+    public TemplateInstance listVehicles() {
+        return Templates.list(service.findOwnedVehicles());
     }
 
     @GET
@@ -49,14 +49,14 @@ public class VehicleResource {
     @Produces(MediaType.TEXT_HTML)
     @Path("/sell")
     public TemplateInstance sellVehicle() {
-        return Templates.sell(service.findAll(), personService.findAllOwners());
+        return Templates.sell(service.findOwnedVehicles(), personService.findAllOwners());
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Path("/rent")
     public TemplateInstance rentVehicle() {
-        return Templates.rent(service.findAll(), personService.findAllTenants());
+        return Templates.rent(service.findOwnedVehicles(), personService.findAllTenants());
     }
 
     @GET

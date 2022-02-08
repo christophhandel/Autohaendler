@@ -6,6 +6,7 @@ import at.htl.workloads.reparation.Reparation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Vehicle {
     private String brand;
     private LocalDate constructionPerYear;
     private int horsePower;
-    private int acceleration;
+    private BigDecimal pricePerHour;
     @ManyToOne
     private Owner owner;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle") @JsonIgnore
@@ -30,11 +31,11 @@ public class Vehicle {
     //endregion
 
     //region Constructor
-    public Vehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, Owner owner) {
+    public Vehicle(String brand, LocalDate constructionPerYear, int horsePower, BigDecimal pricePerHour, Owner owner) {
         this.brand = brand;
         this.constructionPerYear = constructionPerYear;
         this.horsePower = horsePower;
-        this.acceleration = acceleration;
+        this.pricePerHour = pricePerHour;
         this.owner = owner;
     }
 
@@ -92,12 +93,12 @@ public class Vehicle {
         this.horsePower = horsePower;
     }
 
-    public int getAcceleration() {
-        return acceleration;
+    public BigDecimal getPricePerHour() {
+        return pricePerHour;
     }
 
-    public void setAcceleration(int acceleration) {
-        this.acceleration = acceleration;
+    public void setPricePerHour(BigDecimal pricePerHour) {
+        this.pricePerHour = pricePerHour;
     }
 
     public Owner getOwner() {

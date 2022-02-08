@@ -1,11 +1,13 @@
 package at.htl.workloads.vehicle;
 
 import at.htl.workloads.ownership.Rental;
+import at.htl.workloads.person.PersonRepository;
 import at.htl.workloads.person.PersonService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class VehicleServiceImpl implements VehicleService{
     }
 
     @Override
-    public Vehicle saveVehicle(String brand, LocalDate constructionPerYear, int horsePower, int acceleration, String ownerId)
+    public Vehicle saveVehicle(String brand, LocalDate constructionPerYear, int horsePower, BigDecimal pricePerHour, String ownerId)
             throws ValidationException {
         if(constructionPerYear.compareTo(LocalDate.now()) > 0)
             throw new ValidationException("ConstructionYear kann nicht in der Zukunft liegen!");
@@ -29,14 +31,14 @@ public class VehicleServiceImpl implements VehicleService{
         else if(horsePower <= 0)
             throw new ValidationException("PS kann nicht unter 0 sein!");
 
-        else if(acceleration <= 0)
-            throw new ValidationException("0-100 Beschleuningungsdauer kann nicht unter 0 sein!");
+        else if(pricePerHour.compareTo(BigDecimal.ZERO) <= 0)
+            throw new ValidationException("Preis pro Stunde kann nicht unter 0 sein!");
 
         Vehicle vehicle = new Vehicle(
                 brand,
                 constructionPerYear,
                 horsePower,
-                acceleration,
+                pricePerHour,
                 null);
         return vehicleRepository.saveVehicle(vehicle);
 
@@ -45,7 +47,7 @@ public class VehicleServiceImpl implements VehicleService{
     @Override
     public Vehicle updateVehicle(Long id, String brand, LocalDate constructionPerYear,
                                  int horsePower,
-                                 int acceleration,
+                                 BigDecimal pricePerHour,
                                  String ownerId) throws ValidationException {
         if(constructionPerYear.compareTo(LocalDate.now()) > 0)
             throw new ValidationException("ConstructionYear kann nicht in der Zukunft liegen!");
@@ -53,8 +55,8 @@ public class VehicleServiceImpl implements VehicleService{
         else if(horsePower <= 0)
             throw new ValidationException("PS kann nicht unter 0 sein!");
 
-        else if(acceleration <= 0)
-            throw new ValidationException("0-100 Beschleuningungsdauer kann nicht unter 0 sein!");
+        else if(pricePerHour.compareTo(BigDecimal.ZERO) <= 0)
+            throw new ValidationException("Preis pro Stunde kann nicht unter 0 sein!");
 
         if (findById(id) == null){
             throw new ValidationException("Dieses Fahrzeig existiert nicht!");
@@ -67,7 +69,7 @@ public class VehicleServiceImpl implements VehicleService{
         Vehicle vehicle = findById(id);
 
         vehicle.setBrand(brand);
-        vehicle.setAcceleration(acceleration);
+        vehicle.setPricePerHour(pricePerHour);
         vehicle.setHorsePower(horsePower);
         vehicle.setOwner(ownerId == null ? null : personService.findOwnerById(ownerId));
         vehicle.setConstructionPerYear(constructionPerYear);
@@ -82,7 +84,7 @@ public class VehicleServiceImpl implements VehicleService{
 
     @Override
     public List<Vehicle> findAll() {
-        return vehicleRepository.listAll();
+        return vehicleRepository.findAllVehicles();
     }
 
     @Override
@@ -106,6 +108,14 @@ public class VehicleServiceImpl implements VehicleService{
     @Override
     public List<Vehicle> findSoldVehicles() {
         return vehicleRepository.findSoldVehicles();
+    }
+
+    /**
+     * Liefert alle KFZs zurück, die der Firma gehören
+     */
+    @Override
+    public List<Vehicle> findOwnedVehicles() {
+        return vehicleRepository.findOwnedVehicles();
     }
 
     @Override

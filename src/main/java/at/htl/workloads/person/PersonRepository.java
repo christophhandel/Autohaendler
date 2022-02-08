@@ -40,4 +40,6 @@ public interface PersonRepository {
     Person findPersonById(String svNr);
 
     List<IncomePerPerson> calculateIncomePerOwner();
+
+    List<IncomePerPerson> calculateIncomePerTenant();
 }

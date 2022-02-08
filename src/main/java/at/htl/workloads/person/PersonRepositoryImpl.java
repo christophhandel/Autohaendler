@@ -179,4 +179,20 @@ public class PersonRepositoryImpl implements PersonRepository{
         }
     }
 
+    @Override
+    public List<IncomePerPerson> calculateIncomePerTenant() {
+        try {
+            return entityManager.createQuery("select new at.htl.models.results" +
+                            ".IncomePerPerson(" +
+                            "CASE WHEN count(r) = 0 THEN 0.00 ELSE SUM(r.vehicle.pricePerHour*DATE_PART('day', r.to-r.from)*24) END " +
+                            ",t) " +
+                            "from Tenant t " +
+                            "left join t.rentals r " +
+                            "group by t", IncomePerPerson.class)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package at.htl.models;
 import at.htl.workloads.vehicle.Vehicle;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -12,24 +13,24 @@ public class VehicleDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate constructionYear;
     private int horsePower;
-    private int acceleration;
+    private BigDecimal pricePerHour;
     private Optional<String> ownerId;
 
     public VehicleDTO() {
         this.ownerId = Optional.empty();
     }
 
-    public VehicleDTO(String brand, LocalDate constructionYear, int horsePower, int acceleration, String ownerId) {
+    public VehicleDTO(String brand, LocalDate constructionYear, int horsePower, BigDecimal pricePerHour, String ownerId) {
         this.brand = brand;
         this.constructionYear = constructionYear;
         this.horsePower = horsePower;
-        this.acceleration = acceleration;
+        this.pricePerHour = pricePerHour;
         this.ownerId = Optional.of(ownerId);
     }
 
     public static VehicleDTO fromVehicle(Vehicle v) {
         VehicleDTO vehicleDTO = new VehicleDTO();
-        vehicleDTO.setAcceleration(v.getAcceleration());
+        vehicleDTO.setPricePerHour(v.getPricePerHour());
         vehicleDTO.setBrand(v.getBrand());
         vehicleDTO.setConstructionYear(v.getConstructionPerYear());
         vehicleDTO.setHorsePower(v.getHorsePower());
@@ -61,12 +62,12 @@ public class VehicleDTO {
         this.horsePower = horsePower;
     }
 
-    public int getAcceleration() {
-        return acceleration;
+    public BigDecimal getPricePerHour() {
+        return pricePerHour;
     }
 
-    public void setAcceleration(int acceleration) {
-        this.acceleration = acceleration;
+    public void setPricePerHour(BigDecimal pricePerHour) {
+        this.pricePerHour = pricePerHour;
     }
 
     public String getOwnerId() {

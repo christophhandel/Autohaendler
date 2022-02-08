@@ -5,6 +5,7 @@ import at.htl.workloads.person.Mechanic;
 
 import javax.inject.Inject;
 import javax.xml.bind.ValidationException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,14 +18,14 @@ public interface VehicleService {
     Vehicle saveVehicle(String brand,
                         LocalDate constructionPerYear,
                         int horsePower,
-                        int acceleration,
+                        BigDecimal pricePerHour,
                         String ownerId) throws ValidationException;
 
     Vehicle updateVehicle(Long id,
                           String brand,
                           LocalDate constructionPerYear,
                           int horsePower,
-                          int acceleration,
+                          BigDecimal pricePerHour,
                           String ownerId) throws ValidationException;
 
     Vehicle findById(Long id);
@@ -36,6 +37,8 @@ public interface VehicleService {
     List<Vehicle> findWithIds(List<Long> vehicleIds);
 
     List<Vehicle> findSoldVehicles();
+
+    List<Vehicle> findOwnedVehicles();
 
     List<Rental> getFutureRentals(Vehicle v);
 }

@@ -6,7 +6,7 @@ Content-Type: application/json
   "brand": "BMW",
   "constructionYear": "2020-01-01",
   "horsePower": "600",
-  "acceleration": "8"
+  "pricePerHour": "80"
 }
 
 > {%
@@ -43,7 +43,7 @@ Content-Type: application/json
   "brand": "BMW",
   "constructionYear": "2020-01-01",
   "horsePower": "600",
-  "acceleration": "8",
+  "pricePerHour": "80",
   "ownerId": "5555555555"
 }
 

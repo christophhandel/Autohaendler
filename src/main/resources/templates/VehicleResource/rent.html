@@ -26,12 +26,12 @@
         <div class="row">
             <div class="input-field col s12">
                 <select name="tenantId" id="ownerId">
-                    <option value="" disabled selected>Käufer auswählen</option>
+                    <option value="" disabled selected>Mieter auswählen</option>
                     {#for person in people}
                     <option value="{person.svNr}">{person.firstName} {person.lastName}</option>
                     {/for}
                 </select>
-                <label for="ownerId">Käufer</label>
+                <label for="ownerId">Mieter</label>
             </div>
         </div>
         <div class="row">

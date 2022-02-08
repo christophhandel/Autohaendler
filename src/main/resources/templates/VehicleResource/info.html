@@ -13,13 +13,13 @@
     <h4 class="col s6">PS: </h4>
 </div>
 <div class="row">
-    <h5 class="col s5" id="ps"></h5>
+    <h5 id="ps"></h5>
 </div>
 <div class="row">
-    <h4 class="col s6">0-100km/h:</h4>
+    <h4>Preis pro Stunde:</h4>
 </div>
 <div class="row">
-    <h5 id="acceleration"></h5><h5 ></h5>
+    <h5 id="pricePerHour"></h5><h5 ></h5>
 </div>
 
 <div class="row">
@@ -49,7 +49,7 @@
             console.log(data)
             $('#title').text(data.brand + ' (' + data.constructionPerYear + ')');
             $('#ps').text(data.horsePower);
-            $('#acceleration').text(data.acceleration);
+            $('#pricePerHour').text(data.pricePerHour);
         }.bind(this),
         error: function(xhr, status, err) {
             window.location.replace("/error/msg=" + encodeURIComponent( xhr.responseText));
