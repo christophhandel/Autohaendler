@@ -1,5 +1,6 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.models.results.PartsUsedInVehicle;
 import at.htl.workloads.ownership.Rental;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface VehicleRepository {
     List<Vehicle> findOwnedVehicles();
 
     List<Vehicle> findAllVehicles();
+
+    List<PartsUsedInVehicle> countsThePartsInAVehicle();
 }

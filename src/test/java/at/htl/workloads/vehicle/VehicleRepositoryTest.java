@@ -1,9 +1,12 @@
 package at.htl.workloads.vehicle;
 
 import at.htl.IntTestBase;
+import at.htl.models.results.PartsUsedInVehicle;
 import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.ownership.RentalRepo;
 import at.htl.workloads.person.PersonRepository;
+import at.htl.workloads.reparation.Reparation;
+import at.htl.workloads.reparation.Replacement;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +32,9 @@ class VehicleRepositoryTest extends IntTestBase {
 
     @Inject
     PersonRepository personRepository;
+
+   @Inject
+   VehicleRepository vehicleRepository;
 
     @Test
     void saveVehicleOk() {
@@ -155,4 +161,27 @@ class VehicleRepositoryTest extends IntTestBase {
         assertThat(newR.get()).isIn(repository.findRentalsForVehicleInFuture(newV.get()));
     }
 
+    @Test
+    void findPartsPerVehicle() {
+
+        assertThatCode(() -> vehicleRepository.countsThePartsInAVehicle())
+                .doesNotThrowAnyException();
+
+        List<PartsUsedInVehicle> tmpParts = vehicleRepository.countsThePartsInAVehicle();
+        assertThat(tmpParts).isNotNull();
+
+        for (var part: tmpParts) {
+            boolean contains = false;
+            for (Reparation reparation : part.getVehicle().getReparations()) {
+                    contains = (reparation.getReplacements().stream()
+                            .anyMatch(replacement ->
+                                    replacement.getId().getPart().getPartId().equals(part.getPart().getPartId()))
+                    );
+                    if(contains)
+                        break;
+            }
+
+            assertThat(contains).isEqualTo(true);
+        }
+    }
 }

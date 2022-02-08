@@ -49,12 +49,12 @@ public class Part {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Part part = (Part) o;
-        return amountStored == part.amountStored && Objects.equals(partId, part.partId);
+        return Objects.equals(partId, part.partId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(partId, amountStored);
+        return Objects.hash(partId);
     }
     //endregion
 }

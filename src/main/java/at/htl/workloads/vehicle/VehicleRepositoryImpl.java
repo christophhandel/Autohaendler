@@ -1,5 +1,7 @@
 package at.htl.workloads.vehicle;
 
+import at.htl.models.results.IncomePerPerson;
+import at.htl.models.results.PartsUsedInVehicle;
 import at.htl.workloads.ownership.Rental;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -92,5 +94,14 @@ public class VehicleRepositoryImpl implements VehicleRepository{
         }
     }
 
+    @Override
+    public List<PartsUsedInVehicle> countsThePartsInAVehicle() {
+        return entityManager.createQuery("" +
+                                "select new at.htl.models.results.PartsUsedInVehicle(rr.id.part,v) from Vehicle v" +
+                                " join v.reparations r " +
+                                " join r.replacements rr"
+                ,PartsUsedInVehicle.class)
+                .getResultList();
+    }
 
 }
