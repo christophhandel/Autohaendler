@@ -39,7 +39,7 @@ class PersonRepositoryTest extends IntTestBase {
         assertThatCode(()-> newM.set(personRepository.saveMechanic(m))).doesNotThrowAnyException();
         assertThatCode(() -> personRepository.findMechanicById(newM.get().getSvNr()))
                 .doesNotThrowAnyException();
-        assertThat(personRepository.findMechanicById(newM.get().getSvNr())).isNotNull();
+        assertThat(personRepository.findMechanicById(newM.get().getSvNr())).isNotNull().isEqualTo(newM.get());
         assertThatCode(() -> personRepository.deleteMechanic(newM.get())).doesNotThrowAnyException();
     }
 
@@ -52,7 +52,7 @@ class PersonRepositoryTest extends IntTestBase {
         assertThatCode(() -> newOwner.set(personRepository.saveOwner(owner))).doesNotThrowAnyException();
         assertThatCode(() -> personRepository.findOwnerById(newOwner.get().getSvNr()))
                 .doesNotThrowAnyException();
-        assertThat(personRepository.findOwnerById(newOwner.get().getSvNr())).isNotNull();
+        assertThat(personRepository.findOwnerById(newOwner.get().getSvNr())).isNotNull().isEqualTo(newOwner.get());
         assertThatCode(() -> personRepository.deleteOwner(newOwner.get())).doesNotThrowAnyException();
     }
 
@@ -66,7 +66,7 @@ class PersonRepositoryTest extends IntTestBase {
         assertThatCode(() -> newTenant.set(personRepository.saveTanant(tenant))).doesNotThrowAnyException();
         assertThatCode(() -> personRepository.findTenantById(newTenant.get().getSvNr()))
                 .doesNotThrowAnyException();
-        assertThat(personRepository.findTenantById(newTenant.get().getSvNr())).isNotNull();
+        assertThat(personRepository.findTenantById(newTenant.get().getSvNr())).isNotNull().isEqualTo(newTenant.get());
         assertThatCode(() -> personRepository.deleteTenant(newTenant.get())).doesNotThrowAnyException();
     }
 

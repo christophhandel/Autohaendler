@@ -80,7 +80,7 @@ class RentalRepoTest extends IntTestBase {
 
         var loadedRental = rentalRepository.findRentalById(r.getId());
 
-        assertThat(loadedRental).isNotNull();
+        assertThat(loadedRental).isEqualTo(r).isNotNull();
 
         rentalRepository.deleteRental(r);
     }

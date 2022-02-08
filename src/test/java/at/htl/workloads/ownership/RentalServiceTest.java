@@ -119,6 +119,8 @@ class RentalServiceTest extends IntTestBase {
                 LocalDateTime.of(2022,1,20,10,0)
         );
 
+        assertThat(rentalService.findRentalById(r.getId())).isNotNull().isEqualTo(r);
+
         rentalService.deleteRental(r);
     }
 

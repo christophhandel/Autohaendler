@@ -45,7 +45,8 @@ class VehicleRepositoryTest extends IntTestBase {
                 .doesNotThrowAnyException();
 
         assertThat(repository.findById(newV.get().getId()))
-                .isNotNull();
+                .isNotNull()
+                .isEqualTo(newV.get());
 
         assertThatCode(() -> repository.deleteVehicle(newV.get()))
                 .doesNotThrowAnyException();

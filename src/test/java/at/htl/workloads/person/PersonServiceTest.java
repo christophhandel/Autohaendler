@@ -97,13 +97,13 @@ class PersonServiceTest extends IntTestBase {
     @Test
     void createOwnerOk(){
         assertThatCode(() ->
-                personService.saveOwner("sdgdfh45","Lisa","Haus",
+                personService.saveOwner("sdgdfh47","Lisa","Haus",
                         LocalDate.of(2008,12,24)
                         ,"057839585","5645"))
                 .doesNotThrowAnyException();
 
-        assertThat(personService.findOwnerById("sdgdfh45")).isNotNull();
-        personService.deleteOwner(personService.findOwnerById("sdgdfh45"));
+        assertThat(personService.findOwnerById("sdgdfh47")).isNotNull();
+        personService.deleteOwner(personService.findOwnerById("sdgdfh47"));
     }
 
     @Test
@@ -118,13 +118,13 @@ class PersonServiceTest extends IntTestBase {
     @Test
     void createTenantOk(){
         assertThatCode(() ->
-                personService.saveTenant("sdgdfh45","Lisa","Haus",
+                personService.saveTenant("sdgdfh46","Lisa","Haus",
                         LocalDate.of(2008,12,24)
                         ,"057839585","5645",16.86))
                 .doesNotThrowAnyException();
 
-        assertThat(personService.findTenantById("sdgdfh45")).isNotNull();
-        personService.deleteTenant(personService.findTenantById("sdgdfh45"));
+        assertThat(personService.findTenantById("sdgdfh46")).isNotNull();
+        personService.deleteTenant(personService.findTenantById("sdgdfh46"));
     }
 
     @Test

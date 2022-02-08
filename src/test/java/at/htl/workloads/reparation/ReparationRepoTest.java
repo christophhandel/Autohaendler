@@ -44,7 +44,7 @@ class ReparationRepoTest extends IntTestBase {
                 .doesNotThrowAnyException();
         assertThat(reparationRepo.findPartByType(
                 mewPart.get().getPartId().getPartType(),
-                mewPart.get().getPartId().getDescription())).isNotNull();
+                mewPart.get().getPartId().getDescription())).isNotNull().isEqualTo(mewPart.get());
         assertThatCode(() -> reparationRepo.deletePart(mewPart.get())).doesNotThrowAnyException();
     }
 
@@ -61,7 +61,7 @@ class ReparationRepoTest extends IntTestBase {
         assertThatCode(() -> reparationRepo.findReparationById(newRep.get().getId()))
                 .doesNotThrowAnyException();
         assertThat(reparationRepo.findReparationById(newRep.get().getId()))
-                .isNotNull();
+                .isNotNull().isEqualTo(newRep.get());
         assertThatCode(() -> reparationRepo.deleteReparation(newRep.get()))
                 .doesNotThrowAnyException();
     }
@@ -88,7 +88,8 @@ class ReparationRepoTest extends IntTestBase {
                 newRep.get().getId().getPart().getPartId().getPartType(),
                 newRep.get().getId().getPart().getPartId().getDescription(),
                 newRep.get().getId().getReparation().getId()))
-                .isNotNull();
+                .isNotNull()
+                .isEqualTo(newRep.get());
         assertThatCode(() -> reparationRepo.deleteReplacement(newRep.get()))
                 .doesNotThrowAnyException();
     }
