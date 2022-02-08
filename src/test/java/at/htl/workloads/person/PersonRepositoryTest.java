@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 import javax.persistence.Convert;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -185,9 +186,11 @@ class PersonRepositoryTest extends IntTestBase {
                 curIncome = curIncome.add(
                         r.getVehicle().getPricePerHour()
                                 .multiply(BigDecimal.valueOf(ChronoUnit.HOURS.between(r.getFrom(),r.getTo())))
+                                .multiply(BigDecimal.valueOf(t.getPriceDiscountPercent()/100))
                 );
             }
-            assertThat(tmp.getIncome()).isNotNull().isEqualByComparingTo(curIncome);
+            assertThat(tmp.getIncome().setScale(2, RoundingMode.HALF_UP)).isNotNull()
+                    .isEqualByComparingTo(curIncome.setScale(2,RoundingMode.HALF_UP));
         }
     }
 }
