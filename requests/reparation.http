@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "vehicleId": "1",
-  "mechanicId": "1",
-  "nextAppointment": "2022-01-17T07:00",
+  "mechanicId": "1234567890",
+  "nextAppointment": "2028-01-17T07:00",
   "duration": "2"
 }
 
@@ -41,8 +41,8 @@ Content-Type: application/json
 
 {
   "vehicleId": "1",
-  "mechanicId": "1",
-  "nextAppointment": "2022-05-25T09:00",
+  "mechanicId": "1234567890",
+  "nextAppointment": "2029-05-25T09:00",
   "duration": "2"
 }
 

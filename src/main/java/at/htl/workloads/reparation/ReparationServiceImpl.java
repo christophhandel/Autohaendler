@@ -79,7 +79,7 @@ public class ReparationServiceImpl implements ReparationService{
         Reparation reparation = reparationRepo.findReparationById(reparationId);
         if (reparation == null)
             throw new ValidationException("Diese Reperation existiert nicht!");
-        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) == null)
+        if (reparationRepo.findReparationByMechanicIDAndAppointment(mechanicId,nextAppointment) != null)
             throw new ValidationException("Der Mechaniker kann an diesem Datum nicht reserviert werden!");
 
         Mechanic mechanic = personService.findMechanicById(mechanicId);
@@ -122,7 +122,7 @@ public class ReparationServiceImpl implements ReparationService{
         ReplacementId rId = new ReplacementId(p, findReparationById(reparationId));
 
         if(rId.getReparation() == null ||rId.getPart() == null)
-            throw new ValidationException("Nonexistent Replacement!");
+            throw new ValidationException("Nonexistent part or reparation!");
 
         if(p.getAmountStored() - amount < 0)
             throw new ValidationException("Lagerbestand zu gering!");

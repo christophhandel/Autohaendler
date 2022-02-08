@@ -1,6 +1,7 @@
 package at.htl.api;
 
 import at.htl.models.ReparationDTO;
+import at.htl.workloads.ownership.Rental;
 import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.reparation.ReparationService;
 import io.quarkus.qute.Location;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.ValidationException;
 import java.net.URI;
+import java.util.List;
 
 @Path("/api/reparation")
 public class ReparationResourceApi {
@@ -63,7 +65,7 @@ public class ReparationResourceApi {
                     .entity(e.getMessage()).build();
         }
 
-        return Response.ok(r).build();
+        return Response.ok(ReparationDTO.fromReparation(r)).build();
     }
 
     @GET
@@ -99,7 +101,7 @@ public class ReparationResourceApi {
 
         reparationService.deleteReparation(r);
 
-        return Response.ok(r).build();
+        return Response.ok(ReparationDTO.fromReparation(r)).build();
     }
 
 }

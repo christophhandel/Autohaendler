@@ -66,7 +66,7 @@ public class VehicleResourceApi {
                     .entity(e.getMessage()).build();
         }
 
-        return Response.ok(v).build();
+        return Response.ok(VehicleDTO.fromVehicle(v)).build();
     }
 
     @GET

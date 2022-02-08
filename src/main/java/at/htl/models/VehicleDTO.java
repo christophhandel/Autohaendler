@@ -1,5 +1,6 @@
 package at.htl.models;
 
+import at.htl.workloads.vehicle.Vehicle;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
@@ -24,6 +25,16 @@ public class VehicleDTO {
         this.horsePower = horsePower;
         this.acceleration = acceleration;
         this.ownerId = Optional.of(ownerId);
+    }
+
+    public static VehicleDTO fromVehicle(Vehicle v) {
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setAcceleration(v.getAcceleration());
+        vehicleDTO.setBrand(v.getBrand());
+        vehicleDTO.setConstructionYear(v.getConstructionPerYear());
+        vehicleDTO.setHorsePower(v.getHorsePower());
+        vehicleDTO.setOwnerId(v.getOwner() == null ? null : v.getOwner().getSvNr());
+        return vehicleDTO;
     }
 
     public String getBrand() {

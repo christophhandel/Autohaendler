@@ -53,7 +53,7 @@ public class VehicleTransferRessourceApi {
             return Response.status(404)
                     .entity("Transfer mit dieser id existiert nicht!").build();
         }
-        return Response.ok(v).build();
+        return Response.ok(VehicleTransferDTO.fromVehicleTransfer(v)).build();
     }
 
     @GET
@@ -72,6 +72,6 @@ public class VehicleTransferRessourceApi {
                     .entity("Transfer mit dieser id existiert nicht!").build();
 
         rentalService.deleteTransfer(id);
-        return Response.ok(vehicleTransfer).build();
+        return Response.ok(VehicleTransferDTO.fromVehicleTransfer(vehicleTransfer)).build();
     }
 }

@@ -3,7 +3,7 @@ POST http://localhost:8080/api/replacement/
 Content-Type: application/json
 
 {
-  "partType": "Reifen",
+  "partType": "Bremsklotz",
   "partDescription": "Continental M&S 275-17R-55",
   "reparationId": 1,
   "amount": 4
@@ -15,6 +15,16 @@ client.test("Request executed successfully", function() {
 });
 
 client.global.set("id", response.body.id);
+%}
+
+### GetById
+GET http://localhost:8080/api/replacement/?partType=Bremsklotz&partDescription=Continental M%26S 275-17R-55&reparationId=1
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
 %}
 
 ### GetForReparation
@@ -41,7 +51,7 @@ PUT http://localhost:8080/api/replacement/
 Content-Type: application/json
 
 {
-  "partType": "Reifen",
+  "partType": "Bremsklotz",
   "partDescription": "Continental M&S 275-17R-55",
   "reparationId": 1,
   "amount": 1
@@ -54,16 +64,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Delete
-DELETE http://localhost:8080/api/replacement/
-Content-Type: application/json
-
-
-{
-  "partType": "Reifen",
-  "partDescription": "Continental M&S 275-17R-55",
-  "reparationId": 1,
-  "amount": 4
-}
+DELETE http://localhost:8080/api/replacement/?partType=Bremsklotz&partDescription=Continental M%26S 275-17R-55&reparationId=1
 
 > {%
 client.test("Request executed successfully", function() {

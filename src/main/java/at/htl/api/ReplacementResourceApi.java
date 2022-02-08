@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.ValidationException;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Path("/api/replacement")
 public class ReplacementResourceApi {
@@ -41,7 +43,12 @@ public class ReplacementResourceApi {
         }
 
         return Response.status(301)
-                .location(URI.create("/api/replacement/"+replacementDTO.getReparationId()))
+                .location(URI.create("/api/replacement/?" +
+                        "partType="+ URLEncoder.encode(replacementDTO.getPartType(), StandardCharsets.UTF_8) + '&' +
+                        "partDescription="+ URLEncoder.encode(replacementDTO.getPartDescription(), StandardCharsets.UTF_8) + '&' +
+                        "reparationId="+ URLEncoder.encode(String.valueOf(replacementDTO.getReparationId()),
+                                StandardCharsets.UTF_8) + '&'
+                        ))
                 .build();
 
     }
@@ -71,10 +78,15 @@ public class ReplacementResourceApi {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readById(ReplacementDTO replacementDTO) {
-        Replacement r = reparationService.findReplacementById(replacementDTO.getPartType(),
-                replacementDTO.getPartDescription(),
-                replacementDTO.getReparationId());
+    public Response readById(@QueryParam("partType") String partType,
+                             @QueryParam("partDescription") String partDescription,
+                             @QueryParam("reparationId") Long reparationId) {
+
+        Replacement r = reparationService.findReplacementById(
+                partType,
+                partDescription,
+                reparationId
+        );
 
         if(r == null) {
             return Response.status(404)
@@ -83,6 +95,7 @@ public class ReplacementResourceApi {
 
         return Response.ok(r).build();
     }
+
 
     @GET
     @Path("/{reparationId}")
@@ -108,14 +121,20 @@ public class ReplacementResourceApi {
     @DELETE
     @Transactional
     @Path("/")
-    public Response delete(ReplacementDTO replacementDTO) {
-        Replacement r = reparationService.findReplacementById(replacementDTO.getPartType(),
-                replacementDTO.getPartDescription(),
-                replacementDTO.getReparationId());
+    public Response delete(@QueryParam("partType") String partType,
+                           @QueryParam("partDescription") String partDescription,
+                           @QueryParam("reparationId") Long reparationId) {
+
+        Replacement r = reparationService.findReplacementById(
+                partType,
+                partDescription,
+                reparationId
+        );
+
 
         if(r == null) {
             return Response.status(404)
-                    .entity("Reparation mit dieser id existiert nicht!").build();
+                    .entity("Replacement mit dieser id existiert nicht!").build();
         }
 
         reparationService.deleteReplacement(r);

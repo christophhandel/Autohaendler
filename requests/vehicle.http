@@ -44,7 +44,7 @@ Content-Type: application/json
   "constructionYear": "2020-01-01",
   "horsePower": "600",
   "acceleration": "8",
-  "ownerId": 1
+  "ownerId": "5555555555"
 }
 
 > {%

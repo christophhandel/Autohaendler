@@ -1,6 +1,7 @@
 package at.htl.models;
 
 import at.htl.workloads.person.Mechanic;
+import at.htl.workloads.reparation.Reparation;
 import at.htl.workloads.vehicle.Vehicle;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,6 +27,15 @@ public class ReparationDTO {
     }
 
     public ReparationDTO() {
+    }
+
+    public static ReparationDTO fromReparation(Reparation r) {
+        ReparationDTO reparationDTO = new ReparationDTO();
+        reparationDTO.setNextAppointment(r.getNextAppointment());
+        reparationDTO.setDuration(r.getDuration());
+        reparationDTO.setVehicleId(r.getVehicle().getId());
+        reparationDTO.setMechanicId(r.getMechanic().getSvNr());
+        return reparationDTO;
     }
 
     public Long getVehicleId() {
